@@ -1,5 +1,5 @@
 # Welcome to our DevOps repository.
 
-## USEFUL LINKS
+## Useful Links
 
-[Duck Duck Go](https://github.com/users/chronis98/projects/1)
+[Kanban board](https://github.com/users/chronis98/projects/1)
