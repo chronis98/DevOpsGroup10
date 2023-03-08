@@ -1,12 +1,23 @@
 <template>
   <div class="header">
-    <router-link class="logo" :to="{name: RouteName.HOME}">LOGO</router-link>
-    <div class="header-right" @click="hamburgerNavOpen=!hamburgerNavOpen">
+
+    <div class="header-main">
+      <router-link class="logo" :to="{name: RouteName.HOME}">LOGO</router-link>
+
+      <div class="hamburger-icon" @click="toggleMobileMenu">
+        <font-awesome-icon icon="fa-solid fa-bars"/>
+      </div>
+    </div>
+
+    <div :class="hamburgerShow ? 'header-down' : 'header-right'">
       <router-link :to="{name: link.routeName}"
                    class="header-link"
-                   v-for="link in links">{{link.displayName}}</router-link>
+                   @click="toggleMobileMenu"
+                   v-for="link in links">{{ link.displayName }}
+      </router-link>
     </div>
   </div>
+
 </template>
 
 <script lang="ts">
@@ -15,8 +26,9 @@ import {RouteName} from "@/router";
 
 export default defineComponent({
   name: "Header",
-  setup () {
-    const hamburgerNavOpen = ref(false);
+  components: {},
+  setup() {
+    const hamburgerShow = ref(false);
     const links = [
       {
         displayName: 'Home',
@@ -28,19 +40,48 @@ export default defineComponent({
       }
     ];
 
+    function toggleMobileMenu() {
+      hamburgerShow.value = !hamburgerShow.value;
+    }
+
     return {
-      hamburgerNavOpen,
+      hamburgerShow,
       links,
-      RouteName
+      RouteName,
+      toggleMobileMenu
     }
   }
 });
 </script>
 
 <style scoped>
+.hamburger-icon {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 25px;
+  cursor: pointer;
+}
 
-.container {
+.header-down {
+  display: flex;
+  flex-direction: column;
+}
 
+.header-right {
+  display: none;
+}
+
+.header-main {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-right .router-link-active {
+  border-bottom: 2px solid var(--vt-c-black);
 }
 
 /* Style the header with a grey background and some padding */
@@ -51,6 +92,9 @@ export default defineComponent({
   box-shadow: 4px 11px 15px 3px rgba(0, 0, 0, 0.25);
   /*box-shadow: 4px 11px 15px 3px rgba(0, 0, 0, 0.25);*/
   border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  /*justify-content: space-between;*/
 }
 
 /* Style the header links */
@@ -80,28 +124,6 @@ export default defineComponent({
 .header a.active {
   background-color: dodgerblue;
   color: white;
-}
-
-/* Float the link section to the right */
-.header-right {
-  float: right;
-}
-
-.header-right .router-link-active {
-  border-bottom: 2px solid var(--vt-c-black);
-}
-
-/* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
-@media screen and (max-width: 500px) {
-  .header a {
-    float: none;
-    display: block;
-    text-align: left;
-  }
-
-  .header-right {
-    float: none;
-  }
 }
 
 </style>
