@@ -1,7 +1,7 @@
 #install npm and run npm build
 FROM node:10.15.3-alpine
 
-WORKDIR /frontend/
+WORKDIR /frontend
 
 COPY package*.json ./
 
@@ -11,12 +11,14 @@ COPY . .
 
 RUN npm run build
 
-#install nginx
-FROM nginx:1.17.1-alpine
+#install nginx and copy build files
+FROM nginx:1.16.0-alpine
 
-COPY --from=0 /app/dist /usr/share/nginx/html
+COPY --from=0 /frontend/dist /usr/share/nginx/html
 
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
+
+
 
