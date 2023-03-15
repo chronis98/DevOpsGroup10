@@ -140,7 +140,7 @@
 			font-style: normal;
 			font-weight: 400;
 			margin: 10px;
-			color: #e1e1e3;;
+			color: #e1e1e3;
 
 		}
 		p, input {

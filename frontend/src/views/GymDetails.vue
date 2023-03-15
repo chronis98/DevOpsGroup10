@@ -34,8 +34,7 @@
 		</div>
 
 		<div @click="addEquipment(gymName)" class="plus radious">
-			
-		</div>
+</div>
 
 </template>
 
