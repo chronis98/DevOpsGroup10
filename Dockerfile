@@ -1,5 +1,5 @@
 #install npm and run npm build
-FROM node:10.15.3-alpine
+FROM node:19.7.0-alpine
 
 COPY frontend/package*.json ./
 
@@ -10,7 +10,7 @@ COPY . .
 RUN npm run build
 
 #install nginx and copy build files
-FROM nginx:1.16.0-alpine
+FROM nginx:1.23.3-alpine
 
 COPY --from=0 /frontend/dist /usr/share/nginx/html
 
