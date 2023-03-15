@@ -54,7 +54,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .hamburger-icon {
   float: left;
   color: black;
@@ -88,13 +88,10 @@ export default defineComponent({
 .header {
   overflow: hidden;
   background-color: #BFBFBF;
-  /*padding: 10px 5px;*/
   box-shadow: 4px 11px 15px 3px rgba(0, 0, 0, 0.25);
-  /*box-shadow: 4px 11px 15px 3px rgba(0, 0, 0, 0.25);*/
   border-radius: 4px;
   display: flex;
   flex-direction: column;
-  /*justify-content: space-between;*/
 }
 
 /* Style the header links */
