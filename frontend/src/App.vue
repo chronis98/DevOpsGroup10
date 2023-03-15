@@ -2,6 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 // import HelloWorld from './components/HelloWorld.vue'
 import GymOverview from './components/GymOverview.vue'
+import GymDetails from './components/GymDetails.vue'
 </script>
 
 <template>
