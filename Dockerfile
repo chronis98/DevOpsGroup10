@@ -1,7 +1,7 @@
 #install npm and run npm build
 FROM node:10.15.3-alpine
 
-WORKDIR /app
+WORKDIR /frontend
 
 COPY package*.json ./
 
