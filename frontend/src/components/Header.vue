@@ -24,12 +24,17 @@
 import {defineComponent, ref} from "vue";
 import {RouteName} from "@/router";
 
+type Link = {
+	displayName: string;
+	routeName: string;
+}
+
 export default defineComponent({
   name: "Header",
   components: {},
   setup() {
     const hamburgerShow = ref(false);
-    const links = [
+    const links: Link[] = [
       {
         displayName: 'Home',
         routeName: RouteName.HOME
@@ -56,7 +61,6 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .hamburger-icon {
-  float: left;
   color: black;
   text-align: center;
   padding: 12px;
@@ -86,23 +90,21 @@ export default defineComponent({
 
 /* Style the header with a grey background and some padding */
 .header {
-  overflow: hidden;
   background-color: #BFBFBF;
   box-shadow: 4px 11px 15px 3px rgba(0, 0, 0, 0.25);
-  border-radius: 4px;
-  display: flex;
-  flex-direction: column;
 }
 
 /* Style the header links */
 .header a {
-  float: left;
   color: black;
-  text-align: center;
   padding: 12px;
   text-decoration: none;
   font-size: 18px;
   line-height: 25px;
+}
+
+.header .header-link {
+	text-align: center;
 }
 
 /* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
