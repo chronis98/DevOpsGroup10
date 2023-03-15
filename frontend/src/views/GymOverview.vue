@@ -3,59 +3,20 @@
 
 	<div class="Title">Gym Overview</div>
 	<br><br>
-	<!-- <div class="outer"> -->
 
 	<div v-for="l in locations">
-		<!-- <div class="card" v-on:click="handleClick(l),$emit('GymItem',l.name)"> -->
 		<div class="card" @click="handleClick(l.name)">
 			<img src="@/assets/Gymicon.png"/>
-			<!-- <v-img src="@/assets/Gymicon.jpg" alt=""
-			contain
-			height="100px"
-			width="150px"> -->
-			<!-- </v-img> -->
-			<!-- <img src="img_avatar.png" alt="Avatar" style="width:100%"> -->
-			<!-- <div class="container"> -->
+
 			{{ l.name }}<br>
 			{{ l.date }}
-			<!-- </div> -->
-		</div>
 
+		</div>
 
 	</div>
-	<!-- </div> -->
-
-	<!-- <div class="outer">
-
-		<div class="card">
-
-			<img src="img_avatar.png" alt="Avatar" style="width:100%">
-			<div class="container">
-				John Doe
-				<p>Architect & Engineer</p>
-			</div>
-
-		</div>
-	</div> -->
 
 </template>
 
-<!-- <style>
-@media (min-width: 1024px) {
-	.about {
-		min-height: 100vh;
-		display: flex;
-		align-items: center;
-	}
-
-}
-
-
-</style> -->
-
-<!-- <script lang="ts">
-
-	</script> -->
 
 <script lang="ts">
 	import GymDetails from '../views/GymDetails.vue';
@@ -119,39 +80,20 @@
 		}
 
 		.Title {
-
-			//font-family: 'Inter';
 			font-style: 'large';
 			font-size: 36.56px;
-			// line-height: 64px;
-			// line-height: 100%;
-			//right: 20px;
 			color: #FDFDFD;
 			margin: 5px;
-			// Align: Left
-			// Vertical align: Top
-
-
 		}
 		img {
 			width: 35px;
 			height: 30px;
 			display: absolute;
-			// float: left;
-			//margin-left: 0;
-			// left : 5px;
-			// top : 7px;
-			// margin-right: 20px;
 			border-radius: 10%;
-
-			// width: 50%;
-			//height: auto;
 		}
 
 		.container {
-			//height: 200px;
 			position: relative;
-			//border: 3px solid #FFFFFF;
 			border: 2.6px solid #0f0101;
 			border-radius: 7.2719px;
 			display: block;
@@ -167,37 +109,22 @@
 		.card {
 			/* Add shadows to create the "card" effect */
 			box-shadow: 1px 1px 0px 0px #17191e;
-			//text-align: center;
 			transition: 0.2s;
 			display: flex;
 			justify-content: space-between;
-
-			// display: flex;
 			align-items: center;
-			// align-content: space-around;
 			background-color: #242A34;
 			border: px solid #17191e;
 			border-radius: 8.2719px;
-
-			// margin-left: auto;
-			// margin-right: auto;
-			// width: 100%;
 			margin: 10px;
 			min-height: 45px;
 			padding: 5%;
-
-
 		}
 		.outer {
 			box-shadow: 0px 100px 16px 0 rgba(134, 88, 214, 0.2);
-			//border-radius: 40.2719px;
 			text-align: center;
 			transition: 0.2s;
 			display: block;
-			//background-color: #FFFFFF;
-			// margin-left: auto;
-			// margin-right: auto;
-			// width: 100%;
 			margin: 10px;
 		}
 
@@ -208,32 +135,14 @@
 
 			border-radius: 20.2719px;
 		}
-
-		/* Add some padding inside the card container */
-		// .container {
-		//   padding: 1px 8px;
-		// }
-
-
 		.Details, label, text {
-
-
 			position: relative;
-
-
-			// font-family: 'Inter';
 			font-style: normal;
 			font-weight: 400;
-
 			margin: 10px;
-			//font-size: 26.2783px;
-			//line-height: 32px;
-			// right: 15px;
 			color: #e1e1e3;;
 
 		}
-
-
 		p, input {
 			font-family: 'Inter';
 			font-style: normal;
@@ -256,12 +165,12 @@
 			border: 10px solid #0375F7; /* the outer space */
 			border-radius: 50%;
 			background: conic-gradient(from 90deg at var(--b) var(--b), #0375F7 90deg, #fff 0) calc(100% + var(--b) / 2) calc(100% + var(--b)/2)/
-      calc(50%  + var(--b)) calc(50% + var(--b));
+      		calc(50%  + var(--b)) calc(50% + var(--b));
 
 		}
 		.plus:hover {
 			background: conic-gradient(from 90deg at var(--b) var(--b), green 90deg, hsla(254, 100%, 37%, 0.2) 0) calc(100% + var(--b) / 2) calc(100% + var(--b)/2)/
-    calc(50%  + var(--b)) calc(50% + var(--b));
+    		calc(50%  + var(--b)) calc(50% + var(--b));
 		}
 
 		.radius {
@@ -274,13 +183,8 @@
 
 		.regular-checkbox {
 			box-sizing: border-box;
-
-			//position: absolute;
 			width: 36.95px;
 			height: 32.85px;
-			// left: 95px;
-			// top: 998px;
-
 			background: #363945;
 			border: 2.46359px solid #D9D9D9;
 			border-radius: 4.10599px;
@@ -335,9 +239,6 @@
 		.checkmark {
 			display: absolute;
 			float: left;
-			// top : 8px;
-			// margin: 6px;
-			// margin-right: 20px;
 			width: 22px;
 			height: 22px;
 			-ms-transform: rotate(45deg); /* IE 9 */

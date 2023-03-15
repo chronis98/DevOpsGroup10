@@ -2,10 +2,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 	
-
 	<div class="Title">{{ gymName }}</div>
 	<br><br>
-
 
 		<div v-for=" e,index in gymEquipment">
 			<div class='card' id="card{{index}}">
@@ -18,10 +16,6 @@
 				Votes from {{300*Math.floor(Math.random() * 101)}} users
 				<div class="equipment_details"></div>
 			</div>		
-				
-
-					
-				<!-- <div class="right"> -->
 					<div v-if="Math.random() > 0.5">
 						<span class="checkmark">
 						<div class="checkmark_circle"></div>
@@ -36,34 +30,8 @@
 						<div class="crosssign_stem2"></div>
 						</span>
 					</div>
-				<!-- </div> -->
-
-				
 			</div>
-			
-
 		</div>
-
-		<!-- <div class="card" id="test">
-
-				<img src="@/assets/equipment.jpeg" />
-
-				<div class="right">
-					<span class="checkmark">
-						<div class="checkmark_circle"></div>
-						<div class="checkmark_stem"></div>
-						<div class="checkmark_kick"></div>
-					</span>
-
-				</div>
-				HEllelsllesllesflldflsdflslflasdajskndaksnaksdnaks<br>
-				<div class="equipment_details">
-	
-					Votes from 03303 users
-				</div>
-				
-
-		</div> -->
 
 		<div @click="addEquipment(gymName)" class="plus radious">
 			
@@ -92,10 +60,6 @@
 		name: string;
 		equipment: string[];
 	};
-	let url=""
-	// fetch("http://localhost:8000/"chronis@test.com)
-	// .then((response) => response.json())
-	// .then((data) => console.log(data));
 	export default defineComponent({
 		name: "GymDetails",
 		setup() {
@@ -182,10 +146,6 @@
 			}
 			const card = document.getElementById("test");
 			console.log(card);
-			// Add an event listener to the card
-			
-				// Add more details to the card
-				
 			function addEquipment(name: string): void{
 				router.push({name: RouteName.ADD_EQUIPMENT, params: {name}});
 			};
@@ -195,16 +155,14 @@
 				gymEquipment,
 				addEquipment
 
-
 			};
 		}
 	})
 
 </script>
-<!-- 
+
 <style scoped lang="scss">
 
-@import './base.css';
 
 #app {
   max-width: 1280px;
@@ -522,4 +480,4 @@
 }
 
 
-</style> -->
+</style>
