@@ -1,11 +1,10 @@
-#install npm and run npm build
 FROM node:19.7.0-alpine
 
 COPY frontend/package*.json ./
 
 RUN npm install
 
-COPY . .
+COPY frontend/. .
 
 RUN npm run build
 
