@@ -2,14 +2,9 @@ name: deploy to ECS
 
 on:
   push:
-    branches:
-      - 'main'
+    branches:    
       - 'development'
-  pull_request:
-    branches:
-      - 'main'
-      - 'development'
-  
+ 
 env:
   ECR_REGISTRY: 528775740130.dkr.ecr.us-east-1.amazonaws.com
   ECR_REPOSITORY: devopsgroup10projectdev
