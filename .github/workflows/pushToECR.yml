@@ -5,7 +5,7 @@ on:
   pull_request:
 
 env:
-  ECR_REGISTRY: 528775740130.dkr.ecr.us-east-1.amazonaws.com/devopsgroup10projectdev
+  ECR_REGISTRY: 528775740130.dkr.ecr.us-east-1.amazonaws.com
   ECR_REPOSITORY: devopsgroup10projectdev 
   AWS_REGION: us-east-1
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
