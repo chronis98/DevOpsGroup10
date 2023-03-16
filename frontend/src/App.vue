@@ -2,6 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import Header from "@/components/Header.vue";
+import EquipmentDetail from "@/EquipmentDetail.vue";
 </script>
 
 <template>
