@@ -4,15 +4,15 @@
       <img class="image" :src="equipment.imgPath" :alt="equipment.name">
 
       <div class="details-container">
-        <label>Name: </label> <input :value="equipment.name" disabled>
-        <span>First Added: </span> <span>{{ equipment.firstAdded.toLocaleString() }}</span>
-        <span>Reports: </span> <span>{{ equipment.reports }}</span>
-        <span>Confirmed: </span> <span>{{ equipment.confirmed.toLocaleString() }}</span>
+        <label>Name: </label> <span>{{ equipment.name }}</span>
+        <label>First Added: </label> <span>{{ equipment.firstAdded.toLocaleString() }}</span>
+        <label>Reports: </label> <span>{{ equipment.reports }}</span>
+        <label>Confirmed: </label> <span>{{ equipment.confirmed.toLocaleString() }}</span>
       </div>
 
-      <div class="button-container">
-        <button>Stars</button>
-        <button>Add Report</button>
+      <div class="buttons-container">
+        <button class="button" type="button">Stars</button>
+        <button class="button button-primary" type="button">Add Report</button>
       </div>
     </div>
   </div>
@@ -35,18 +35,6 @@ export default defineComponent({
     id: {
       type: Number,
       required: true
-    }
-  },
-  filters: {
-    formattedDate(date: Date) {
-      const options: Intl.DateTimeFormatOptions = {
-
-        // day: "numeric",
-        // month: "numeric",
-        // year: "numeric"
-      }
-      return date.toDateString();
-      // return new Intl.DateTimeFormat('default', options).format(date);
     }
   },
   setup(props) {
@@ -75,31 +63,54 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-  border: red solid 1px;
 }
 
 .container {
   background-color: var(--vt-c-grey-soft);
   box-shadow: 4px 11px 15px 3px rgba(0, 0, 0, 0.25);
-  padding: 10px;
+  padding: 20px 30px;
+  margin: 15px;
+  border-radius: 3px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
+  gap: 20px;
 }
 
 .details-container {
   display: grid;
-  grid-templte-column: 25% 75%;
+  grid-template-columns: 1fr 1fr;
 }
 
-.button-container {
-
+.buttons-container {
+  align-self: end;
+  display: flex;
+  gap: 10px;
 }
 
 .image {
-  max-width: 20vw;
   max-height: 20vh;
+  margin: 0 0 20px 0;
+  border-radius: 8px;
+}
+
+.button {
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button-primary {
+  background-color: black;
+  color: white;
+}
+
+.button-primary:hover {
+  background-color: var(--color-background);
+  color: white;
 }
 
 </style>
