@@ -1,10 +1,10 @@
 <template>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <div class="Title">{{ gymName }}</div>
+  <div class="title">{{ gymName }}</div>
   <br><br>
   <div v-for=" e, index in gymEquipment">
 
-    <CardComponent
+    <Card
       source="https://static.vecteezy.com/system/resources/previews/015/845/432/original/gym-station-for-fitness-equipment-gym-station-icon-suitable-for-apps-website-developer-graphic-designer-needs-on-white-background-free-vector.jpg"
       :name="e" date="">
 
@@ -22,49 +22,40 @@
           <div class="crosssign_stem2"></div>
         </span>
       </div>
-    </CardComponent>
+    </Card>
 
   </div>
   <div @click="addEquipment(gymName)" class="plus radious">
   </div>
 </template>
 
-
 <script lang="ts">
 
 import { defineComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import router, { RouteName } from "@/router";
-import CardComponent from '../views/CardComponent.vue';
-
+import Card from '../views/Card.vue';
 
 export type Location = {
   name: string;
+  equipment: string[];
   date: string;
   numberOfPeople: number;
   complete: boolean;
 };
+
 export type Equipment = {
   name: string;
   equipment: string[];
 };
+
 export default defineComponent({
-  components: { CardComponent },
+  components: { Card },
   name: "GymDetails",
   setup() {
     const route = useRoute();
     const locations: Location[] = [
-      { name: "Basic-Fit Amsterdam", date: "11/02/2022", numberOfPeople: 4, complete: true },
-      { name: "Basic-Fit Amsterdam West", date: "12/01/2022", numberOfPeople: 2, complete: true },
-      { name: "Basic-Fit Leiden", date: "04/06/2021", numberOfPeople: 6, complete: true },
-      { name: "Power-Fit Diemen", date: "08/10/2021", numberOfPeople: 10, complete: true },
-      { name: "Get-Fit Hilversum", date: "12/12/2022", numberOfPeople: 14, complete: true },
-      { name: "Get-Fit Utrecht", date: "10/02/2023", numberOfPeople: 12, complete: false },
-      { name: "Get-Fit Den Haag", date: "04/02/2020", numberOfPeople: 2, complete: true }
-    ];
-    const equipment: Equipment[] = [
-      {
-        name: "Basic-Fit Amsterdam", equipment: [
+      { name: "Basic-Fit Amsterdam", equipment: [
           "Power rack",
           "Chest fly machine",
           "Bench Press",
@@ -72,10 +63,8 @@ export default defineComponent({
           "Decline bench press",
           "Adjustable bench",
           "Olympic Weight Bench"
-        ]
-      },
-      {
-        name: "Basic-Fit Amsterdam West", equipment: [
+        ], date: "11/02/2022", numberOfPeople: 4, complete: true },
+      { name: "Basic-Fit Amsterdam West", equipment: [
           "Power rack",
           "Chest fly machine",
           "Bench Press",
@@ -86,24 +75,13 @@ export default defineComponent({
           "Tricep Extension Machine",
           "Shoulder Press Machine",
           "Front Pull Down Machine"
-        ]
-      },
-      {
-        name: "Basic-Fit Leiden", equipment: [
+        ], date: "12/01/2022", numberOfPeople: 2, complete: true },
+      { name: "Basic-Fit Leiden", equipment: [
           "Power rack",
           "Chest fly machine",
           "Bench Press"
-        ]
-      },
-      {
-        name: "Power-Fit Diemen", equipment: [
-          "Power rack",
-          "Chest fly machine",
-          "Bench Press"
-        ]
-      },
-      {
-        name: "Get-Fit Hilversum", equipment: [
+        ], date: "04/06/2021", numberOfPeople: 6, complete: true },
+      { name: "Power-Fit Diemen", equipment: [
           "Power rack",
           "Chest fly machine",
           "Bench Press",
@@ -114,10 +92,8 @@ export default defineComponent({
           "Tricep Extension Machine",
           "Shoulder Press Machine",
           "Front Pull Down Machine"
-        ]
-      },
-      {
-        name: "Get-Fit Utrecht", equipment: [
+        ], date: "08/10/2021", numberOfPeople: 10, complete: true },
+      { name: "Get-Fit Hilversum", equipment: [
           "Power rack",
           "Chest fly machine",
           "Bench Press",
@@ -128,37 +104,46 @@ export default defineComponent({
           "Tricep Extension Machine",
           "Shoulder Press Machine",
           "Front Pull Down Machine"
-        ]
-      },
-      {
-        name: "Get-Fit Den Haag", equipment: [
+        ], date: "12/12/2022", numberOfPeople: 14, complete: true },
+      { name: "Get-Fit Utrecht", equipment: [
+          "Power rack",
+          "Chest fly machine",
+          "Bench Press",
+          "Incline bench press",
+          "Decline bench press",
+          "Adjustable bench",
+          "Olympic Weight Bench",
+          "Tricep Extension Machine",
+          "Shoulder Press Machine",
+          "Front Pull Down Machine"
+        ], date: "10/02/2023", numberOfPeople: 12, complete: false },
+      { name: "Get-Fit Den Haag",equipment: [
           "Power rack",
           "Chest fly machine",
           "Bench Press",
           "Incline bench press"
-        ]
-      }
+        ], date: "04/02/2020", numberOfPeople: 2, complete: true }
     ];
     
     const gymName = route.params.name as string;
-    const gym = locations.find(location => location.name === gymName)!.name;
-    const gymEquipment = equipment.find(eq => eq.name === gymName)!.equipment;
-    if (!gym || !gymEquipment) {
-      const router = useRouter();
-      router.push({ name: RouteName.GYM_OVERVIEW });
+    const gym = locations.find(location => location.name === gymName);
+
+    if (!gym ) {
+      const router = useRouter(); 
+      router.push({ name: RouteName.GYM_OVERVIEW }); 
     }
     
     const card = document.getElementById("test");
     console.log(card);
     function addEquipment(name: string): void {
-    }
-    ;
+    };
+
     return {
       gymName,
       locations,
-      gymEquipment,
+      gymEquipment: gym?.equipment,
       addEquipment,
-      CardComponent
+      Card
     };
   },
 })
@@ -169,18 +154,14 @@ export default defineComponent({
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-
   font-weight: normal;
 }
 
-
-
-.Title {
+.title {
   font-style: 'large';
   font-size: 36.56px;
   color: #FDFDFD;
   margin: 5px;
-
 }
 
 img {
@@ -190,15 +171,11 @@ img {
   border-radius: 10%;
 }
 
-
-.card:hover,
-.plus:hover {
+.card:hover, .plus:hover {
   box-shadow: 0px 10px 16px 0 rgba(0, 0, 0, 0.901);
   cursor: pointer;
-
   border-radius: 20.2719px;
 }
-
 
 .plus {
   display: relative;
@@ -214,7 +191,6 @@ img {
     conic-gradient(from 90deg at var(--b) var(--b), #0375F7 90deg, #fff 0) calc(100% + var(--b)/2) calc(100% + var(--b)/2)/ calc(50% + var(--b)) calc(50% + var(--b));
 
 }
-
 
 .plus:hover {
   background:
@@ -243,8 +219,7 @@ img {
   top: 0;
 }
 
-.crosssign_stem,
-.crosssign_stem2 {
+.crosssign_stem, .crosssign_stem2 {
   position: absolute;
   background-color: #fff;
   top: 50%;

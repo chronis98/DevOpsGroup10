@@ -1,16 +1,14 @@
 <script  lang="ts">
+
 import { defineComponent } from "vue";
 export default defineComponent({
-
-	name: "CardComponent",
+	name: "Card",
 	props: {
 		name: String,
 		source: String
 	}
-
 });
 </script>
-
 
 <template>
 	<div class="card">
@@ -32,7 +30,6 @@ export default defineComponent({
 	.radius:hover {
 		background-color: hsla(254, 100%, 37%, 0.2);
 		color: rgb(16, 104, 142);
-
 	}
 }
 
