@@ -7,7 +7,7 @@ import EquipmentDetail from "@/EquipmentDetail.vue";
 
 <template>
   <Header/>
-  <EquipmentDetail/>
+
   <RouterView />
 </template>
 
