@@ -54,3 +54,7 @@ jobs:
           AWS_REGION: ${{ env.AWS_REGION }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          
+      - name: deploy new image
+        run: sudo aws ecs update-service --cluster gymcheck_development --service gymcheck-deploy-service --force-new-deployment --region us-east-1
+
