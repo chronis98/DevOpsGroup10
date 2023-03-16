@@ -36,12 +36,8 @@ export default defineComponent({
     const hamburgerShow = ref(false);
     const links: Link[] = [
       {
-        displayName: 'Home',
-        routeName: RouteName.HOME
-      },
-      {
-        displayName: 'About',
-        routeName: RouteName.ABOUT
+        displayName: 'Gyms',
+        routeName: RouteName.GYM_OVERVIEW
       }
     ];
 
