@@ -1,8 +1,12 @@
-name: Build and Push Docker Image to ECR
+name: Build and Push Docker Image to ECR (development branch)
 
 on:
   push:
+    branches:
+      - "developopment"
   pull_request:
+     branches:
+       - "developopment"
 
 env:
   ECR_REGISTRY: 528775740130.dkr.ecr.us-east-1.amazonaws.com
