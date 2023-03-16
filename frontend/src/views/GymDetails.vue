@@ -184,7 +184,6 @@ img {
   border-radius: 50%;
   background:
     conic-gradient(from 90deg at var(--b) var(--b), #0375F7 90deg, #fff 0) calc(100% + var(--b)/2) calc(100% + var(--b)/2)/ calc(50% + var(--b)) calc(50% + var(--b));
-
 }
 
 .plus:hover {

@@ -23,7 +23,6 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
-
 .card:hover, a:hover, .radius:hover {
 	background-color: hsla(254, 100%, 37%, 0.2);
 	color: rgb(16, 104, 142);
