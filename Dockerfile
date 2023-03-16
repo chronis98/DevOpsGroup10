@@ -3,11 +3,11 @@ FROM node:19.7.0-alpine AS node-builder
 
 WORKDIR /frontend
 
-COPY frontend/package*.json ./
+COPY frontend/package*.json .
 
 RUN npm install
 
-COPY frontend/. .
+COPY frontend .
 
 RUN npm run build
 
