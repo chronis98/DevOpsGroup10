@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  mariadb:
+    image: mariadb:10.11.2
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql:/var/lib/mysql
+    environment:
+      - TZ=Europe/Amsterdam
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin:5.2-apache
+    ports:
+      - 80:80
+    depends_on:
+      - mariadb
+    volumes:
+      - phpmyadmin:/var/www/html
+    environment:
+      - TZ=Europe/Amsterdam
+      - PMA_HOST=${MYSQL_HOST}
+      - UPLOAD_LIMIT=100M
+    restart: unless-stopped
+
+volumes:
+  mysql: {}
+  phpmyadmin: {}
