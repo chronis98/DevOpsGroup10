@@ -75,8 +75,3 @@ jobs:
           output=$(aws ec2 describe-network-interfaces --query 'NetworkInterfaces[*].Association.PublicIp')
           echo "$output"
           
-      - name: Save IP as artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: output
-          path: ipaddress.txt
