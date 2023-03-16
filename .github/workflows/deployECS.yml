@@ -2,7 +2,11 @@ name: deploy to ECS
 
 on:
   push:
+    branches:
+      - development
   pull_request:
+    branches:
+      - development
 
 env:
   ECR_REGISTRY: 528775740130.dkr.ecr.us-east-1.amazonaws.com
