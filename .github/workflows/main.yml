@@ -2,14 +2,9 @@ name: deploy to ECS
 
 on:
   push:
-    branches:
-      - 'main'
+    branches:    
       - 'development'
-  pull_request:
-    branches:
-      - 'main'
-      - 'development'
-  
+ 
 env:
   ECR_REGISTRY: 528775740130.dkr.ecr.us-east-1.amazonaws.com
   ECR_REPOSITORY: devopsgroup10projectdev
@@ -69,3 +64,9 @@ jobs:
           service: ${{ env.ECS_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
           wait-for-service-stability: true
+          
+      - name: Get deployment IP
+        run: |
+          output=$(aws ec2 describe-network-interfaces --query 'NetworkInterfaces[*].Association.PublicIp')
+          echo "$output"
+          
