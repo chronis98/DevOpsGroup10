@@ -2,7 +2,11 @@ name: Build and Push Docker Image to ECR
 
 on:
   push:
+    branches:
+      - development
   pull_request:
+    branches:
+      - "development"
 
 env:
   ECR_REGISTRY: 528775740130.dkr.ecr.us-east-1.amazonaws.com
@@ -43,10 +47,14 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+          tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
         env:
           ECR_REGISTRY: ${{ env.ECR_REGISTRY }}
           ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}
           AWS_REGION: ${{ env.AWS_REGION }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          
+      - name: Force redeployment on ECS
+        run: sudo aws ecs update-service --cluster gymcheck_development --service gymcheck-deploy-service --force-new-deployment --region us-east-1
+
