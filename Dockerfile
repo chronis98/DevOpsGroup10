@@ -15,6 +15,7 @@ RUN npm run build
 FROM nginx:1.23.3-alpine
 
 COPY --from=node-builder /frontend/dist /var/www/html
+COPY --from=node-builder /frontend/dist /usr/share/nginx/html
 
 EXPOSE 80
 
