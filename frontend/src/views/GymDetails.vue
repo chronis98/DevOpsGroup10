@@ -3,7 +3,7 @@
   <div class="title">{{ gymName }}</div>
   <br><br>
   <div v-for=" e, index in gymEquipment">
-
+  
     <Card
       source="https://static.vecteezy.com/system/resources/previews/015/845/432/original/gym-station-for-fitness-equipment-gym-station-icon-suitable-for-apps-website-developer-graphic-designer-needs-on-white-background-free-vector.jpg"
       :name="e" date="">
