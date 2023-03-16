@@ -9,7 +9,7 @@ env:
   ECR_REPOSITORY: devopsgroup10projectdev
   ECS_SERVICE: gymcheck-deploy-service
   ECS_CLUSTER: gymcheck_development
-  ECS_TASK_DEFINITION: ecs-deploy-gymcheck-development
+  ECS_TASK_DEFINITION: ./task-defintion.json
   CONTAINER_NAME: gymcheck-dev
   AWS_REGION: us-east-1
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
