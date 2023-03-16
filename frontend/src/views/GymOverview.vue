@@ -101,17 +101,18 @@ export default defineComponent({
         ], date: "04/02/2020", numberOfPeople: 2, complete: true }
     ];
 
-		const router = useRouter();
-		function handleClick(name: string): void {
-			router.push({ name: RouteName.GYM_DETAILS, params: { name } });
-		}
+	const router = useRouter();
+	function handleClick(name: string): void {
+		router.push({ name: RouteName.GYM_DETAILS, params: { name } });
+	}
 
-		return {
-			locations,
-			handleClick
-		};
+	return {
+		locations,
+		handleClick
+	};
 	}
 });
+
 </script>
 
 <style scoped lang="scss">

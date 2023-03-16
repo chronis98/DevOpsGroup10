@@ -12,47 +12,40 @@ export default defineComponent({
 
 <template>
 	<div class="card">
-		<div>
-			<img :src='source' />
-		</div>
-		{{ name }}<br>
-		<slot>
+	<div>
+		<img :src='source' />
+	</div>
+	{{ name }}<br>
+	<slot>
 
-		</slot>
+	</slot>
 	</div>
 </template>
 
 <style scoped lang="scss">
 
-@media (hover: hover) {
-	.card:hover,
-	a:hover,
-	.radius:hover {
-		background-color: hsla(254, 100%, 37%, 0.2);
-		color: rgb(16, 104, 142);
+.card:hover, a:hover, .radius:hover {
+	background-color: hsla(254, 100%, 37%, 0.2);
+	color: rgb(16, 104, 142);
 	}
+
+body {
+	display: flex;
+	place-items: center;
+	background-color: #181a1f;
 }
 
-@media (min-width: 300px) {
-	body {
-		display: flex;
-		place-items: center;
-		background-color: #181a1f;
-	}
+text #app {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	padding: 0 2rem;
+}
 
-	text #app {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		padding: 0 2rem;
-
-	}
-
-	img {
-		width: 45px;
-		height: 40px;
-		display: absolute;
-		border-radius: 10%;
-	}
+img {
+	width: 45px;
+	height: 40px;
+	display: absolute;
+	border-radius: 10%;
 }
 
 .card {
@@ -73,7 +66,6 @@ export default defineComponent({
 .card:hover {
 	box-shadow: 0px 10px 16px 0 rgba(0, 0, 0, 0.901);
 	cursor: pointer;
-
 	border-radius: 20.2719px;
 }
 </style>

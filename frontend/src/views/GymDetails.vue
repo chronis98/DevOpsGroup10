@@ -44,11 +44,6 @@ export type Location = {
   complete: boolean;
 };
 
-export type Equipment = {
-  name: string;
-  equipment: string[];
-};
-
 export default defineComponent({
   components: { Card },
   name: "GymDetails",
@@ -141,7 +136,7 @@ export default defineComponent({
     return {
       gymName,
       locations,
-      gymEquipment: gym?.equipment,
+      gymEquipment: gym!.equipment,
       addEquipment,
       Card
     };
