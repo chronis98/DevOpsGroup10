@@ -1,28 +1,31 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import {createRouter, createWebHistory} from 'vue-router'
+import GymOverview from '../views/GymOverview.vue'
+import GymDetails from '../views/GymDetails.vue'
+import {propsToAttrMap} from '@vue/shared';
 
 export const RouteName = Object.freeze({
-   HOME: "HOME",
-   ABOUT: "ABOUT"
+    GYM_OVERVIEW: 'GymOverview',
+    GYM_DETAILS: 'GymDetails',
 });
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: RouteName.HOME,
-      component: HomeView
-    },
-    {
-      path: '/about',
-      name: RouteName.ABOUT,
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    }
-  ]
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes: [
+        {
+            path: '/gym',
+            name: RouteName.GYM_OVERVIEW, 
+            component: GymOverview, 
+        },
+        {
+            path: '/',
+            redirect: {name: RouteName.GYM_OVERVIEW}
+        },
+        {
+            path: '/gym-details/:name',
+            name: RouteName.GYM_DETAILS,
+            component: GymDetails,
+        }
+    ]
 })
 
 export default router
