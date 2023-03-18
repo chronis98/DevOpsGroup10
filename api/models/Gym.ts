@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, Geometry, OneToOne, OneToMany} from "typeorm"
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, Geometry, OneToOne, OneToMany, JoinColumn} from "typeorm"
 import {Address} from "./Address";
 import {GymOwnership} from "./GymOwnership";
 import {Report} from "./Report";
@@ -31,9 +31,15 @@ export class Gym extends BaseEntity {
   })
   email: string;
 
+  @Column({
+    type: "varchar"
+  })
+  imagePath: string;
+
   @OneToOne(() => Address, (address) => address.gym, {
     cascade: ["update", "remove"]
   })
+  @JoinColumn()
   address: Promise<Address>;
 
   @OneToMany(() => GymOwnership, (gymOwnership) => gymOwnership.gym)

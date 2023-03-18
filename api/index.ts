@@ -3,13 +3,17 @@ import "reflect-metadata"
 import {AppDataSource} from "./data-source";
 import dotenv from 'dotenv';
 import {Equipment} from "./models/Equipment";
+import {Gym} from "./models/Gym";
+import cors from "cors";
 
 dotenv.config();
 
 AppDataSource.initialize()
-    .then(async () => {
+    .then(() => {
 
-      const app: Express = express();
+      const app = express();
+
+      app.use(cors());
 
       const port = process.env.PORT;
 
@@ -25,7 +29,21 @@ AppDataSource.initialize()
           category: await equipment.category
         }));
         const result = await Promise.all(equipmentPresentables);
-        res.send(result);
+        res.json(result);
+      });
+
+      app.get('/api/gym', cors(), async (req: Request, res: Response) => {
+        const gyms = await AppDataSource.manager.find(Gym, {
+          relations: ['address']
+        });
+        const gymPresentables = gyms.map(async gym => ({
+          id: gym.id,
+          name: gym.name,
+          imagePath: gym.imagePath,
+          address: await gym.address
+        }));
+        const result = await Promise.all(gymPresentables);
+        res.json(result);
       });
 
       app.listen(port, () => {
@@ -33,4 +51,4 @@ AppDataSource.initialize()
       });
 
     })
-    .catch(error => console.log(error));
+    .catch(error => console.log(error))
