@@ -5,6 +5,8 @@ import {Equipment} from "./models/Equipment";
 import {Address} from "./models/Address";
 import {EquipmentCategory} from "./models/EquipmentCategory";
 import {Gym} from "./models/Gym";
+import {GymOwnership} from "./models/GymOwnership";
+import {UserOwner} from "./models/UserOwner";
 
 export const AppDataSource = new DataSource({
     type: "mysql",
@@ -15,7 +17,7 @@ export const AppDataSource = new DataSource({
     database: "gymcheck",
     synchronize: true,
     logging: true,
-    entities: [User, Equipment, Address, EquipmentCategory, Gym],
+    entities: [User, UserOwner, Equipment, Address, EquipmentCategory, Gym, GymOwnership],
     migrations: [],
     subscribers: [],
 })

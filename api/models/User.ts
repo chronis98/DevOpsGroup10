@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm"
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne} from "typeorm"
+import {UserOwner} from "./UserOwner";
 
 @Entity()
 export class User extends BaseEntity {
@@ -12,4 +13,7 @@ export class User extends BaseEntity {
 
   @Column()
   password: string = '';
+
+  @OneToOne(() => UserOwner, (userOwner) => userOwner.user)
+  userOwner: Promise<UserOwner | null>;
 }

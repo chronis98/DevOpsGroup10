@@ -1,7 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, Geometry, OneToOne} from "typeorm"
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, Geometry, OneToOne, OneToMany} from "typeorm"
 import {Address} from "./Address";
-
-type LatLng = {lat: number, long: number};
+import {GymOwnership} from "./GymOwnership";
 
 @Entity()
 export class Gym extends BaseEntity {
@@ -35,4 +34,7 @@ export class Gym extends BaseEntity {
     cascade: ["update", "remove"]
   })
   address: Promise<Address>;
+
+  @OneToMany(() => GymOwnership, (gymOwnership) => gymOwnership.gym)
+  ownerships: Promise<GymOwnership[]>;
 }
