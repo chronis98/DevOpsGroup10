@@ -1,26 +1,31 @@
-import { Express, Request, Response } from 'express';
+import express, {Express, Request, Response} from 'express';
 import "reflect-metadata"
 import {AppDataSource} from "./data-source";
-import {User} from "./models/User";
 import dotenv from 'dotenv';
-import express from 'express';
 import {Equipment} from "./models/Equipment";
-import {Address} from "./models/Address";
-import {DeepPartial} from "typeorm";
 
 dotenv.config();
 
 AppDataSource.initialize()
     .then(async () => {
 
-      console.log(await AppDataSource.manager.find(Address));
-
       const app: Express = express();
 
       const port = process.env.PORT;
 
       app.get('/api/equipment', async (req: Request, res: Response) => {
-        res.send(await AppDataSource.manager.find(Equipment));
+        const equipments = await AppDataSource.manager.find(Equipment, {
+          relations: ['category']
+        });
+        const equipmentPresentables = equipments.map(async equipment => ({
+          id: equipment.id,
+          name: equipment.name,
+          description: equipment.description,
+          imagePath: equipment.imagePath,
+          category: await equipment.category
+        }));
+        const result = await Promise.all(equipmentPresentables);
+        res.send(result);
       });
 
       app.listen(port, () => {
