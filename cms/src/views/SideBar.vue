@@ -1,7 +1,7 @@
 <template>
-  <div class="sidenav">
-    <a>LOGO</a>
-    <a>Users</a>
+  <div class="sidebar-container">
+    <div class="logo">LOGO</div>
+    <div>Users</div>
   </div>
 </template>
 
@@ -13,28 +13,35 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-.sidenav {
-  height: 100%;
-  width: 160px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  padding-top: 20px;
+<style scoped lang="scss">
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  background-color: grey;
+  border-radius: 20px;
+  //border-radius: 0 10px 10px 0;
 }
 
-.sidenav a {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
+.logo {
+  margin-bottom: 40px;
 }
 
-.sidenav a:hover {
-  color: #f1f1f1;
+@media only screen and (min-width: 640px) {
+  .sidebar-container {
+    height: 100vh;
+    padding: 20px;
+  }
 }
+
+//.sidenav a {
+//  padding: 6px 8px 6px 16px;
+//  text-decoration: none;
+//  font-size: 25px;
+//  color: #818181;
+//  display: block;
+//}
+//
+//.sidenav a:hover {
+//  color: #f1f1f1;
+//}
 </style>
