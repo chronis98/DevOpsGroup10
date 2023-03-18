@@ -1,12 +1,18 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm"
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, ManyToOne} from "typeorm"
+import {EquipmentCategory} from "./EquipmentCategory";
 
 @Entity()
 export class Equipment extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number = 0;
 
-  @Column()
-  categoryId: number = 0;
+  @Column({
+    type: "int",
+  })
+  categoryId: number;
+
+  @ManyToOne(() => EquipmentCategory, (equipmentCategory) => equipmentCategory.equipment)
+  category: Promise<EquipmentCategory>;
 
   @Column()
   name: string = '';

@@ -1,5 +1,7 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, Geometry} from "typeorm"
 
+type LatLng = {lat: number, long: number};
+
 @Entity()
 export class Address extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -8,8 +10,11 @@ export class Address extends BaseEntity {
   @Column()
   number: number = 0;
 
-  @Column()
-  addition?: string;
+  @Column({
+    type: "varchar",
+    nullable: true
+  })
+  addition: string | null = null;
 
   @Column()
   street: string = '';
@@ -22,9 +27,21 @@ export class Address extends BaseEntity {
 
   @Column({
     type: "point",
-    nullable: true,
+    nullable: false,
     spatialFeatureType: "Point",
     srid: 4326,
+    transformer: {
+      to(value: LatLng): string {
+        return `POINT(${value.lat} ${value.long})`
+      },
+      from(value: string): LatLng {
+        const [lat, long] = value
+            .replace(/(POINT\()|\)/g, '')
+            .split(' ')
+            .map(coord => parseFloat(coord)) as [number, number];
+        return {lat, long};
+      }
+    }
   })
-  coords: string = '';
+  coords: LatLng = {lat: 0, long: 0}
 }
