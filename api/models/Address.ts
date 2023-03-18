@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, Geometry} from "typeorm"
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, Geometry, OneToOne} from "typeorm"
+import {Gym} from "./Gym";
 
 type LatLng = {lat: number, long: number};
 
@@ -44,4 +45,7 @@ export class Address extends BaseEntity {
     }
   })
   coords: LatLng = {lat: 0, long: 0}
+
+  @OneToOne(() => Gym, (gym) => gym.address)
+  gym: Promise<Gym>;
 }

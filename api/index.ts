@@ -14,15 +14,6 @@ AppDataSource.initialize()
     .then(async () => {
 
       console.log(await AppDataSource.manager.find(Address));
-      console.log(await AppDataSource.getRepository(Address).create({
-        number: 306,
-        addition: undefined,
-        coords: {
-          lat: 50,
-          long: 40
-        }
-      }).save())
-      console.log(await AppDataSource.manager.find(Address));
 
       const app: Express = express();
 
