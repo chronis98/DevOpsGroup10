@@ -1,7 +1,18 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, Geometry, OneToOne, Unique, ManyToOne} from "typeorm"
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  Geometry,
+  OneToOne,
+  Unique,
+  ManyToOne,
+  OneToMany
+} from "typeorm"
 import {Gym} from "./Gym";
 import {User} from "./User";
 import {Equipment} from "./Equipment";
+import {ReportVerification} from "./ReportVerification";
 
 @Entity()
 @Unique(['gymId', 'equipmentId', 'userId'])
@@ -57,4 +68,7 @@ export class Report extends BaseEntity {
     cascade: ["update", "remove"]
   })
   user: Promise<User>;
+
+  @OneToMany(() => ReportVerification, reportVerification => reportVerification.report)
+  verifications: Promise<ReportVerification[]>;
 }

@@ -1,6 +1,7 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, OneToMany} from "typeorm"
 import {User} from "./User";
 import {GymOwnership} from "./GymOwnership";
+import {ReportVerification} from "./ReportVerification";
 
 @Entity()
 export class UserOwner extends BaseEntity {
@@ -22,4 +23,7 @@ export class UserOwner extends BaseEntity {
     cascade: ["update", "remove"]
   })
   gymOwnerships: Promise<GymOwnership[]>;
+
+  @OneToMany(() => ReportVerification, reportVerification => reportVerification.verifiedByUserOwner)
+  reportVerifications: Promise<ReportVerification[]>;
 }
