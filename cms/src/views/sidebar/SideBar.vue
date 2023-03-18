@@ -1,15 +1,21 @@
 <template>
   <div class="sidebar-container">
     <div class="logo">LOGO</div>
-    <div>Users</div>
+
+    <SideBarItem>
+      <font-awesome-icon icon="fa-solid fa-users" />
+      <a>Users</a>
+    </SideBarItem>
   </div>
 </template>
 
 <script lang="ts">
 import {defineComponent} from "vue";
+import SideBarItem from "@/views/sidebar/SideBarItem.vue";
 
 export default defineComponent({
-  name: "SideBar"
+  name: "SideBar",
+  components: {SideBarItem}
 });
 </script>
 
@@ -18,7 +24,6 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   background-color: grey;
-  border-radius: 20px;
 }
 
 .logo {

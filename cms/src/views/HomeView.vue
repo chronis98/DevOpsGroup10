@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import {defineComponent, ref} from "vue";
-import SideBar from "@/views/SideBar.vue";
+import SideBar from "@/views/sidebar/SideBar.vue";
 import MainOverview from "@/views/MainOverview.vue";
 
 type User = {
