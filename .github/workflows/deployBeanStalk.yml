@@ -55,7 +55,7 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-      name: Get latest ECR image tag
+      - name: Get latest ECR image tag
         id: ecr
         uses: aws-actions/amazon-ecr-login@v1
       
