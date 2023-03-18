@@ -1,5 +1,6 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, ManyToOne} from "typeorm"
 import {EquipmentCategory} from "./EquipmentCategory";
+import {Report} from "./Report";
 
 @Entity()
 export class Equipment extends BaseEntity {
@@ -22,4 +23,7 @@ export class Equipment extends BaseEntity {
 
   @Column()
   imagePath: string = '';
+
+  @OneToMany(() => Report, (report) => report.equipment)
+  reports: Promise<Report[]>;
 }

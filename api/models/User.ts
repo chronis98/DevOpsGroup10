@@ -1,5 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne} from "typeorm"
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, OneToMany} from "typeorm"
 import {UserOwner} from "./UserOwner";
+import {Report} from "./Report";
 
 @Entity()
 export class User extends BaseEntity {
@@ -16,4 +17,7 @@ export class User extends BaseEntity {
 
   @OneToOne(() => UserOwner, (userOwner) => userOwner.user)
   userOwner: Promise<UserOwner | null>;
+
+  @OneToMany(() => Report, (report) => report.user)
+  reports: Promise<Report[]>;
 }
