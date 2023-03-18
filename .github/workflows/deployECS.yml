@@ -1,13 +1,11 @@
-name: deploy to ECS
+name: Deploy to ECS
 
 on:
   push:
     branches:
-      - 'main'
       - 'development'
   pull_request:
     branches:
-      - 'main'
       - 'development'
   
 env:
