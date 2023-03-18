@@ -19,7 +19,6 @@ export default defineComponent({
   flex-direction: column;
   background-color: grey;
   border-radius: 20px;
-  //border-radius: 0 10px 10px 0;
 }
 
 .logo {
@@ -32,16 +31,4 @@ export default defineComponent({
     padding: 20px;
   }
 }
-
-//.sidenav a {
-//  padding: 6px 8px 6px 16px;
-//  text-decoration: none;
-//  font-size: 25px;
-//  color: #818181;
-//  display: block;
-//}
-//
-//.sidenav a:hover {
-//  color: #f1f1f1;
-//}
 </style>

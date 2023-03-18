@@ -44,8 +44,6 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .home-view-container {
-  //display: grid;
-  //grid-template-rows: 100px 200px;
   display: flex;
   flex-direction: column;
   width: 100vw;
