@@ -3,7 +3,10 @@ name: Zip and Push to S3
 on:
   push:
     branches:
-      - main
+      - 'operations'
+  pull_request:
+    branches:
+      - 'operations'
 
 jobs:
   zip-and-push:
