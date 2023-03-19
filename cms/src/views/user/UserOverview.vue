@@ -20,8 +20,7 @@
     </div>
 
     <AgGridVue
-        style="height: 100%; width: 100%"
-        class="ag-theme-alpine"
+        class="ag-theme-alpine grid"
         :columnDefs="columnDefs"
         :rowData="users"
         :pagination="true"
@@ -95,7 +94,6 @@ export default defineComponent({
   gap: 5px;
 }
 
-
 .button {
   border: none;
   border-radius: 4px;
@@ -134,6 +132,11 @@ export default defineComponent({
 
 .button-danger:hover:not([disabled]) {
   background-color: var(--color-button-danger-light);
+}
+
+.grid {
+  height: 100%;
+  width: 100%;
 }
 
 </style>
