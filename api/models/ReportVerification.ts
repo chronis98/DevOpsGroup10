@@ -9,15 +9,11 @@ import {
   ManyToOne,
   OneToMany
 } from "typeorm"
-import {Gym} from "./Gym";
-import {User} from "./User";
-import {Equipment} from "./Equipment";
-import {Report} from "./Report";
-import {UserOwner} from "./UserOwner";
-import {JoinColumn} from "typeorm/browser";
+import Report from "./Report";
+import UserOwner from "./UserOwner";
 
 @Entity()
-export class ReportVerification extends BaseEntity {
+export default class ReportVerification extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -34,7 +30,7 @@ export class ReportVerification extends BaseEntity {
   @Column({
     type: "datetime"
   })
-  date: Date;
+  createdAt: Date;
 
   @Column({
     type: "varchar",

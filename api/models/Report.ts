@@ -1,22 +1,11 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  BaseEntity,
-  Geometry,
-  OneToOne,
-  Unique,
-  ManyToOne,
-  OneToMany
-} from "typeorm"
-import {Gym} from "./Gym";
-import {User} from "./User";
-import {Equipment} from "./Equipment";
-import {ReportVerification} from "./ReportVerification";
+import {BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm"
+import User from "./User";
+import Equipment from "./Equipment";
+import ReportVerification from "./ReportVerification";
+import Gym from "./Gym";
 
 @Entity()
-@Unique(['gymId', 'equipmentId', 'userId'])
-export class Report extends BaseEntity {
+export default class Report extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -38,7 +27,7 @@ export class Report extends BaseEntity {
   @Column({
     type: "datetime"
   })
-  date: Date;
+  createdAt: Date;
 
   @Column({
     type: "tinyint",

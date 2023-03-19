@@ -12,11 +12,11 @@ import GymOwnership from "./models/GymOwnership";
 
 export const AppDataSource = new DataSource({
     type: "mysql",
-    host: "localhost",
+    host: process.env.MYSQL_HOST,
     port: 3306,
     username: "root",
-    password: "root",
-    database: "gymcheck",
+    password: process.env.MYSQL_ROOT_PASSWORD,
+    database: process.env.MYSQL_DATABASE,
     synchronize: true,
     logging: true,
     entities: [User, UserOwner, Equipment, Address, EquipmentCategory, Gym, GymOwnership, Report, ReportVerification],

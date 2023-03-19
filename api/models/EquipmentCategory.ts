@@ -1,8 +1,8 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, OneToMany} from "typeorm"
-import {Equipment} from "./Equipment";
+import Equipment from "./Equipment";
 
 @Entity()
-export class EquipmentCategory extends BaseEntity {
+export default class EquipmentCategory extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number = 0;
 

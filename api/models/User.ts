@@ -1,9 +1,9 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, OneToMany} from "typeorm"
-import {UserOwner} from "./UserOwner";
-import {Report} from "./Report";
+import Report from "./Report";
+import UserOwner from "./UserOwner";
 
 @Entity()
-export class User extends BaseEntity {
+export default class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number = 0;
 
@@ -14,6 +14,14 @@ export class User extends BaseEntity {
 
   @Column()
   password: string = '';
+
+  @Column({
+    type: "datetime"
+  })
+  createdAt: Date;
+
+  @Column()
+  username: string;
 
   @OneToOne(() => UserOwner, (userOwner) => userOwner.user)
   userOwner: Promise<UserOwner | null>;

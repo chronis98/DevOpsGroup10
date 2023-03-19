@@ -1,10 +1,10 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, OneToMany} from "typeorm"
-import {User} from "./User";
-import {GymOwnership} from "./GymOwnership";
-import {ReportVerification} from "./ReportVerification";
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, OneToMany, JoinColumn} from "typeorm"
+import User from "./User";
+import ReportVerification from "./ReportVerification";
+import GymOwnership from "./GymOwnership";
 
 @Entity()
-export class UserOwner extends BaseEntity {
+export default class UserOwner extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -17,6 +17,7 @@ export class UserOwner extends BaseEntity {
   @OneToOne(() => User, (user) => user.userOwner, {
     cascade: ["update", "remove"]
   })
+  @JoinColumn()
   user: Promise<User>;
 
   @OneToMany(() => GymOwnership, (gymOwnership) => gymOwnership.userOwner, {

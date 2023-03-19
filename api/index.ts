@@ -7,7 +7,7 @@ import Equipment from "./models/Equipment";
 import Report from "./models/Report";
 import Gym from "./models/Gym";
 
-dotenv.config();
+console.log(process.env);
 
 AppDataSource.initialize()
     .then(async () => {

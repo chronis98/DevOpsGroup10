@@ -1,10 +1,9 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, Geometry, OneToOne, OneToMany, ManyToOne} from "typeorm"
-import {Address} from "./Address";
-import {Gym} from "./Gym";
-import {UserOwner} from "./UserOwner";
+import {BaseEntity, Column, Entity, ManyToOne} from "typeorm"
+import UserOwner from "./UserOwner";
+import Gym from "./Gym";
 
 @Entity()
-export class GymOwnership extends BaseEntity {
+export default class GymOwnership extends BaseEntity {
   @Column({
     type: "int",
     primary: true

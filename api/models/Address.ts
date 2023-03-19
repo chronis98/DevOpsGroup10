@@ -1,10 +1,10 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, Geometry, OneToOne} from "typeorm"
-import {Gym} from "./Gym";
+import Gym from "./Gym";
 
 type LatLng = {lat: number, long: number};
 
 @Entity()
-export class Address extends BaseEntity {
+export default class Address extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number = 0;
 

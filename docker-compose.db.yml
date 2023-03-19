@@ -11,6 +11,8 @@ services:
       - TZ=Europe/Amsterdam
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
+    networks:
+      - gymcheck
     restart: unless-stopped
 
   phpmyadmin:
@@ -25,8 +27,14 @@ services:
       - TZ=Europe/Amsterdam
       - PMA_HOST=${MYSQL_HOST}
       - UPLOAD_LIMIT=100M
+    networks:
+      - gymcheck
     restart: unless-stopped
 
 volumes:
   mysql: {}
   phpmyadmin: {}
+
+networks:
+  gymcheck:
+    external: true
