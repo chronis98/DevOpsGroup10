@@ -10,6 +10,7 @@ on:
 env:
   s3_zip_name: $ZIP_NAME
   ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
+
 jobs:
   zip_and_upload:
     runs-on: ubuntu-latest
@@ -24,7 +25,7 @@ jobs:
         run: |
           export ZIP_NAME="$(git rev-parse --short HEAD)-$(date +%s).zip"
           zip -r $ZIP_NAME .
-          echo $ZIP_NAME
+          echo $ZIP_NAME >> $env.s3_zip_name
 
       - name: Show filename
         run: |
