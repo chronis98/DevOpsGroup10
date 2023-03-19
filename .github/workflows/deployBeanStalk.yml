@@ -33,6 +33,9 @@ jobs:
       - name: Find file
         run: |
           ls
+          echo "Current directory: ${GITHUB_WORKSPACE}"
+          echo "Current directory: ${{GITHUB_WORKSPACE}}"
+          find . -name ${{ steps.hash.outputs.hash }}.zip
 
       - name: Push to S3
         uses: jakejarvis/s3-sync-action@master
