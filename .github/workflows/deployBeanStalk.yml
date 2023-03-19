@@ -36,4 +36,3 @@ jobs:
           AWS_REGION: us-east-1
           SOURCE_DIR: $GITHUB_WORKSPACE
           DEST_DIR: /
-          EXCLUDE: "*.git*"
