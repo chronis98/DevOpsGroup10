@@ -5,9 +5,9 @@ import App from './App.vue'
 import router from './router'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faUsers, faPlus, faPen, faTrash} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faUsers)
+library.add(faUsers, faPlus, faPen, faTrash)
 
 
 import './assets/main.css'

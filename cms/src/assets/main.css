@@ -19,6 +19,14 @@
     --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
     --vt-c-text-dark-1: var(--vt-c-white);
     --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+
+
+    --color-button-primary: #317491;
+    --color-button-primary-light: #4397bd;
+    --color-button-secondary: rgba(90, 196, 67, 0.8);
+    --color-button-secondary-light: rgb(90, 196, 67);
+    --color-button-danger: #c54242;
+    --color-button-danger-light: #ee5151;
 }
 
 /* semantic color variables for this project */
@@ -76,5 +84,11 @@ body {
 #app {
     display: flex;
     justify-content: center;
-    align-items: center;
+    height: 100vh;
+}
+
+@media only screen and (min-width: 640px) {
+    #app {
+        align-items: center;
+    }
 }

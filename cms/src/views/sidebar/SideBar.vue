@@ -27,6 +27,7 @@ export default defineComponent({
 }
 
 .logo {
+  // TODO:: Set boundaries for logo image for small and big screen
   margin-bottom: 40px;
 }
 
