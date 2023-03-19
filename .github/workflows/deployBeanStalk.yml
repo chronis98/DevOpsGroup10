@@ -15,35 +15,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       
-      - name: Generate SHA-1 hash
-        id: hash
-        run: |
-          echo "::set-output name=hash::$(git rev-parse --short HEAD)-$(openssl rand -hex 4)"
-      
-      - name: Zip repository
-        id: filename
-        run: |
-          zip -r ${{ steps.hash.outputs.hash }}.zip .
-          echo "::set-output name=filename::$({{ steps.hash.outputs.hash }}.zip)"
+      - name: Zip the files
+        run: zip -r gymcheck.zip .
 
-      - name: Show filename
-        run: |
-          echo "Filename: ${{ steps.hash.outputs.hash }}.zip"
-
-      - name: Find file
-        run: |
-          ls
-          echo "Current directory: ${{GITHUB_WORKSPACE}}"
-
-      - name: Push to S3
+      - name: Upload to S3
         uses: jakejarvis/s3-sync-action@master
         with:
-          args: --acl public-read --follow-symlinks --delete --exclude '.git/*'
+          args: --acl public-read --follow-symlinks --delete gymcheck.zip 
         env:
           AWS_S3_BUCKET: gymchecks3bucket
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: us-east-1
-          SOURCE_DIR: $GITHUB_WORKSPACE/${{ steps.hash.outputs.hash }}.zip
-          DEST_DIR: $GITHUB_WORKSPACE/${{ steps.hash.outputs.hash }}.zip 
-      
+          SOURCE_DIR: gymcheck.zip
+     
