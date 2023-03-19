@@ -3,17 +3,22 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from "vue";
-import type {User} from "@/entities/user";
+import {defineComponent, ref, watch} from "vue";
+import type {User} from "@/entities/User";
+import {useRoute} from "vue-router";
 
 export default defineComponent({
   name: "UserEdit",
-  props: {
-    id: {type: Number, required: true}
-  },
-  setup(props) {
+  setup() {
+    const route = useRoute()
+
     const userRef = ref<User | null>(null);
-    getUser(props.id).then(user => userRef.value = user);
+
+    watch(() => route.params.id,
+        newId => {
+          return getUser(Number(newId)).then(user => userRef.value = user);
+        }
+    );
 
     async function getUser(id: number): Promise<User> {
       // TODO:: API call to real back-end

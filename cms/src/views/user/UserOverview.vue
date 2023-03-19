@@ -37,8 +37,8 @@ import {defineComponent, ref} from "vue";
 import {AgGridVue} from "ag-grid-vue3";
 import "ag-grid-community/styles//ag-grid.css";
 import "ag-grid-community/styles//ag-theme-alpine.css";
-import type {User} from "@/entities/user";
-import type {CellClickedEvent} from "ag-grid-community";
+import type {CellClickedEvent, ColDef} from "ag-grid-community";
+import type {User} from "@/entities/User";
 
 export default defineComponent({
   name: "UserOverview",
@@ -46,7 +46,7 @@ export default defineComponent({
     AgGridVue
   },
   setup() {
-    const usersRef = ref<User[] | null>(null);
+    const usersRef = ref<User[]>([]);
     const rowIsSelected = ref<boolean>(false);
 
     getUsers().then(users => usersRef.value = users);
@@ -64,7 +64,7 @@ export default defineComponent({
       rowIsSelected.value = true;
     }
 
-    const columnDefs = [
+    const columnDefs: ColDef[] = [
       {headerName: "Id", field: "id"},
       {headerName: "Email", field: "email"},
       {headerName: "Type", field: "type"},
