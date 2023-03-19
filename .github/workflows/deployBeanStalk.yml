@@ -45,8 +45,7 @@ jobs:
           application-name: GymCheck
           environment-name: Gymcheck-env
           version-label: gymcheck-${{ steps.vars.outputs.sha }}
-          source-bundle-s3-bucket: ${{ secrets.AWS_S3_BUCKET }}
-          source-bundle-s3-key: gymcheck-${{ steps.vars.outputs.sha }}.zip
+          deployment_package: gymcheck-${{ steps.vars.outputs.sha }}.zip
 
       - name: Update environment
         uses: einaregilsson/beanstalk-deploy@v21
