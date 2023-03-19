@@ -1,35 +1,36 @@
----
-name: Zip and upload to S3
+name: Zip and Push to S3
+
 on:
   push:
     branches:
-      - operations
-  pull_request:
-    branches:
-      - operations
-env:
-  ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
-  ZIP_FILE: 'filename'
+      - main
 
 jobs:
-  zip_and_upload:
+  zip-and-push:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Install zip
-        run: sudo apt-get install zip
-
-      - name: Create zip file
+      
+      - name: Install AWS CLI
         run: |
-          export ZIP_NAME="$(git rev-parse --short HEAD)-$(date +%s).zip"
-          zip -r $ZIP_NAME .
-          echo "$ZIP_NAME"
-          echo "$ZIP_NAME" >> ZIP_FILE
-
-      - name: Echo Filename
+          sudo apt-get update
+          sudo apt-get install -y awscli
+      
+      - name: Zip repository
         run: |
-          echo "${{ ZIP_FILENAME }}"
-          echo "${{ env.ZIP_FILENAME }}"
-
+          cd $GITHUB_WORKSPACE
+          zip -r $GITHUB_WORKSPACE/${{ github.run_id }}.zip .
+      
+      - name: Push to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --delete
+        env:
+          AWS_S3_BUCKET: gymchecks3
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: us-east-1
+          SOURCE_DIR: $GITHUB_WORKSPACE
+          DEST_DIR: /
+          EXCLUDE: "*.git*"
