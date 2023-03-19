@@ -1,5 +1,7 @@
 <template>
   <div class="user-list-container">
+    <h1>Users</h1>
+
     <div class="button-group">
       <button class="button button-primary">
         <font-awesome-icon icon="fa-solid fa-plus"/>

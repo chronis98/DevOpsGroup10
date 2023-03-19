@@ -1,7 +1,5 @@
 <template>
   <div class="main-overview-container">
-    <span>HOOI</span>
-
     <UserOverview/>
   </div>
 </template>
