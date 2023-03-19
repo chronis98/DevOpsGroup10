@@ -2,7 +2,7 @@
   <div class="header">
 
     <div class="header-main">
-      <router-link class="logo" :to="{name: RouteName.HOME}">LOGO</router-link>
+      <router-link class="logo" :to="{name: RouteName.GYM_OVERVIEW}">LOGO</router-link>
 
       <div class="hamburger-icon" @click="toggleMobileMenu">
         <font-awesome-icon icon="fa-solid fa-bars"/>
@@ -36,12 +36,8 @@ export default defineComponent({
     const hamburgerShow = ref(false);
     const links: Link[] = [
       {
-        displayName: 'Home',
-        routeName: RouteName.HOME
-      },
-      {
-        displayName: 'About',
-        routeName: RouteName.ABOUT
+        displayName: 'Gyms',
+        routeName: RouteName.GYM_OVERVIEW
       }
     ];
 
