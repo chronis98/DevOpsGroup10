@@ -9,6 +9,7 @@ on:
       - operations
 env:
   ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
+  ZIP_FILE: 'filename'
 
 jobs:
   zip_and_upload:
@@ -24,8 +25,8 @@ jobs:
         run: |
           export ZIP_NAME="$(git rev-parse --short HEAD)-$(date +%s).zip"
           zip -r $ZIP_NAME .
-          ZIP_FILENAME = "filename"
-          echo "::set-env name=ZIP_FILENAME::$ZIP_NAME"
+          echo "$ZIP_NAME"
+          echo "$ZIP_NAME" >> ZIP_FILE
 
       - name: Echo Filename
         run: |
