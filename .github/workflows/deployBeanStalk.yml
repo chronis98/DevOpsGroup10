@@ -28,6 +28,5 @@ jobs:
       - name: Show filename
         run: |
           echo "file name: ${{ env.s3_zip_name }}"
-          echo "file name: $ZIP_NAME"
-          
+          echo "file name: $ZIP_NAME"         
 
