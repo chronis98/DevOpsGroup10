@@ -30,7 +30,7 @@ jobs:
         run: |
           echo "Filename: ${{ steps.hash.outputs.hash }}.zip"
 
-      -name: Find file
+      - name: Find file
         run: |
           ls
           cd ..
