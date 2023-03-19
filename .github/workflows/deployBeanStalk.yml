@@ -10,6 +10,7 @@ on:
 
 env:
   s3_zip_name: $ZIP_NAME
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
 
 jobs:
   zip_and_upload:
@@ -26,8 +27,10 @@ jobs:
           export ZIP_NAME="$(git rev-parse --short HEAD)-$(date +%s).zip"
           zip -r $ZIP_NAME .
           echo "::set-env name=zip_name::$ZIP_NAME"
-          echo ${{ env.s3_zip_name }}
         
+       - name: Show filename
+         run: echo "file name:${{ env.s3_zip_name }}""
+
       - name: Upload file to bucket
         uses: zdurham/s3-upload-github-action@master
         with:
