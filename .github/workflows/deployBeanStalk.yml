@@ -15,15 +15,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       
-      - name: Install AWS CLI
+      - name: Generate SHA-1 hash
+        id: hash
         run: |
-          sudo apt-get update
-          sudo apt-get install -y awscli
+          echo "::set-output name=hash::$(git rev-parse --short HEAD)-$(openssl rand -hex 4)"
       
       - name: Zip repository
         run: |
           cd $GITHUB_WORKSPACE
-          zip -r $GITHUB_WORKSPACE/${{ github.run_id }}.zip .
+          zip -r $GITHUB_WORKSPACE/${{ steps.hash.outputs.hash }}.zip .
       
       - name: Push to S3
         uses: jakejarvis/s3-sync-action@master
@@ -36,3 +36,5 @@ jobs:
           AWS_REGION: us-east-1
           SOURCE_DIR: $GITHUB_WORKSPACE
           DEST_DIR: /
+          EXCLUDE: "*.git*"
+          S3_OBJECT_NAME: ${{ steps.hash.outputs.hash }}.zip
