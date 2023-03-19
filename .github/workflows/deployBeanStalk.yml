@@ -29,7 +29,8 @@ jobs:
           echo "::set-env name=zip_name::$ZIP_NAME"
         
        - name: Show filename
-         run: echo "file name:${{ env.s3_zip_name }}""
+         run: |
+          echo "file name:${{ env.s3_zip_name }}"
 
       - name: Upload file to bucket
         uses: zdurham/s3-upload-github-action@master
