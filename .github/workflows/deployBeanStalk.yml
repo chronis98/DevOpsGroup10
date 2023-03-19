@@ -29,6 +29,6 @@ jobs:
 
       - name: Echo Filename
         run: |
-          echo ${{ ZIP_FILENAME }}
-          echo ${{ env.ZIP_FILENAME }}
+          echo "${{ ZIP_FILENAME }}"
+          echo "${{ env.ZIP_FILENAME }}"
 
