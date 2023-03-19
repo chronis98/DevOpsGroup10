@@ -33,7 +33,6 @@ jobs:
       - name: Find file
         run: |
           ls
-          echo "Current directory: ${GITHUB_WORKSPACE}"
           echo "Current directory: ${{GITHUB_WORKSPACE}}"
 
       - name: Push to S3
@@ -46,4 +45,5 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: us-east-1
           SOURCE_DIR: $GITHUB_WORKSPACE/${{ steps.hash.outputs.hash }}.zip
+          DEST_DIR: $GITHUB_WORKSPACE/${{ steps.hash.outputs.hash }}.zip 
       
