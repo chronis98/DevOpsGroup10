@@ -1,5 +1,5 @@
+---
 name: Zip and upload to S3
-
 on:
   push:
     branches:
@@ -7,38 +7,32 @@ on:
   pull_request:
     branches:
       - operations
-
 env:
   s3_zip_name: $ZIP_NAME
-  ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
 jobs:
   zip_and_upload:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      
       - name: Install zip
         run: sudo apt-get install zip
-      
       - name: Create zip file
         run: |
           export ZIP_NAME="$(git rev-parse --short HEAD)-$(date +%s).zip"
           zip -r $ZIP_NAME .
           echo "::set-env name=zip_name::$ZIP_NAME"
-        
-       - name: Show filename
-         run: |
+      - name: Show filename
+        run: |
           echo "file name:${{ env.s3_zip_name }}"
-
       - name: Upload file to bucket
         uses: zdurham/s3-upload-github-action@master
         with:
           args: --acl public-read
         env:
           FILE: ${{ env.s3_zip_name }}
-          AWS_REGION: 'us-east-1'
+          AWS_REGION: us-east-1
           S3_BUCKET: gymchecks3
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
