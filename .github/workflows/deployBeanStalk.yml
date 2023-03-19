@@ -8,7 +8,6 @@ on:
     branches:
       - operations
 env:
-  s3_zip_name: $ZIP_NAME
   ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
 
 jobs:
@@ -25,10 +24,9 @@ jobs:
         run: |
           export ZIP_NAME="$(git rev-parse --short HEAD)-$(date +%s).zip"
           zip -r $ZIP_NAME .
-          echo $ZIP_NAME >> $env.s3_zip_name
+          echo "$ZIP_NAME" >> $env.s3_zip_name
 
       - name: Show filename
         run: |
-          echo "file name: ${{ env.s3_zip_name }}"
-          echo "file name: $ZIP_NAME"         
+          echo "file name: ${{ env.s3_zip_name }}"      
 
