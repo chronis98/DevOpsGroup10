@@ -24,9 +24,9 @@ jobs:
         id: filename
         run: |
           zip -r ${{ steps.hash.outputs.hash }}.zip .
-          echo "::set-output name=filename::$({{ steps.hash.outputs.hash }}.zip)"
+          echo "::set-output name=filename::$({{ steps.hash.outputs.hash }}).zip"
 
       - name: Show filename
         run: |
-          echo "Filename: {{steps.filename.outputs.filename}}"
+          echo "Filename: ${{steps.filename.outputs.filename}}"
       
