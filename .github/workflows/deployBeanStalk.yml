@@ -23,11 +23,9 @@ jobs:
         run: echo ::set-output name=sha::$(openssl rand -hex 8)
 
       - name: Rename zip file
+        if: filenames
         run: |
-          ls
           mv gymcheck.zip gymcheck-${{ steps.vars.outputs.sha }}.zip
-          ls 
-          echo "${{ steps.vars.outputs.sha }}.zip"
 
       - name: Upload to S3
         uses: jakejarvis/s3-sync-action@master
