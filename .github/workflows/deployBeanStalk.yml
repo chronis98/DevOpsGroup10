@@ -25,7 +25,7 @@ jobs:
           export ZIP_NAME="$(git rev-parse --short HEAD)-$(date +%s).zip"
           zip -r $ZIP_NAME .
 
-      - name:
+      - name: echo filenames
         run: |
           echo $ZIP_NAME
           echo {{ $ZIP_NAME }}
