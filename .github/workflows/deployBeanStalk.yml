@@ -9,7 +9,7 @@ on:
       - operations
 
 env:
-  S3_BUCKET_NAME: lab3bucketuva
+  S3_BUCKET_NAME: gymchecks3
   AWS_REGION: us-east-1
 
 
