@@ -28,5 +28,5 @@ jobs:
 
       - name: Show filename
         run: |
-          echo "Filename: $steps.filename.outputs.filename"
+          echo "Filename: ${{ steps.hash.outputs.hash }}.zip"
       
