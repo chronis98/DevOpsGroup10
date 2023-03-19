@@ -3,7 +3,10 @@ name: Zip and upload to S3
 on:
   push:
     branches:
-      - main
+      - operations
+  pull_request:
+    branches:
+      - operations
 
 env:
   S3_BUCKET_NAME: lab3bucketuva
