@@ -8,6 +8,9 @@ on:
     branches:
       - operations
 
+env:
+  s3_zip_name: $ZIP_NAME
+
 jobs:
   zip_and_upload:
     runs-on: ubuntu-latest
@@ -22,13 +25,15 @@ jobs:
         run: |
           export ZIP_NAME="$(git rev-parse --short HEAD)-$(date +%s).zip"
           zip -r $ZIP_NAME .
+          echo "::set-env name=zip_name::$ZIP_NAME"
+          echo ${{ env.s3_zip_name }}
         
       - name: Upload file to bucket
         uses: zdurham/s3-upload-github-action@master
         with:
           args: --acl public-read
         env:
-          FILE: ./$ZIP_NAME
+          FILE: ${{ env.s3_zip_name }}
           AWS_REGION: 'us-east-1'
           S3_BUCKET: gymchecks3
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
