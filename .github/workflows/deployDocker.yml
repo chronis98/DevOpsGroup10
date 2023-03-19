@@ -7,7 +7,7 @@ on:
   pull_request:
     branches:
       - operations
-      
+
 jobs:
   zip-and-push:
     runs-on: ubuntu-latest
@@ -15,5 +15,5 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-
+ 
 
