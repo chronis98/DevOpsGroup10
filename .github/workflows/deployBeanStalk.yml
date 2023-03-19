@@ -27,7 +27,7 @@ jobs:
           zip -r $ZIP_NAME .
           echo "::set-env name=ZIP_FILENAME::$ZIP_NAME"
 
-      - name: echo filenames
+      - name: Echo Filename
         run: |
           echo ${{ ZIP_FILENAME }}
           echo ${{ env.ZIP_FILENAME }}
