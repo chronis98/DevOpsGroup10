@@ -32,7 +32,6 @@
 </template>
 
 <script lang="ts">
-import UserCard from "@/views/user/UserCard.vue";
 import {defineComponent, ref} from "vue";
 import {AgGridVue} from "ag-grid-vue3";
 import "ag-grid-community/styles//ag-grid.css";
@@ -41,9 +40,8 @@ import type {User} from "@/entities/user";
 import type {CellClickedEvent} from "ag-grid-community";
 
 export default defineComponent({
-  name: "UserList",
+  name: "UserOverview",
   components: {
-    UserCard,
     AgGridVue
   },
   setup() {
@@ -62,7 +60,6 @@ export default defineComponent({
     }
 
     function onCellClicked(event: CellClickedEvent) {
-      console.log(event.data);
       rowIsSelected.value = true;
     }
 
