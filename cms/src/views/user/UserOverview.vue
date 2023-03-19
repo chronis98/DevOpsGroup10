@@ -8,12 +8,12 @@
         Add
       </button>
 
-      <button class="button button-secondary" :disabled="!rowIsSelected">
+      <button class="button button-secondary" :disabled="!selectedUser" @click="routeToUserEdit">
         <font-awesome-icon icon="fa-solid fa-pen"/>
         Edit
       </button>
 
-      <button class="button button-danger" :disabled="!rowIsSelected">
+      <button class="button button-danger" :disabled="!selectedUser">
         <font-awesome-icon icon="fa-solid fa-trash"/>
         Delete
       </button>
@@ -29,6 +29,7 @@
         @cell-clicked="onCellClicked">
     </AgGridVue>
 
+    <router-view></router-view>
   </div>
 </template>
 
@@ -39,6 +40,7 @@ import "ag-grid-community/styles//ag-grid.css";
 import "ag-grid-community/styles//ag-theme-alpine.css";
 import type {CellClickedEvent, ColDef} from "ag-grid-community";
 import type {User} from "@/entities/User";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: "UserOverview",
@@ -46,35 +48,44 @@ export default defineComponent({
     AgGridVue
   },
   setup() {
+    const router = useRouter();
     const usersRef = ref<User[]>([]);
     const rowIsSelected = ref<boolean>(false);
+    const selectedUser = ref<User | null>(null);
+
+    const columnDefs: ColDef[] = [
+      {headerName: "Id", field: "id"},
+      {headerName: "Email", field: "email"},
+      {headerName: "Type", field: "type"}
+    ]
 
     getUsers().then(users => usersRef.value = users);
 
     async function getUsers(): Promise<User[]> {
       // TODO:: API call to real back-end
       return [
-        {id: 1, email: "abdul@zor.nl", type: "type1"},
-        {id: 2, email: "vahip@zor.nl", type: "type1"},
-        {id: 3, email: "uva@zor.nl", type: "type2"}
+        {id: 1, email: "abdul@zor.nl", username: "abdul", created_at: new Date()},
+        {id: 2, email: "vahip@zor.nl", username: "vahip", created_at: new Date()},
+        {id: 3, email: "uva@zor.nl", username: "uva", created_at: new Date()}
       ];
     }
 
     function onCellClicked(event: CellClickedEvent) {
       rowIsSelected.value = true;
+      selectedUser.value = event.data;
     }
 
-    const columnDefs: ColDef[] = [
-      {headerName: "Id", field: "id"},
-      {headerName: "Email", field: "email"},
-      {headerName: "Type", field: "type"},
-    ]
+    function routeToUserEdit() {
+      router.push({name: 'userEdit', params: {'id': selectedUser.value!.id}});
+    }
 
     return {
       users: usersRef,
+      selectedUser,
       columnDefs,
       rowIsSelected,
-      onCellClicked
+      onCellClicked,
+      routeToUserEdit
     }
   }
 });

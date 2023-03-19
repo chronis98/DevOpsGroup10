@@ -2,8 +2,8 @@
   <div class="sidebar-container">
     <div class="logo">LOGO</div>
 
-    <SideBarItem>
-      <font-awesome-icon icon="fa-solid fa-users" />
+    <SideBarItem @click="routeToUsersOverview">
+      <font-awesome-icon icon="fa-solid fa-users"/>
       <a>Users</a>
     </SideBarItem>
   </div>
@@ -12,10 +12,22 @@
 <script lang="ts">
 import {defineComponent} from "vue";
 import SideBarItem from "@/views/sidebar/SideBarItem.vue";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: "SideBar",
-  components: {SideBarItem}
+  components: {SideBarItem},
+  setup() {
+    const router = useRouter();
+
+    function routeToUsersOverview() {
+      router.push({path: '/users'});
+    }
+
+    return {
+      routeToUsersOverview
+    }
+  }
 });
 </script>
 

@@ -1,7 +1,7 @@
 <template>
-  <div class="main-overview-container">
-    <UserOverview/>
-  </div>
+<!--  <div class="main-overview-container">-->
+<!--    <UserOverview/>-->
+<!--  </div>-->
 </template>
 
 <script>
