@@ -1,0 +1,19 @@
+---
+name: Zip and Push to S3
+on:
+  push:
+    branches:
+      - operations
+  pull_request:
+    branches:
+      - operations
+      
+jobs:
+  zip-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+
+
