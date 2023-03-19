@@ -44,7 +44,6 @@ jobs:
           region: ${{ secrets.AWS_REGION }}
           application_name: GymCheck
           environment_name: Gymcheck-env
-          version_label: gymcheck-${{ steps.vars.outputs.sha }}
           version_description: ${{github.SHA}}
           deployment_package: gymcheck-${{ steps.vars.outputs.sha }}.zip
 
@@ -56,7 +55,6 @@ jobs:
           region: ${{ secrets.AWS_REGION }}
           application_name: GymCheck
           environment_name: Gymcheck-env
-          version_label: gymcheck-${{ steps.vars.outputs.sha }}
           version_description: ${{github.SHA}}
 
       - name: Delete zip file
