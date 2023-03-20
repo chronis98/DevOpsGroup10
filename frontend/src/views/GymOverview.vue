@@ -3,16 +3,16 @@
   <br><br>
   <div class="container">
   <div v-for="l in locations">
-    <Card name='' :date="l.date" v-on:click.native="handleClick(l.name)">
+    <Card @click="handleClick(l.name)">
       <div>
         <img
           src="https://img.freepik.com/premium-vector/barbell-dumbbell-gym-icon-logo-template-gym-badge-fitness-logo-design_757387-345.jpg?w=2000" />
       </div>
       <div class="gym_title"> {{ l.name }} </div>
     </Card>
-  </div>    
   </div>
- 
+  </div>
+
 </template>
 
 <script lang="ts">

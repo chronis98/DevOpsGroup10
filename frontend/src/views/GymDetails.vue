@@ -3,9 +3,9 @@
   <div class="title">{{ gymName }}</div>
   <br><br>
   <div class="container">
-  <div v-for=" e, index in gymEquipment">
-    <Card name='' date='' v-on:click.native="viewDetails(e)">
-      <div>
+  <div v-for="(e, index) in gymEquipment">
+    <Card @click="viewDetails(e)">
+      <div class="image-container">
         <img
           src="https://static.vecteezy.com/system/resources/previews/015/845/432/original/gym-station-for-fitness-equipment-gym-station-icon-suitable-for-apps-website-developer-graphic-designer-needs-on-white-background-free-vector.jpg" />
       </div>
@@ -26,10 +26,10 @@
       </div>
     </Card>
   </div>
-  
+
   </div>
   <div @click="addEquipment(gymName)" class="plus radious">
-  </div>  
+  </div>
 
 
 </template>
@@ -168,7 +168,7 @@ export default defineComponent({
 })
 
 </script>
-<style scoped lang = "scss">
+<style scoped lang="scss">
 #app {
   max-width: 1280px;
   margin: 0 auto;
@@ -182,17 +182,20 @@ export default defineComponent({
   padding: 10px;
 }
 
-img {
-  width: 50px;
-  height: 50px;
-  display: absolute;
-  border-radius: 10%;
+.card .image-container {
+	width: 50px;
+	height: 50px;
+
+	img {
+		width: 100%;
+		height: 100%;
+		border-radius: 10%;
+	}
 }
 
 .plus:hover {
-  box-shadow: 0px 10px 16px 0 rgba(0, 0, 0, 0.901);
+  box-shadow: 0px 10px 16px 0 rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  border-radius: 20.2719px;
 }
 
 .plus {

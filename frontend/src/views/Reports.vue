@@ -1,4 +1,4 @@
-<template> 
+<template>
     <div class="title">Reports</div>
     <div class="container">
       <div class="flex-topwards">
@@ -7,11 +7,11 @@
       </div>
       <div class="card_container">
         <div v-for="report in  reports">
-          <Card name="" >
+          <Card>
             <div class="gym_title">{{report}}</div>
           </Card>
         </div>
-      </div>      
+      </div>
     </div>
 
 

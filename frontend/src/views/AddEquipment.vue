@@ -6,20 +6,19 @@
   <div v-for="e in equipmentsRef ">
     <div class="reports_card">
     <Card
-      source="https://static.vecteezy.com/system/resources/previews/015/845/432/original/gym-station-for-fitness-equipment-gym-station-icon-suitable-for-apps-website-developer-graphic-designer-needs-on-white-background-free-vector.jpg"
-      name="" date="" @click="selectEquipment(e.id)"
+      @click="selectEquipment(e.id)"
       :class="{ 'selected-equipment': selectedEquipmentRef.includes(e.id) }" class="card">
       <div class="card_title">
-        {{ e.name }} 
+        {{ e.name }}
       </div>
-    </Card>    
+    </Card>
     </div>
-  </div>    
+  </div>
   </div>
 
   <button class="button">Add</button>
 
-  
+
 </template>
 
 <script lang="ts">

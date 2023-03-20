@@ -14,7 +14,7 @@
       </div>
       <div class="card_container">
         <div v-for="report in  reports">
-          <Card source="" name="" date="" v-on:click.native="showReports()">
+          <Card @click="showReports">
             <div class="gym_title">{{ report }}</div>
           </Card>
         </div>
