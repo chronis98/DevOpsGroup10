@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - 81:80
+    restart: unless-stopped
+    networks:
+      - gymcheck
+
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    ports:
+      - 82:8000
+    restart: unless-stopped
+    depends_on:
+      - mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - PORT=${API_PORT}
+    networks:
+      - gymcheck
+
+  cms:
+    build:
+      context: .
+      dockerfile: cms/Dockerfile
+    ports:
+      - 83:80
+    restart: unless-stopped
+    networks:
+      - gymcheck
+
+volumes:
+  mysql: {}
+  phpmyadmin: {}
+
+networks:
+  gymcheck:
+    external: true
