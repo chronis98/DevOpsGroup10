@@ -139,7 +139,7 @@ export default defineComponent({
       }
     ];
 
-    const gymName = route.params.name as string;
+    const gymName = route.params.gymName as string;
     const gym = locations.find(location => location.name === gymName);
 
     if (!gym) {
@@ -150,10 +150,10 @@ export default defineComponent({
     const card = document.getElementById("test");
     console.log(card);
     function addEquipment(name: string): void {
-      router.push({ name: RouteName.ADD_EQUIPMENT, params: { name } });
+      router.push({ name: RouteName.EQUIPMENT_ADD, params: { gymName: gymName } });
     };
     function viewDetails(name: string): void {
-      router.push({ name: RouteName.EQUIPMENT_DETAILS, params: { name } });
+      router.push({ name: RouteName.EQUIPMENT_DETAILS, params: { gymName: gymName , equipmentName: name } });
     };
 
     return {

@@ -6,7 +6,7 @@
         <img class="image" :src="equipment.imgPath" :alt="equipment.name">
 
         <div class="details-container">
-          <label>Name: </label> <span>{{ equipment_name }}</span>
+          <label>Name: </label> <span>{{ equipmentName }}</span>
           <label>First Added: </label> <span>{{ equipment.firstAdded.toLocaleString() }}</span>
           <label>Reports: </label> <span>{{ equipment.reports }}</span>
           <label>Confirmed: </label> <span>{{ equipment.confirmed.toLocaleString() }}</span>
@@ -14,14 +14,14 @@
       </div>
       <div class="card_container">
         <div v-for="report in  reports">
-          <Card @click="showReports">
+          <Card @click="navigateToReportsOverview">
             <div class="gym_title">{{ report }}</div>
           </Card>
         </div>
       </div>
       <div class="flex-bottomwards">
         <div class="buttons-container">
-          <button class="button" type="button" @click="addReport()">Add Report</button>
+          <button class="button" type="button" @click="navigateToReportsAdd()">Add Report</button>
         </div>
       </div>
     </div>
@@ -34,36 +34,23 @@ import { useRoute, useRouter } from "vue-router";
 import router, { RouteName } from "@/router";
 import Card from '@/views/Card.vue';
 import Reports from '@/views/Reports.vue';
-
-type Equipment = {
-  imgPath: string
-  name: string,
-  firstAdded: Date,
-  reports: number,
-  confirmed: Date
-};
+import Equipment from "./models/Equipment";
 
 export default defineComponent({
   name: "EquipmentDetail",
-  props: {
-    id: {
-      type: Number,
-      required: true
-    },
-    test: String
-  },
   components: {
     Card,
     Reports
   },
-  setup(props) {
+  setup() {
     const equipmentRef = ref<Equipment | null>(null);
-    getEquipment(props.id).then(equipment => equipmentRef.value = equipment);
     const route = useRoute();
-    const equipment_name = route.params.name as string;
-    const reports: string[] = ["test", "awful", "should be careful with that ding ding", "asdad", "asdads"];
+    const equipmentName = route.params.equipmentName as string;
+    const gymName = route.params.gymName as string;
+    const reports = ["test", "awful", "should be careful with that ding ding", "asdad", "asdads"];
+    getEquipment(equipmentName).then(equipment => equipmentRef.value = equipment);
     const router = useRouter();
-    async function getEquipment(id: Number = 0): Promise<Equipment> {
+    async function getEquipment(name: string): Promise<Equipment> {
       return {
         imgPath: "https://www.bestusedgymequipment.com/wp-content/uploads/2018/04/olympic-flat-bench-300x300.jpg",
         name: "",
@@ -72,19 +59,21 @@ export default defineComponent({
         confirmed: new Date()
       };
     }
-    function showReports() {
-      router.push({ name: RouteName.REPORTS, params: { reportList: reports, name: equipment_name , imgPath: equipmentRef.value?.imgPath } });
+
+    function navigateToReportsOverview(): void {
+      router.push({ name: RouteName.REPORTS, params: { gymName: gymName, equipmentName: equipmentName } });
     }
-    function addReport() {
-      router.push({ name: RouteName.ADDREPORT, params: { name: equipment_name , imgPath: equipmentRef.value?.imgPath }});
+
+    function navigateToReportsAdd(): void {
+      router.push({ name: RouteName.REPORTS_ADD, params: { gymName: gymName, equipmentName: equipmentName } });
     }
 
     return {
       equipment: equipmentRef,
-      equipment_name,
+      equipmentName,
       reports,
-      showReports,
-      addReport
+      navigateToReportsOverview,
+      navigateToReportsAdd
     }
   }
 });
@@ -142,7 +131,7 @@ export default defineComponent({
   gap: 10px;
 }
 
-.button{
+.button {
   display: block;
   float: right;
   background-color: #0375F7;
@@ -155,7 +144,8 @@ export default defineComponent({
   margin: 35px 0px 10px 10px;
   border-radius: 10px;
 }
-.button:hover{
+
+.button:hover {
   color: rgb(0, 0, 0);
   cursor: pointer;
 }

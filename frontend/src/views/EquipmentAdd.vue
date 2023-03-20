@@ -6,7 +6,7 @@
   <div v-for="e in equipmentsRef ">
     <div class="reports_card">
     <Card
-      @click="selectEquipment(e.id)"
+      @click="toggleEquipmentSelection(e.id)"
       :class="{ 'selected-equipment': selectedEquipmentRef.includes(e.id) }" class="card">
       <div class="card_title">
         {{ e.name }}
@@ -28,19 +28,7 @@ import { useRoute, useRouter } from "vue-router";
 import router, { RouteName } from "@/router";
 import Card from '../views/Card.vue';
 import { remove } from "@vue/shared";
-
-type Equipment = {
-  id: number,
-  category: Category,
-  imagePath: string,
-  name: string,
-  description: string
-}
-
-type Category = {
-  id: number,
-  name: string
-}
+import { Equipment, Category} from "@/models/EquipmentV2";
 
 function delay(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -51,7 +39,7 @@ export default defineComponent({
   name: "AddEquipment",
   setup() {
     const route = useRoute();
-    const gymName = route.params.name as string;
+    const gymName = route.params.equipmentName as string;
     const equipmentsRef = ref<Equipment[]>([]);
     async function fetchEquipment(): Promise<Equipment[]> {
       await delay(1000);
@@ -72,14 +60,14 @@ export default defineComponent({
       }];
     }
     fetchEquipment().then(equipments => equipmentsRef.value = equipments);
-    function viewDetails(name: string): void {
-      router.push({ name: RouteName.EQUIPMENT_DETAILS, params: { name } });
-    };
+
     async function submitEquipmentToApi(equipments: string[]): Promise<void> {
       return;
     }
+
     const selectedEquipmentRef = ref<number[]>([]);
-    async function selectEquipment(equipmentId: number) {
+
+    async function toggleEquipmentSelection(equipmentId: number) : Promise<void> {
       const index = selectedEquipmentRef.value.indexOf(equipmentId)
       if (index > -1) {
         selectedEquipmentRef.value.splice(index, 1);
@@ -90,17 +78,16 @@ export default defineComponent({
 
     return {
       gymName,
-      viewDetails,
       Card,
       equipmentsRef,
       selectedEquipmentRef,
-      selectEquipment
+      toggleEquipmentSelection
     };
   },
 })
 
 </script>
-<style scoped lang = "scss">
+<style scoped lang="scss">
 #app {
   max-width: 1280px;
   margin: 0 auto;

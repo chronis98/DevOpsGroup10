@@ -120,7 +120,7 @@ export default defineComponent({
 
     const router = useRouter();
     function handleClick(name: string): void {
-      router.push({ name: RouteName.GYM_DETAILS, params: { name } });
+      router.push({ name: RouteName.GYM_DETAILS, params: { gymName: name } });
     }
 
     return {

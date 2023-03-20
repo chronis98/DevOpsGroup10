@@ -3,17 +3,17 @@ import GymOverview from '../views/GymOverview.vue'
 import GymDetails from '../views/GymDetails.vue'
 import {propsToAttrMap} from '@vue/shared';
 import EquipmentDetail from '@/EquipmentDetail.vue';
-import AddEquipment from '../views/AddEquipment.vue';
+import EquipmentAdd from '../views/EquipmentAdd.vue';
 import Reports from '../views/Reports.vue';
-import AddReport from '../views/AddReport.vue';
+import ReportsAdd from '../views/ReportsAdd.vue';
 
 export const RouteName = Object.freeze({
   GYM_OVERVIEW: 'GymOverview',
   GYM_DETAILS: 'GymDetails',
   EQUIPMENT_DETAILS: 'EquipmentDetails',
-  ADD_EQUIPMENT: 'AddEquipment',
+  EQUIPMENT_ADD: 'EquipmentAdd',
   REPORTS: 'Reports',
-  ADDREPORT: 'AddReport'
+  REPORTS_ADD: 'ReportsAdd'
 });
 
 const router = createRouter({
@@ -29,29 +29,29 @@ const router = createRouter({
       redirect: {name: RouteName.GYM_OVERVIEW}
     },
     {
-      path: '/gym-details/:name',
+      path: '/gym/:gymName',
       name: RouteName.GYM_DETAILS,
       component: GymDetails,
     },
     {
-      path: '/equipment-details/:name',
+      path: '/gym/:gymName/equipment/:equipmentName',
       name: RouteName.EQUIPMENT_DETAILS,
       component: EquipmentDetail,
     },
     {
-      path: '/add-equipment/:name',
-      name: RouteName.ADD_EQUIPMENT,
-      component: AddEquipment,
+      path: '/gym/:gymName/equipment/add',
+      name: RouteName.EQUIPMENT_ADD,
+      component: EquipmentAdd,
     },
     {
-      path: '/reports/:name/:imgPath/:reportList+',
+      path: '/gym/:gymName/equipment/:equipmentName/reports',
       name: RouteName.REPORTS,
       component: Reports,
     },
     {
-      path: '/addReport/:name/:imgPath',
-      name: RouteName.ADDREPORT,
-      component: AddReport,
+      path: '/gym/:gymName/equipment/:equipmentName/reports/add',
+      name: RouteName.REPORTS_ADD,
+      component: ReportsAdd,
     }
 
   ]

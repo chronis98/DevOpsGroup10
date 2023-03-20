@@ -29,19 +29,14 @@ import Card from '@/views/Card.vue';
 
 export default defineComponent({
   name: "AddReport",
-  props: {
-  },
   components: { Card },
-  setup(props) {
+  setup() {
     const route = useRoute();
-    const reports = route.params.reportList as string[];
-    const equipmentName = route.params.name as string;
-    const equipmentImage = route.params.imgPath as string;
-    console.log(reports);
+    const equipmentName = route.params.equipmentName as string;
+    const equipmentImage = "https://www.bestusedgymequipment.com/wp-content/uploads/2018/04/olympic-flat-bench-300x300.jpg";
     return {
       comment: '',
       selected: '',
-      reports,
       equipmentName,
       equipmentImage
     }
