@@ -1,13 +1,13 @@
 <template>
   <div class="title">
     <span class="button" @click="goBack"><font-awesome-icon icon="fa-solid fa-chevron-left"/></span>
-    <h2>Edit User</h2>
+    <h2>Add User</h2>
   </div>
 
-  <div class="container" v-if="user">
+  <div class="container">
     <div class="fields-group">
-      <label>ID: </label>
-      <span>{{ user.id }}</span>
+      <!--      <label>ID: </label>-->
+      <!--      <span>{{ user.id }}</span>-->
 
       <label>Name: </label>
       <input :value="user.username" type="text"/>
@@ -16,7 +16,7 @@
       <input :value="user.email" type="email"/>
 
       <label>Created At: </label>
-      <label>{{ user.createdAt.toLocaleString() }}</label>
+      <input type="date"/>
     </div>
 
     <div class="button-group">
@@ -34,30 +34,27 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, watch} from "vue";
-import type {User} from "@/entities/User";
+import {defineComponent, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 
+type User = {
+  username: string,
+  email: string,
+  createdAt: Date
+}
+
 export default defineComponent({
-  name: "UserEdit",
+  name: "UserAdd",
   setup() {
     const route = useRoute();
     const router = useRouter();
-    const userRef = ref<User | null>(null);
-
-    getUser(Number(route.params.id)).then(user => userRef.value = user);
+    const userRef = ref<User>({} as User);
 
     function goBack() {
       router.back();
     }
 
-    async function getUser(id: number): Promise<User> {
-      // TODO:: API call to real back-end
-
-      return {id, email: "abdul@zor.nl", username: "Abdul", createdAt: new Date()};
-    }
-
-    async function saveUser() {
+    function saveUser() {
       // TODO:: API call to real back-end
     }
 

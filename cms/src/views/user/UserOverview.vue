@@ -3,8 +3,8 @@
     <h1>Users</h1>
 
     <div class="button-group">
-      <button class="button button-primary">
-        <font-awesome-icon icon="fa-solid fa-plus"/>
+      <button class="button button-primary" @click="routeToUserAdd">
+        <font-awesome-icon icon="fa-solid fa-plus" />
         Add
       </button>
 
@@ -56,7 +56,8 @@ export default defineComponent({
     const columnDefs: ColDef[] = [
       {headerName: "Id", field: "id"},
       {headerName: "Email", field: "email"},
-      {headerName: "Type", field: "type"}
+      {headerName: "Username", field: "username"},
+      {headerName: "Created At", field: "createdAt"}
     ]
 
     getUsers().then(users => usersRef.value = users);
@@ -64,9 +65,9 @@ export default defineComponent({
     async function getUsers(): Promise<User[]> {
       // TODO:: API call to real back-end
       return [
-        {id: 1, email: "abdul@zor.nl", username: "abdul", created_at: new Date()},
-        {id: 2, email: "vahip@zor.nl", username: "vahip", created_at: new Date()},
-        {id: 3, email: "uva@zor.nl", username: "uva", created_at: new Date()}
+        {id: 1, email: "abdul@zor.nl", username: "abdul", createdAt: new Date()},
+        {id: 2, email: "vahip@zor.nl", username: "vahip", createdAt: new Date()},
+        {id: 3, email: "uva@zor.nl", username: "uva", createdAt: new Date()}
       ];
     }
 
@@ -79,13 +80,18 @@ export default defineComponent({
       router.push({name: 'userEdit', params: {'id': selectedUser.value!.id}});
     }
 
+    function routeToUserAdd() {
+      router.push({name: 'userAdd'});
+    }
+
     return {
       users: usersRef,
       selectedUser,
       columnDefs,
       rowIsSelected,
       onCellClicked,
-      routeToUserEdit
+      routeToUserEdit,
+      routeToUserAdd
     }
   }
 });
