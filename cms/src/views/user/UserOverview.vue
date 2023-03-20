@@ -1,5 +1,5 @@
 <template>
-  <div class="user-list-container">
+  <div class="container">
     <h1>Users</h1>
 
     <div class="button-group">
@@ -92,7 +92,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.user-list-container {
+.container {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -103,46 +103,6 @@ export default defineComponent({
   display: flex;
   justify-content: end;
   gap: 5px;
-}
-
-.button {
-  border: none;
-  border-radius: 4px;
-  padding: 8px 16px;
-  font-size: 14px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  color: white;
-}
-
-.button:disabled {
-  background-color: #cccccc;
-  color: #666666;
-  cursor: not-allowed;
-}
-
-.button-primary {
-  background-color: var(--color-button-primary);
-}
-
-.button-primary:hover:not([disabled]) {
-  background-color: var(--color-button-primary-light);
-}
-
-.button-secondary {
-  background-color: var(--color-button-secondary);
-}
-
-.button-secondary:hover:not([disabled]) {
-  background-color: var(--color-button-secondary-light);
-}
-
-.button-danger {
-  background-color: var(--color-button-danger);
-}
-
-.button-danger:hover:not([disabled]) {
-  background-color: var(--color-button-danger-light);
 }
 
 .grid {
