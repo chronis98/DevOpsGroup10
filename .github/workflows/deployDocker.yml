@@ -1,12 +1,13 @@
 ---
-name: Zip and Push to S3
+name: Deploy docker containers to ECS
+
 on:
   push:
     branches:
-      - operations
+      - docker
   pull_request:
     branches:
-      - operations
+      - docker
 
 jobs:
   zip-and-push:
@@ -14,6 +15,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      
 
- 
+
 

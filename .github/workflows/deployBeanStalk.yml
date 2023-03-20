@@ -1,0 +1,65 @@
+---
+name: Deploy to BeanStalk
+on:
+  push:
+    branches:
+      - operations
+  pull_request:
+    branches:
+      - operations
+jobs:
+  zip-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Zip the files
+        run: zip -r gymcheck.zip .
+
+      - name: Get random SHA name and assign to variable
+        id: vars
+        run: echo ::set-output name=sha::$(openssl rand -hex 8)
+
+      - name: Rename zip file
+        run: mv gymcheck.zip gymcheck-${{ steps.vars.outputs.sha }}.zip
+
+      - name: login to aws CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Copy zip file to S3
+        run: aws s3 cp gymcheck-${{ steps.vars.outputs.sha }}.zip s3://${{ secrets.AWS_S3_BUCKET }}/
+        env:
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+
+      - name: Create new application version
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: ${{ secrets.AWS_REGION }}
+          application_name: GymCheck
+          environment_name: Gymcheck-env
+          version_label: gymcheck-${{ steps.vars.outputs.sha }}
+          version_description: ${{github.SHA}}
+          deployment_package: gymcheck-${{ steps.vars.outputs.sha }}.zip
+
+      - name: Update environment
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: ${{ secrets.AWS_REGION }}
+          application_name: GymCheck
+          environment_name: Gymcheck-env
+          version_label: gymcheck-${{ steps.vars.outputs.sha }}
+          version_description: ${{github.SHA}}
+
+      - name: Delete zip file
+        run: rm gymcheck-${{ steps.vars.outputs.sha }}.zip
+
+
