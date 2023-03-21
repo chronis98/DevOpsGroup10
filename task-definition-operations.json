@@ -14,7 +14,7 @@
             "essential": true,
             "environment": [
                 {
-                    "name": "API_PORT",
+                    "name": "PORT",
                     "value": "8000"
                 },
                 {
