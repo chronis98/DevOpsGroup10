@@ -1,13 +1,14 @@
 import express, {Request, Response} from 'express';
 import "reflect-metadata"
-import {AppDataSource} from "./data-source";
 import dotenv from 'dotenv';
 import cors from "cors";
 import Equipment from "./models/Equipment";
 import Report from "./models/Report";
 import Gym from "./models/Gym";
 
-console.log(process.env);
+dotenv.config();
+
+import {AppDataSource} from "./data-source";
 
 AppDataSource.initialize()
     .then(async () => {
@@ -16,7 +17,7 @@ AppDataSource.initialize()
 
       app.use(cors());
 
-      const port = process.env.PORT;
+      const port = process.env.API_PORT;
 
       app.get('/api/equipment', async (req: Request, res: Response) => {
         const equipments = await AppDataSource.manager.find(Equipment, {
