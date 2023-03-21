@@ -10,10 +10,13 @@
       <span>{{ user.id }}</span>
 
       <label>Name: </label>
-      <input :value="user.username" type="text"/>
+      <input v-model="user.username" type="text"/>
 
       <label>Email: </label>
-      <input :value="user.email" type="email"/>
+      <input v-model="user.email" type="email"/>
+
+      <label>New Password: </label>
+      <input v-model="user.password" type="password"/>
 
       <label>Created At: </label>
       <label>{{ user.createdAt.toLocaleString() }}</label>
@@ -21,7 +24,7 @@
 
     <div class="button-group">
       <button class="button button-danger" type="button" @click="goBack">
-        <font-awesome-icon icon="fa-solid fa-trash"/>
+        <font-awesome-icon icon="fa-solid fa-xmark"/>
         Cancel
       </button>
 
@@ -35,17 +38,22 @@
 
 <script lang="ts">
 import {defineComponent, ref} from "vue";
-import type {User} from "@/entities/User";
 import {useRoute, useRouter} from "vue-router";
+import type {User} from "@/entities/User";
+
+type EditUser = { password: string } & User;
 
 export default defineComponent({
   name: "UserEdit",
   setup() {
     const route = useRoute();
     const router = useRouter();
-    const userRef = ref<User | null>(null);
+    // const user: User = {} as User;
+    const userRef = ref<EditUser | null>(null);
 
-    getUser(Number(route.params.id)).then(user => userRef.value = user);
+    getUser(Number(route.params.id)).then(user => {
+      userRef.value = {...user, password: ""};
+    });
 
     function goBack() {
       router.back();

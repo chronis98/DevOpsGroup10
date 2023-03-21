@@ -7,22 +7,22 @@
   <div class="container">
     <div class="fields-group">
       <label>Name: </label>
-      <input :value="user.username" type="text"/>
+      <input v-model="user.username" type="text"/>
 
       <label>Email: </label>
-      <input :value="user.email" type="email"/>
+      <input v-model="user.email" type="email"/>
 
       <label>Password: </label>
-      <input :value="user.password" type="password"/>
+      <input v-model="user.password" type="password"/>
     </div>
 
     <div class="button-group">
       <button class="button button-danger" type="button" @click="goBack">
-        <font-awesome-icon icon="fa-solid fa-trash"/>
+        <font-awesome-icon icon="fa-solid fa-xmark"/>
         Cancel
       </button>
 
-      <button class="button button-primary" type="button">
+      <button class="button button-primary" type="button" @click="saveUser">
         <font-awesome-icon icon="fa-solid fa-floppy-disk"/>
         Save
       </button>
@@ -33,18 +33,15 @@
 <script lang="ts">
 import {defineComponent, ref} from "vue";
 import {useRouter} from "vue-router";
+import {User} from "@/entities/User";
 
-type User = {
-  username: string,
-  email: string,
-  password: string
-}
+type EditUser = { password: string } & User;
 
 export default defineComponent({
   name: "UserAdd",
   setup() {
     const router = useRouter();
-    const userRef = ref<User>({} as User);
+    const userRef = ref<EditUser>({} as EditUser);
 
     function goBack() {
       router.back();
@@ -56,7 +53,8 @@ export default defineComponent({
 
     return {
       user: userRef,
-      goBack
+      goBack,
+      saveUser
     }
   }
 });
