@@ -12,7 +12,10 @@ export default class Equipment extends BaseEntity {
   })
   categoryId: number;
 
-  @ManyToOne(() => EquipmentCategory, (equipmentCategory) => equipmentCategory.equipment)
+  @ManyToOne(() => EquipmentCategory, (equipmentCategory) => equipmentCategory.equipment, {
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE"
+  })
   category: Promise<EquipmentCategory>;
 
   @Column()

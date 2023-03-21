@@ -11,6 +11,7 @@ dotenv.config();
 import {AppDataSource} from "./data-source";
 import User from "./models/User";
 import bodyParser from "body-parser";
+import UserOwner from "./models/UserOwner";
 
 AppDataSource.initialize()
     .then(async () => {
@@ -130,17 +131,10 @@ AppDataSource.initialize()
       });
 
       app.delete('/api/user/:id', async (req: Request<Record<'id', number>, Object, Object>, res: Response) => {
-        const existingUser = await AppDataSource.manager.findOne(User, {
-          where: {
-            id: req.params.id
-          }
+        const existingUser = await AppDataSource.manager.delete(User, {
+          id: req.params.id
         });
 
-        if (!existingUser) {
-          return res.status(403).send();
-        }
-
-        existingUser.remove();
         res.status(204).json();
       });
 
