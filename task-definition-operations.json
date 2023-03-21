@@ -15,7 +15,7 @@
             "environment": [
                 {
                     "name": "API_NAME",
-                    "value": 8000
+                    "value": "8000"
                 },
                 {
                     "name": "MYSQL_HOST",
