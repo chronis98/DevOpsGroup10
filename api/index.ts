@@ -49,6 +49,20 @@ AppDataSource.initialize()
         res.json(result);
       });
 
+      app.get('/api/equipment-list', async (req: Request, res: Response) => {
+        const gyms = await AppDataSource.manager.find(Gym, {
+          relations: ['address']
+        });
+        const gymPresentables = gyms.map(async gym => ({
+          id: gym.id,
+          name: gym.name,
+          imagePath: gym.imagePath,
+          address: await gym.address
+        }));
+        const result = await Promise.all(gymPresentables);
+        res.json(result);
+      });
+
       app.get('/api/gym/:id', async (req: Request<{ id: string }>, res: Response) => {
         const gymId = parseInt(req.params.id);
         const gym = await AppDataSource.manager.findOneBy(Gym, {id: gymId});

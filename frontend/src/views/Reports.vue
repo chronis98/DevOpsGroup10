@@ -2,13 +2,13 @@
   <div class="title">Reports</div>
   <div class="container">
     <div class="flex-topwards">
-      <img class="image" :src="equipmentImage" :alt="equipmentName">
-      <div class="details_title">{{ equipmentName }}</div>
+      <img class="image" :src="equipmentImage" :alt="equipment.name">
+      <div class="details_title">{{ equipment.name }}</div>
     </div>
     <div class="card_container">
-      <div v-for="report in  reports">
+      <div v-for="report in  equipment.reports">
         <Card>
-          <div class="gym_title">{{ report }}</div>
+          <div class="gym_title">{{ report.comment }}</div>
         </Card>
       </div>
     </div>
@@ -20,6 +20,7 @@ import { defineComponent, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import router, { RouteName } from "@/router";
 import Card from '@/views/Card.vue';
+import type DetailEquipment from "./models/EquipmentResponse";
 
 export default defineComponent({
   name: "Reports",
@@ -27,13 +28,20 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const reports = ["test", "awful", "should be careful with that ding ding", "asdad", "asdads", "more", "more", "more"];
-    const equipmentName = route.params.equipmentName as string;
+    const equipmentRef = ref<DetailEquipment | null>(null);
+    const equipmentId = route.params.equipmentId;
+    const gymId = route.params.gymId;
+    fetchEquipment().then(equipment => equipmentRef.value = equipment);
+
+    function fetchEquipment(): Promise<DetailEquipment> {
+      return fetch(`http://localhost:8000/api/gym/${gymId}/equipment/${equipmentId}`)
+        .then(res => res.json() as Promise<DetailEquipment>);
+    }
     const equipmentImage = "https://www.bestusedgymequipment.com/wp-content/uploads/2018/04/olympic-flat-bench-300x300.jpg";
-    console.log(reports);
     return {
+      equipment: equipmentRef,
       reports,
-      equipmentName,
-      equipmentImage
+      equipmentImage,
     }
   }
 });
