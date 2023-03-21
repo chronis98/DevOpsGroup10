@@ -1,4 +1,4 @@
-import Category from "@/models/Category";
+import type Category from "@/models/Category";
 
 type Equipment = {
   id: number,
@@ -8,4 +8,4 @@ type Equipment = {
   description: string
 }
 
-export default Equipment; 
+export default Equipment;

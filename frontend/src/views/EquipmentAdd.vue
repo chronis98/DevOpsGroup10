@@ -20,14 +20,12 @@
 
 <script lang="ts">
 
-import { defineComponent, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import router, { RouteName } from "@/router";
-import Card from '../views/Card.vue';
-import { remove } from "@vue/shared";
-import { Equipment, Category } from "@/models/EquipmentV2";
+	import {defineComponent, ref} from "vue";
+	import {useRoute} from "vue-router";
+	import Card from '../views/Card.vue';
+	import type Equipment from "@/models/EquipmentV2";
 
-function delay(ms: number): Promise<void> {
+	function delay(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 

@@ -32,7 +32,7 @@
 	import {RouteName} from "@/router";
 	import Card from '@/views/Card.vue';
 	import Reports from '@/views/Reports.vue';
-	import Equipment from "./models/Equipment";
+	import type Equipment from "./models/Equipment";
 
 	type Field = {
 		label: string;
