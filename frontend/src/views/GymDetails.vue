@@ -28,7 +28,7 @@
 		</div>
 
 	</div>
-	<div @click="addEquipment(gymName)" class="plus radious">
+	<div @click="addEquipment()" class="plus radious">
 	</div>
 </template>
 
@@ -64,12 +64,12 @@
 			const card = document.getElementById("test");
 			console.log(card);
 
-			function addEquipment(name: string): void {
+			function addEquipment(): void {
 				router.push({name: RouteName.EQUIPMENT_ADD, params: {gymId}});
 			}
 
-			function viewDetails(name: string): void {
-				router.push({name: RouteName.EQUIPMENT_DETAILS, params: {gymId, equipmentId: name}});
+			function viewDetails(id: number): void {
+				router.push({name: RouteName.EQUIPMENT_DETAILS, params: {gymId, equipmentId: id}});
 			}
 
 			return {
