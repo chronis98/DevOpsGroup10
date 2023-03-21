@@ -56,3 +56,8 @@ jobs:
           run: |
             echo "Deploying to Amazon ECS..."
 
+      - name: Get deployment IP
+        run: |
+          output=$(aws ec2 describe-network-interfaces --query 'NetworkInterfaces[*].Association.PublicIp')
+          echo "Website available at: $output"
+
