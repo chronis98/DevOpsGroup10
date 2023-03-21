@@ -9,8 +9,6 @@ RUN npm install
 
 COPY frontend/. .
 
-RUN cat .env
-
 RUN npm run build
 
 #install nginx and copy build files
