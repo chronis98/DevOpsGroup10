@@ -33,8 +33,9 @@
 <script lang="ts">
 import {defineComponent, ref} from "vue";
 import {useRouter} from "vue-router";
+import type {User} from "@/entities/User";
 
-type User = {
+type FormUser = {
   username: string,
   email: string,
   password: string
@@ -44,14 +45,29 @@ export default defineComponent({
   name: "UserAdd",
   setup() {
     const router = useRouter();
-    const userRef = ref<User>({} as User);
+    const userRef = ref<FormUser>({
+      username: '',
+      email: '',
+      password: ''
+    });
 
     function goBack() {
       router.back();
     }
 
-    function saveUser() {
-      // TODO:: API call to real back-end
+    function saveUser(): Promise<User> {
+      const {username, email, password} = userRef.value;
+      return fetch('http://localhost:8000/api/user', {
+        method: 'POST',
+        body: JSON.stringify({
+          username,
+          email,
+          password
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(res => res.json() as Promise<User>);
     }
 
     return {

@@ -4,7 +4,7 @@
 
     <div class="button-group">
       <button class="button button-primary" @click="routeToUserAdd">
-        <font-awesome-icon icon="fa-solid fa-plus" />
+        <font-awesome-icon icon="fa-solid fa-plus"/>
         Add
       </button>
 
@@ -63,15 +63,14 @@ export default defineComponent({
       {headerName: "Created At", field: "createdAt"}
     ]
 
-    getUsers().then(users => usersRef.value = users);
+    getUsers().then(users => users.map(user => {
+      user.createdAt = new Date(user.createdAt).toLocaleString();
+      usersRef.value = users
+    }));
 
     async function getUsers(): Promise<User[]> {
-      // TODO:: API call to real back-end
-      return [
-        {id: 1, email: "abdul@zor.nl", username: "abdul", createdAt: new Date()},
-        {id: 2, email: "vahip@zor.nl", username: "vahip", createdAt: new Date()},
-        {id: 3, email: "uva@zor.nl", username: "uva", createdAt: new Date()}
-      ];
+      return fetch('http://localhost:8000/api/user')
+          .then(res => res.json() as Promise<User[]>);
     }
 
     function onCellClicked(event: CellClickedEvent) {

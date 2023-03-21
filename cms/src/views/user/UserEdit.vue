@@ -4,22 +4,16 @@
     <h2>Edit User</h2>
   </div>
 
-  <div class="container" v-if="user">
+  <div class="container" v-if="userLoaded">
     <div class="fields-group">
       <label>ID: </label>
-      <span>{{ user.id }}</span>
+      <span>{{ $route.params.id }}</span>
 
       <label>Name: </label>
-      <input v-model="user.username" type="text"/>
+      <input v-model="formUser.username" type="text"/>
 
       <label>Email: </label>
-      <input v-model="user.email" type="email"/>
-
-      <label>New Password: </label>
-      <input v-model="user.password" type="password"/>
-
-      <label>Created At: </label>
-      <label>{{ user.createdAt.toLocaleString() }}</label>
+      <input v-model="formUser.email" type="email"/>
     </div>
 
     <div class="button-group">
@@ -28,7 +22,7 @@
         Cancel
       </button>
 
-      <button class="button button-primary" type="button">
+      <button class="button button-primary" type="button" @click="saveUserAndReturn">
         <font-awesome-icon icon="fa-solid fa-floppy-disk"/>
         Save
       </button>
@@ -37,13 +31,13 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from "vue";
+import {computed, defineComponent, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
+import type {User} from "@/entities/User";
 
-type User = {
+type FormUser = {
   username: string,
-  email: string,
-  password: string
+  email: string
 };
 
 export default defineComponent({
@@ -51,30 +45,53 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const router = useRouter();
-    // const user: User = {} as User;
     const userRef = ref<User | null>(null);
-
-    getUser(Number(route.params.id)).then(user => {
-      userRef.value = {...user, password: ""};
+    const formUserRef = ref<FormUser>({
+      username: '',
+      email: ''
     });
+
+    fetchUser(parseInt(route.params.id as string)).then(user => {
+      userRef.value = user;
+      formUserRef.value = {
+        username: user.username,
+        email: user.email
+      };
+    });
+
+    async function saveUserAndReturn() {
+      await saveUser();
+      router.back();
+    }
 
     function goBack() {
       router.back();
     }
 
-    async function getUser(id: number): Promise<User> {
-      // TODO:: API call to real back-end
-
-      return {id, email: "abdul@zor.nl", username: "Abdul", createdAt: new Date()};
+    async function fetchUser(id: number): Promise<User> {
+      return fetch(`http://localhost:8000/api/user/${id}`)
+          .then(res => res.json() as Promise<User>);
     }
 
-    async function saveUser() {
-      // TODO:: API call to real back-end
+    async function saveUser(): Promise<User> {
+      const {username, email} = formUserRef.value;
+      return fetch(`http://localhost:8000/api/user/${route.params.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          username,
+          email
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(res => res.json() as Promise<User>);
     }
 
     return {
-      user: userRef,
-      goBack
+      userLoaded: computed(() => !!userRef.value),
+      formUser: formUserRef,
+      goBack,
+      saveUserAndReturn
     }
   }
 });

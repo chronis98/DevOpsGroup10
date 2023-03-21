@@ -9,12 +9,15 @@ import Gym from "./models/Gym";
 dotenv.config();
 
 import {AppDataSource} from "./data-source";
+import User from "./models/User";
+import bodyParser from "body-parser";
 
 AppDataSource.initialize()
     .then(async () => {
 
       const app = express();
 
+      app.use(bodyParser.json());
       app.use(cors());
 
       const port = process.env.API_PORT;
@@ -46,6 +49,99 @@ AppDataSource.initialize()
         }));
         const result = await Promise.all(gymPresentables);
         res.json(result);
+      });
+
+      app.get('/api/user', async (req: Request, res: Response) => {
+        const users = await AppDataSource.manager.find(User);
+        const userPresentables = users.map(user => ({
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          createdAt: user.createdAt
+        }));
+        res.json(userPresentables);
+      });
+
+      app.get('/api/user/:id', async (req: Request<Record<'id', number>>, res: Response) => {
+        const existingUser = await AppDataSource.manager.findOne(User, {
+          where: {id: req.params.id}
+        });
+
+        if (existingUser === null) {
+          return res.status(404).send();
+        }
+
+        const responseUser = {
+          id: existingUser.id,
+          username: existingUser.username,
+          email: existingUser.email,
+          createdAt: existingUser.createdAt
+        }
+        res.json(responseUser);
+      });
+
+      app.post('/api/user', async (req: Request<Object, Object, { username: string, email: string, password: string }>, res: Response) => {
+        const existingUser = await AppDataSource.manager.findOne(User, {
+          where: [{
+            username: req.body.username
+          }, {
+            email: req.body.email
+          }]
+        });
+
+        if (existingUser) {
+          return res.status(409).send();
+        }
+
+        const newUser = await AppDataSource.manager.create(User, {
+          username: req.body.username,
+          email: req.body.email,
+          password: req.body.password,
+          createdAt: new Date()
+        }).save();
+
+        res.status(201).json({
+          id: newUser.id,
+          username: newUser.username,
+          email: newUser.email
+        });
+      });
+
+      app.put('/api/user/:id', async (req: Request<Record<'id', number>, Object, { username: string, email: string, password: string }>, res: Response) => {
+        const existingUser = await AppDataSource.manager.findOne(User, {
+          where: {
+            id: req.params.id
+          }
+        });
+
+        if (!existingUser) {
+          return res.status(404).send();
+        }
+
+        existingUser.username = req.body.username;
+        existingUser.email = req.body.email;
+        existingUser.save();
+
+        res.status(200).json({
+          id: existingUser.id,
+          username: existingUser.username,
+          email: existingUser.email
+        });
+      });
+
+      app.delete('/api/user/:id', async (req: Request<Record<'id', number>, Object, Object>, res: Response) => {
+        const existingUser = await AppDataSource.manager.findOne(User, {
+          where: {
+            id: req.params.id
+          }
+        });
+
+        if (!existingUser) {
+          return res.status(403).send();
+        }
+
+        existingUser.remove();
+        res.status(204).json();
       });
 
       app.get('/api/gym/:gymId/equipment/:equipmentId', async (req: Request<Record<'gymId' | 'equipmentId', string>>, res: Response) => {
