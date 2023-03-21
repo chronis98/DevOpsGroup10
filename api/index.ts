@@ -276,6 +276,18 @@ AppDataSource.initialize()
         })
       });
 
+      app.post('/api/gym/:gymId/equipment/:equipmentId', async (req: Request<Record<'gymId' | 'equipmentId', string>, Object, {status: true|false|null, comment: string}>, res: Response) => {
+        const report = AppDataSource.manager.create(Report, {
+          gymId: parseInt(req.params.gymId),
+          equipmentId: parseInt(req.params.equipmentId),
+          userId: (await AppDataSource.manager.findOneOrFail(User, {})).id,
+          status: req.body.status,
+          comment: req.body.comment
+        }).save();
+
+        res.status(204).send();
+      });
+
       app.listen(port, () => {
         console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
       });
