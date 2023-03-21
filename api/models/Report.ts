@@ -44,17 +44,20 @@ export default class Report extends BaseEntity {
   comment: string | null = null;
 
   @ManyToOne(() => Gym, (gym) => gym.reports, {
-    cascade: ["update", "remove"]
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE"
   })
   gym: Promise<Gym>;
 
   @ManyToOne(() => Equipment, (equipment) => equipment.reports, {
-    cascade: ["update", "remove"]
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE"
   })
   equipment: Promise<Equipment>;
 
   @ManyToOne(() => User, (user) => user.reports, {
-    cascade: ["update", "remove"]
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE"
   })
   user: Promise<User>;
 

@@ -38,9 +38,15 @@ export default class ReportVerification extends BaseEntity {
   })
   comment: string;
 
-  @ManyToOne(() => Report, (report) => report.verifications)
+  @ManyToOne(() => Report, (report) => report.verifications, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE"
+  })
   report: Promise<Report>;
 
-  @ManyToOne(() => UserOwner, (userOwner) => userOwner.reportVerifications)
+  @ManyToOne(() => UserOwner, (userOwner) => userOwner.reportVerifications, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE"
+  })
   verifiedByUserOwner: Promise<UserOwner>;
 }

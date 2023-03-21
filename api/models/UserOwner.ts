@@ -10,19 +10,18 @@ export default class UserOwner extends BaseEntity {
 
   @Column({
     type: "int",
-    unique: true
+    unique: true,
   })
   userId: number;
 
   @OneToOne(() => User, (user) => user.userOwner, {
-    cascade: ["update", "remove"]
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE"
   })
   @JoinColumn()
   user: Promise<User>;
 
-  @OneToMany(() => GymOwnership, (gymOwnership) => gymOwnership.userOwner, {
-    cascade: ["update", "remove"]
-  })
+  @OneToMany(() => GymOwnership, (gymOwnership) => gymOwnership.userOwner)
   gymOwnerships: Promise<GymOwnership[]>;
 
   @OneToMany(() => ReportVerification, reportVerification => reportVerification.verifiedByUserOwner)

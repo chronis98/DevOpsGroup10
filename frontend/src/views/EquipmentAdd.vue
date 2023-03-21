@@ -1,9 +1,9 @@
 <template>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <div class="title">{{ gymName }}</div>
+  <!-- <div class="title">{{ gymName }}</div> -->
   <div class="details_title">Please select equipment</div>
   <div class="container">
-    <div v-for="e in equipmentsRef ">
+    <div v-for="e in equipment ">
       <div class="reports_card">
         <Card @click="toggleEquipmentSelection(e.id)"
           :class="{ 'selected-equipment': selectedEquipmentRef.includes(e.id) }" class="card">
@@ -23,7 +23,7 @@
 	import {defineComponent, ref} from "vue";
 	import {useRoute} from "vue-router";
 	import Card from '../views/Card.vue';
-	import type Equipment from "@/models/EquipmentV2";
+	import type Equipment from "@/models/Equipment";
 
 	function delay(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -33,28 +33,14 @@ export default defineComponent({
   components: { Card },
   name: "AddEquipment",
   setup() {
-    const route = useRoute();
-    const gymName = route.params.equipmentName as string;
-    const equipmentsRef = ref<Equipment[]>([]);
-    async function fetchEquipment(): Promise<Equipment[]> {
-      await delay(1000);
-      return [{
-        id: 1,
-        category: { id: 5, name: "xronis" },
-        name: "test",
-        imagePath: "test",
-        description: "Hello darkness my old friend"
+    const equipmentRef = ref<Equipment[]>([]);
+    const router = useRoute();
+    fetchEquipment().then(equipment => equipmentRef.value = equipment);
 
-      }, {
-        id: 2,
-        category: { id: 5, name: "xronis2" },
-        name: "test2",
-        imagePath: "test2",
-        description: "Hello darkness my old friend2"
-
-      }];
+    function fetchEquipment(): Promise<Equipment[]> {
+      return fetch('http://localhost:8000/api/gym/equipment')
+        .then(res => res.json() as Promise<Equipment[]>);
     }
-    fetchEquipment().then(equipments => equipmentsRef.value = equipments);
 
     async function submitEquipmentToApi(equipments: string[]): Promise<void> {
       return;
@@ -72,9 +58,8 @@ export default defineComponent({
     }
 
     return {
-      gymName,
       Card,
-      equipmentsRef,
+      equipment: equipmentRef,
       selectedEquipmentRef,
       toggleEquipmentSelection
     };

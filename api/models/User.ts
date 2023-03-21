@@ -23,7 +23,9 @@ export default class User extends BaseEntity {
   @Column()
   username: string;
 
-  @OneToOne(() => UserOwner, (userOwner) => userOwner.user)
+  @OneToOne(() => UserOwner, (userOwner) => userOwner.user, {
+    nullable: true
+  })
   userOwner: Promise<UserOwner | null>;
 
   @OneToMany(() => Report, (report) => report.user)

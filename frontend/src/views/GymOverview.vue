@@ -32,16 +32,6 @@ export default defineComponent({
   },
   name: 'GymOverview',
   setup() {
-    const url = `http://localhost:8000/api/gym`; // construct the URL with the value in the query string
-
-    fetch(url)
-    .then(response => response.json()) // assuming the response is JSON data
-    .then(data => {
-    console.log(data);
-    })
-    .catch(error => {
-      console.error(error);
-    });
     const gymsRef = ref<OverviewGym[]>([]);
     const router = useRouter();
     fetchGyms().then(gyms => gymsRef.value = gyms);
