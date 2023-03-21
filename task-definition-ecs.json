@@ -1,5 +1,4 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-east-1:528775740130:task-definition/gymcheck-ecs-containers:2",
     "containerDefinitions": [
         {
             "name": "api",
@@ -53,15 +52,8 @@
     "family": "gymcheck-ecs-containers",
     "executionRoleArn": "arn:aws:iam::528775740130:role/ecsTaskExecutionRole",
     "networkMode": "bridge",
-    "revision": 2,
     "volumes": [],
-    "status": "ACTIVE",
     "placementConstraints": [],
-    "compatibilities": [
-        "EXTERNAL",
-        "EC2",
-        "FARGATE"
-    ],
     "requiresCompatibilities": [
         "EC2",
         "FARGATE"
@@ -72,7 +64,5 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2023-03-21T14:02:55.675Z",
-    "registeredBy": "arn:aws:iam::528775740130:root",
     "tags": []
 }
