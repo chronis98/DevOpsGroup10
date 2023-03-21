@@ -13,6 +13,7 @@
             ],
             "essential": true,
             "environment": [],
+            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": []
         },
@@ -29,6 +30,7 @@
             ],
             "essential": true,
             "environment": [],
+            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": []
         },
@@ -45,18 +47,18 @@
             ],
             "essential": true,
             "environment": [],
+            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": []
         }
     ],
     "family": "gymcheck-ecs-containers",
     "executionRoleArn": "arn:aws:iam::528775740130:role/ecsTaskExecutionRole",
-    "networkMode": "awsvpc",
+    "networkMode": "bridge",
     "volumes": [],
     "placementConstraints": [],
     "requiresCompatibilities": [
-        "EC2",
-        "FARGATE"
+        "EC2"
     ],
     "cpu": "1024",
     "memory": "3072",
