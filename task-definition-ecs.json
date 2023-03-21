@@ -1,4 +1,5 @@
 {
+    "taskDefinitionArn": "arn:aws:ecs:us-east-1:528775740130:task-definition/gymcheck-ecs-containers:2",
     "containerDefinitions": [
         {
             "name": "api",
@@ -13,7 +14,6 @@
             ],
             "essential": true,
             "environment": [],
-            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": []
         },
@@ -30,7 +30,6 @@
             ],
             "essential": true,
             "environment": [],
-            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": []
         },
@@ -47,7 +46,6 @@
             ],
             "essential": true,
             "environment": [],
-            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": []
         }
@@ -55,16 +53,26 @@
     "family": "gymcheck-ecs-containers",
     "executionRoleArn": "arn:aws:iam::528775740130:role/ecsTaskExecutionRole",
     "networkMode": "bridge",
+    "revision": 2,
     "volumes": [],
+    "status": "ACTIVE",
     "placementConstraints": [],
-    "requiresCompatibilities": [
-        "EC2"
+    "compatibilities": [
+        "EXTERNAL",
+        "EC2",
+        "FARGATE"
     ],
-    "cpu": "1024",
+    "requiresCompatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "cpu": "2048",
     "memory": "3072",
     "runtimePlatform": {
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
+    "registeredAt": "2023-03-21T14:02:55.675Z",
+    "registeredBy": "arn:aws:iam::528775740130:root",
     "tags": []
 }

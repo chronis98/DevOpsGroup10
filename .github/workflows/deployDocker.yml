@@ -6,7 +6,7 @@ env:
   MYSQL_PASSWORD: ${{ secrets.AWS_RDS_PASSWORD }}
   MYSQL_HOST: ${{ secrets.AWS_RDS_HOST }}
   MYSQL_DATABASE: ${{ secrets.AWS_RDS_DBNAME }}
-  ECS_SERVICE: gymcheck-ecs-containers-deploy
+  ECS_SERVICE: gymcheck-ecs-containers-deploy-final
   ECS_CLUSTER: gymcheck
 
 on:
@@ -51,7 +51,7 @@ jobs:
       - name: Deploy to Amazon ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1.4.10
         with:
-          task-definition: ./task-definition.json
+          task-definition: ./task-definition-ecs.json
           service: ${{ env.ECS_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
           wait-for-service-stability: true
