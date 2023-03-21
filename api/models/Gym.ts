@@ -36,9 +36,7 @@ export default class Gym extends BaseEntity {
   })
   imagePath: string;
 
-  @OneToOne(() => Address, (address) => address.gym, {
-    cascade: ["update", "remove"]
-  })
+  @OneToOne(() => Address, (address) => address.gym)
   @JoinColumn()
   address: Promise<Address>;
 

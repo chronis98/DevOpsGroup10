@@ -16,9 +16,15 @@ export default class GymOwnership extends BaseEntity {
   })
   gymId: number;
 
-  @ManyToOne(() => UserOwner, (userOwner) => userOwner.gymOwnerships)
+  @ManyToOne(() => UserOwner, (userOwner) => userOwner.gymOwnerships, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE"
+  })
   userOwner: Promise<UserOwner>;
 
-  @ManyToOne(() => Gym, (gym) => gym.ownerships)
+  @ManyToOne(() => Gym, (gym) => gym.ownerships,{
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE"
+  })
   gym: Promise<Gym>;
 }

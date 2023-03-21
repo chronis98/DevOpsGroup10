@@ -46,6 +46,9 @@ export default class Address extends BaseEntity {
   })
   coords: LatLng = {lat: 0, long: 0}
 
-  @OneToOne(() => Gym, (gym) => gym.address)
+  @OneToOne(() => Gym, (gym) => gym.address, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE"
+  })
   gym: Promise<Gym>;
 }

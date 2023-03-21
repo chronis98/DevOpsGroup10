@@ -1,22 +1,26 @@
 <template>
   <div class="title">Gym Overview</div>
   <br><br>
-  <div v-for="l in locations">
-    <Card
-      source="https://img.freepik.com/premium-vector/barbell-dumbbell-gym-icon-logo-template-gym-badge-fitness-logo-design_757387-345.jpg?w=2000"
-      name='' :date="l.date" v-on:click.native="handleClick(l.name)">
-      <div class="gym_title"> {{ l.name }} </div>
-    </Card>
+  <div class="container">
+    <div v-for="gym in gyms">
+      <Card @click="handleClick(gym.id)">
+        <div>
+          <img :src="gym.imagePath" />
+        </div>
+        <div class="gym_title"> {{ gym.name }} </div>
+      </Card>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 
 import GymDetails from '../views/GymDetails.vue';
-import { defineComponent } from "vue";
-import type { Location } from "@/views/GymDetails.vue";
+import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
 import { RouteName } from "@/router";
+import type Address from "@/models/Address";
+import type OverviewGym from "@/models/Gym";
 import HelloWorld from '../components/HelloWorld.vue'
 import Card from '../views/Card.vue';
 
@@ -28,98 +32,31 @@ export default defineComponent({
   },
   name: 'GymOverview',
   setup() {
-    const locations: Location[] = [
-      {
-        name: "Basic-Fit Amsterdam", equipment: [
-          "Power rack",
-          "Chest fly machine",
-          "Bench Press",
-          "Incline bench press",
-          "Decline bench press",
-          "Adjustable bench",
-          "Olympic Weight Bench"
-        ], date: "11/02/2022", numberOfPeople: 4, complete: true
-      },
-      {
-        name: "Basic-Fit Amsterdam West", equipment: [
-          "Power rack",
-          "Chest fly machine",
-          "Bench Press",
-          "Incline bench press",
-          "Decline bench press",
-          "Adjustable bench",
-          "Olympic Weight Bench",
-          "Tricep Extension Machine",
-          "Shoulder Press Machine",
-          "Front Pull Down Machine"
-        ], date: "12/01/2022", numberOfPeople: 2, complete: true
-      },
-      {
-        name: "Basic-Fit Leiden", equipment: [
-          "Power rack",
-          "Chest fly machine",
-          "Bench Press"
-        ], date: "04/06/2021", numberOfPeople: 6, complete: true
-      },
-      {
-        name: "Power-Fit Diemen", equipment: [
-          "Power rack",
-          "Chest fly machine",
-          "Bench Press",
-          "Incline bench press",
-          "Decline bench press",
-          "Adjustable bench",
-          "Olympic Weight Bench",
-          "Tricep Extension Machine",
-          "Shoulder Press Machine",
-          "Front Pull Down Machine"
-        ], date: "08/10/2021", numberOfPeople: 10, complete: true
-      },
-      {
-        name: "Get-Fit Hilversum", equipment: [
-          "Power rack",
-          "Chest fly machine",
-          "Bench Press",
-          "Incline bench press",
-          "Decline bench press",
-          "Adjustable bench",
-          "Olympic Weight Bench",
-          "Tricep Extension Machine",
-          "Shoulder Press Machine",
-          "Front Pull Down Machine"
-        ], date: "12/12/2022", numberOfPeople: 14, complete: true
-      },
-      {
-        name: "Get-Fit Utrecht", equipment: [
-          "Power rack",
-          "Chest fly machine",
-          "Bench Press",
-          "Incline bench press",
-          "Decline bench press",
-          "Adjustable bench",
-          "Olympic Weight Bench",
-          "Tricep Extension Machine",
-          "Shoulder Press Machine",
-          "Front Pull Down Machine"
-        ], date: "10/02/2023", numberOfPeople: 12, complete: false
-      },
-      {
-        name: "Get-Fit Den Haag", equipment: [
-          "Power rack",
-          "Chest fly machine",
-          "Bench Press",
-          "Incline bench press"
-        ], date: "04/02/2020", numberOfPeople: 2, complete: true
-      }
-    ];
+    const url = `http://localhost:8000/api/gym`; // construct the URL with the value in the query string
 
+    fetch(url)
+    .then(response => response.json()) // assuming the response is JSON data
+    .then(data => {
+    console.log(data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+    const gymsRef = ref<OverviewGym[]>([]);
     const router = useRouter();
-    function handleClick(name: string): void {
-      router.push({ name: RouteName.GYM_DETAILS, params: { name } });
+    fetchGyms().then(gyms => gymsRef.value = gyms);
+
+    function fetchGyms(): Promise<OverviewGym[]> {
+      return fetch('http://localhost:8000/api/gym')
+        .then(res => res.json() as Promise<OverviewGym[]>);
+    }
+
+    function handleClick(gymId: number): void {
+      router.push({ name: RouteName.GYM_DETAILS, params: { gymId } });
     }
 
     return {
-      locations,
+      gyms: gymsRef,
       handleClick
     };
   }
@@ -132,7 +69,7 @@ export default defineComponent({
   font-style: 'large';
   font-size: 36.56px;
   color: #FDFDFD;
-  margin: 5px;
+  padding: 10px;
 }
 
 img {
@@ -145,4 +82,17 @@ img {
 .gym_title {
   margin: auto;
 
-}</style>
+}
+
+.container {
+  background-color: var(--vt-c-grey-soft);
+  padding: 10px;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: inherit;
+  justify-content: flex-start;
+  gap: 10px;
+  height: 100%;
+}
+</style>
