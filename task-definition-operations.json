@@ -6,7 +6,6 @@
             "cpu": 0,
             "portMappings": [
                 {
-                    "name": "api-8000-tcp",
                     "containerPort": 8000,
                     "hostPort": 8000,
                     "protocol": "tcp"
@@ -33,10 +32,9 @@
             "cpu": 0,
             "portMappings": [
                 {
-                    "name": "frontend-81-tcp",
                     "containerPort": 81,
                     "hostPort": 81,
-                    "protocol": "tcp",
+                    "protocol": "tcp"
                 }
             ],
             "essential": true,
@@ -60,10 +58,9 @@
             "cpu": 0,
             "portMappings": [
                 {
-                    "name": "cms-83-tcp",
                     "containerPort": 83,
                     "hostPort": 83,
-                    "protocol": "tcp",
+                    "protocol": "tcp"
                 }
             ],
             "essential": true,
