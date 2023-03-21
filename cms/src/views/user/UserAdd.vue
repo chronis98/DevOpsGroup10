@@ -6,17 +6,14 @@
 
   <div class="container">
     <div class="fields-group">
-      <!--      <label>ID: </label>-->
-      <!--      <span>{{ user.id }}</span>-->
-
       <label>Name: </label>
       <input :value="user.username" type="text"/>
 
       <label>Email: </label>
       <input :value="user.email" type="email"/>
 
-      <label>Created At: </label>
-      <input type="date"/>
+      <label>Password: </label>
+      <input :value="user.password" type="password"/>
     </div>
 
     <div class="button-group">
@@ -40,13 +37,12 @@ import {useRoute, useRouter} from "vue-router";
 type User = {
   username: string,
   email: string,
-  createdAt: Date
+  password: string
 }
 
 export default defineComponent({
   name: "UserAdd",
   setup() {
-    const route = useRoute();
     const router = useRouter();
     const userRef = ref<User>({} as User);
 
