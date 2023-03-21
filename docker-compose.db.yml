@@ -18,7 +18,7 @@ services:
   phpmyadmin:
     image: phpmyadmin:5.2-apache
     ports:
-      - 80:80
+      - 81:81
     depends_on:
       - mariadb
     volumes:
@@ -27,6 +27,7 @@ services:
       - TZ=Europe/Amsterdam
       - PMA_HOST=${MYSQL_HOST}
       - UPLOAD_LIMIT=100M
+      - PMA_PORT=81
     networks:
       - gymcheck
     restart: unless-stopped

@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: frontend/Dockerfile
     ports:
-      - 81:80
+      - 80:80
     restart: unless-stopped
     networks:
       - gymcheck
@@ -36,7 +36,7 @@ services:
       context: .
       dockerfile: cms/Dockerfile
     ports:
-      - 83:80
+      - 83:81
     restart: unless-stopped
     networks:
       - gymcheck
