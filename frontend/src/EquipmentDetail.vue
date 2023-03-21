@@ -1,12 +1,11 @@
 <template>
+  <div class="title">{{ equipmentName }}</div>
   <div class="center">
-
     <div class="container" v-if="equipment">
       <div class="flex-topwards">
         <img class="image" :src="equipment.imgPath" :alt="equipment.name">
-
         <div class="details-container">
-          <label>Name: </label> <span>{{ equipmentName }}</span>
+          <!-- <label>Name: </label> <span>{{ equipmentName }}</span> -->
           <label>First Added: </label> <span>{{ equipment.firstAdded.toLocaleString() }}</span>
           <label>Reports: </label> <span>{{ equipment.reports }}</span>
           <label>Confirmed: </label> <span>{{ equipment.confirmed.toLocaleString() }}</span>
@@ -87,9 +86,16 @@ export default defineComponent({
   height: 100%;
 }
 
+.title {
+  font-style: 'large';
+  font-size: 36.56px;
+  color: #FDFDFD;
+  padding: 10px;
+}
+
 .container {
   background-color: var(--vt-c-grey-soft);
-  padding: 20px 30px 0;
+  padding: 20px 10px 0;
   border-radius: 3px;
   display: flex;
   flex-direction: column;
@@ -97,6 +103,7 @@ export default defineComponent({
   justify-content: space-between;
   gap: 20px;
   height: 100%;
+  width: 100%;
 }
 
 .card_container {
@@ -106,6 +113,7 @@ export default defineComponent({
   flex-direction: column;
   justify-content: flex-start;
   gap: 10px;
+  width: 100%;
 }
 
 .flex-topwards {

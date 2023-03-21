@@ -2,17 +2,16 @@
   <div class="title">Gym Overview</div>
   <br><br>
   <div class="container">
-  <div v-for="l in locations">
-    <Card @click="handleClick(l.name)">
-      <div>
-        <img
-          src="https://img.freepik.com/premium-vector/barbell-dumbbell-gym-icon-logo-template-gym-badge-fitness-logo-design_757387-345.jpg?w=2000" />
-      </div>
-      <div class="gym_title"> {{ l.name }} </div>
-    </Card>
+    <div v-for="l in locations">
+      <Card @click="handleClick(l.name)">
+        <div>
+          <img
+            src="https://img.freepik.com/premium-vector/barbell-dumbbell-gym-icon-logo-template-gym-badge-fitness-logo-design_757387-345.jpg?w=2000" />
+        </div>
+        <div class="gym_title"> {{ l.name }} </div>
+      </Card>
+    </div>
   </div>
-  </div>
-
 </template>
 
 <script lang="ts">
@@ -151,6 +150,7 @@ img {
   margin: auto;
 
 }
+
 .container {
   background-color: var(--vt-c-grey-soft);
   padding: 10px;

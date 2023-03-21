@@ -3,35 +3,33 @@
   <div class="title">{{ gymName }}</div>
   <br><br>
   <div class="container">
-  <div v-for="(e, index) in gymEquipment">
-    <Card @click="viewDetails(e)">
-      <div class="image-container">
-        <img
-          src="https://static.vecteezy.com/system/resources/previews/015/845/432/original/gym-station-for-fitness-equipment-gym-station-icon-suitable-for-apps-website-developer-graphic-designer-needs-on-white-background-free-vector.jpg" />
-      </div>
-      <div class="gym_title"> {{ e }} </div>
-      <div v-if="Math.random() > 0.5">
-        <span class="checkmark">
-          <div class="checkmark_circle"></div>
-          <div class="checkmark_stem"></div>
-          <div class="checkmark_kick"></div>
-        </span>
-      </div>
-      <div v-else>
-        <span class="crosssign">
-          <div class="crosssign_circle"></div>
-          <div class="crosssign_stem"></div>
-          <div class="crosssign_stem2"></div>
-        </span>
-      </div>
-    </Card>
-  </div>
+    <div v-for="(e, index) in gymEquipment">
+      <Card @click="viewDetails(e)">
+        <div class="image-container">
+          <img
+            src="https://static.vecteezy.com/system/resources/previews/015/845/432/original/gym-station-for-fitness-equipment-gym-station-icon-suitable-for-apps-website-developer-graphic-designer-needs-on-white-background-free-vector.jpg" />
+        </div>
+        <div class="gym_title"> {{ e }} </div>
+        <div v-if="Math.random() > 0.5">
+          <span class="checkmark">
+            <div class="checkmark_circle"></div>
+            <div class="checkmark_stem"></div>
+            <div class="checkmark_kick"></div>
+          </span>
+        </div>
+        <div v-else>
+          <span class="crosssign">
+            <div class="crosssign_circle"></div>
+            <div class="crosssign_stem"></div>
+            <div class="crosssign_stem2"></div>
+          </span>
+        </div>
+      </Card>
+    </div>
 
   </div>
   <div @click="addEquipment(gymName)" class="plus radious">
   </div>
-
-
 </template>
 
 <script lang="ts">
@@ -153,7 +151,7 @@ export default defineComponent({
       router.push({ name: RouteName.EQUIPMENT_ADD, params: { gymName: gymName } });
     };
     function viewDetails(name: string): void {
-      router.push({ name: RouteName.EQUIPMENT_DETAILS, params: { gymName: gymName , equipmentName: name } });
+      router.push({ name: RouteName.EQUIPMENT_DETAILS, params: { gymName: gymName, equipmentName: name } });
     };
 
     return {
@@ -183,14 +181,14 @@ export default defineComponent({
 }
 
 .card .image-container {
-	width: 50px;
-	height: 50px;
+  width: 50px;
+  height: 50px;
 
-	img {
-		width: 100%;
-		height: 100%;
-		border-radius: 10%;
-	}
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10%;
+  }
 }
 
 .plus:hover {
@@ -306,6 +304,7 @@ export default defineComponent({
   margin: auto;
 
 }
+
 .container {
   background-color: var(--vt-c-grey-soft);
   padding: 10px;
