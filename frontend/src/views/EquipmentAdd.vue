@@ -40,18 +40,18 @@ export default defineComponent({
       await delay(1000);
       return [{
         id: 1,
-        category: { id: 5, name: "xronis" },
         name: "test",
         imagePath: "test",
-        description: "Hello darkness my old friend"
-
+        description: "Hello darkness my old friend",
+	      reportsCount: 10,
+	      status: 1
       }, {
         id: 2,
-        category: { id: 5, name: "xronis2" },
         name: "test2",
         imagePath: "test2",
-        description: "Hello darkness my old friend2"
-
+        description: "Hello darkness my old friend2",
+	      reportsCount: 10,
+	      status: 0
       }];
     }
     fetchEquipment().then(equipments => equipmentsRef.value = equipments);
