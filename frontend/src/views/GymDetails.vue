@@ -68,8 +68,8 @@
 				router.push({name: RouteName.EQUIPMENT_ADD, params: {gymId}});
 			}
 
-			function viewDetails(id: number): void {
-				router.push({name: RouteName.EQUIPMENT_DETAILS, params: {gymId, equipmentId: id}});
+			function viewDetails(equipmentId: number): void {
+				router.push({name: RouteName.EQUIPMENT_DETAILS, params: {gymId, equipmentId: equipmentId}});
 			}
 
 			return {

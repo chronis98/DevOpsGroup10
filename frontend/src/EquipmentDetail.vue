@@ -1,9 +1,9 @@
 <template>
-  <div class="title">Equipment details</div>
+  <div class="title">{{ equipment.name }}</div>
   <div class="center">
     <div class="container" v-if="equipment">
       <div class="flex-topwards">
-        <img class="image" :src="equipment.imgPath" :alt="equipment.name">
+        <img class="image" :src="equipment.imagePath" :alt="equipment.name">
         <div class="details-container">
           <template v-for="field in fields">
             <label>{{ field.label }}: </label> <span>{{ field.value }}</span>
@@ -11,9 +11,9 @@
         </div>
       </div>
       <div class="card-container">
-        <div v-for="report in  reports">
+        <div v-for="report in  equipment.reports">
           <Card @click="navigateToReportsOverview">
-            <div class="gym_title">{{ report }}</div>
+            <div class="gym_title">{{ report.comment }}</div>
           </Card>
         </div>
       </div>
@@ -68,7 +68,8 @@ export default defineComponent({
       }
 
 			const firstAdded = equipment.reports[0]?.createdAt || '-';
-
+      const reports = equipment.reports;
+      const name=equipment.name;
       return [{
         label: 'First added',
         value: firstAdded
@@ -89,7 +90,6 @@ export default defineComponent({
     return {
       equipment: equipmentRef,
       equipmentId,
-      reports,
       navigateToReportsOverview,
       navigateToReportsAdd,
       fields
@@ -150,6 +150,12 @@ export default defineComponent({
 .details-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
+}
+
+.details {
+  font-size: 18.56px;
+  color: #FDFDFD;
+  margin: 10px 10px 10px 5px;
 }
 
 .buttons-container {
