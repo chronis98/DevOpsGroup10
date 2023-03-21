@@ -39,9 +39,12 @@
 <script lang="ts">
 import {defineComponent, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
-import type {User} from "@/entities/User";
 
-type EditUser = { password: string } & User;
+type User = {
+  username: string,
+  email: string,
+  password: string
+};
 
 export default defineComponent({
   name: "UserEdit",
@@ -49,7 +52,7 @@ export default defineComponent({
     const route = useRoute();
     const router = useRouter();
     // const user: User = {} as User;
-    const userRef = ref<EditUser | null>(null);
+    const userRef = ref<User | null>(null);
 
     getUser(Number(route.params.id)).then(user => {
       userRef.value = {...user, password: ""};

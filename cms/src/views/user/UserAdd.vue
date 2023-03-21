@@ -33,15 +33,18 @@
 <script lang="ts">
 import {defineComponent, ref} from "vue";
 import {useRouter} from "vue-router";
-import {User} from "@/entities/User";
 
-type EditUser = { password: string } & User;
+type User = {
+  username: string,
+  email: string,
+  password: string
+};
 
 export default defineComponent({
   name: "UserAdd",
   setup() {
     const router = useRouter();
-    const userRef = ref<EditUser>({} as EditUser);
+    const userRef = ref<User>({} as User);
 
     function goBack() {
       router.back();
