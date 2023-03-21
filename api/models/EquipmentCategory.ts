@@ -12,8 +12,6 @@ export default class EquipmentCategory extends BaseEntity {
   })
   name: string = '';
 
-  @OneToMany(() => Equipment, (equipment) => equipment.category, {
-    cascade: ["update", "remove"]
-  })
+  @OneToMany(() => Equipment, (equipment) => equipment.category)
   equipment?: Promise<Equipment[]>;
 }

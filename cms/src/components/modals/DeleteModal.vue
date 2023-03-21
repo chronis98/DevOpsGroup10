@@ -8,7 +8,7 @@
           <font-awesome-icon icon="fa-solid fa-xmark"/>
           Cancel
         </button>
-        <button class="button button-primary">
+        <button class="button button-primary" @click="$emit('delete')">
           <font-awesome-icon icon="fa-solid fa-trash"/>
           Delete
         </button>
@@ -17,13 +17,18 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "DeleteModal"
-}
+<script lang="ts">
+import {defineComponent} from "vue";
+// import {User} from "@/entities/User";
+import {useRoute} from "vue-router";
+import type {User} from "@/entities/User";
+
+export default defineComponent({
+  name: "DeleteModal",
+});
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 .modal-overlay {
   position: fixed;
