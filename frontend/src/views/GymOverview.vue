@@ -47,7 +47,7 @@ export default defineComponent({
     fetchGyms().then(gyms => gymsRef.value = gyms);
 
     function fetchGyms(): Promise<OverviewGym[]> {
-      return fetch('http://localhost:8000/api/gym')
+      return fetch(`${process.env.API_HOST}/api/gym`)
         .then(res => res.json() as Promise<OverviewGym[]>);
     }
 

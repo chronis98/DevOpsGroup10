@@ -54,7 +54,7 @@ export default defineComponent({
     fetchEquipment().then(equipment => equipmentRef.value = equipment);
 
     function fetchEquipment(): Promise<DetailEquipment> {
-      return fetch(`http://localhost:8000/api/gym/${gymId}/equipment/${equipmentId}`)
+      return fetch(`${process.env.API_HOST}/api/gym/${gymId}/equipment/${equipmentId}`)
         .then(res => res.json() as Promise<DetailEquipment>);
     }
 

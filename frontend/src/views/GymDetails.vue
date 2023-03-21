@@ -51,7 +51,7 @@
 			fetchGym().then(gym => gymRef.value = gym);
 
 			function fetchGym(): Promise<DetailGym> {
-				return fetch(`http://localhost:8000/api/gym/${gymId}`)
+				return fetch(`${process.env.API_HOST}/api/gym/${gymId}`)
 						.then(res => res.json() as Promise<DetailGym>);
 			}
 
