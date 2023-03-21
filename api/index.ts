@@ -124,6 +124,9 @@ AppDataSource.initialize()
             equipmentId: parseInt(req.params.equipmentId),
             gymId: parseInt(req.params.gymId)
           },
+          order: {
+            createdAt: 'DESC'
+          },
           take: 5
         });
 

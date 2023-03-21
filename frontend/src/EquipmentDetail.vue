@@ -33,7 +33,7 @@ import { RouteName } from "@/router";
 import Card from '@/views/Card.vue';
 import Reports from '@/views/Reports.vue';
 import type Equipment from "./models/Equipment";
-import type EquipmentResponse from "./models/EquipmentResponse";
+import type DetailEquipment from "./models/EquipmentResponse";
 
 type Field = {
   label: string;
@@ -47,45 +47,34 @@ export default defineComponent({
     Reports
   },
   setup() {
-    const equipmentRef = ref<EquipmentResponse | null>(null);
+    const equipmentRef = ref<DetailEquipment | null>(null);
     const route = useRoute();
     const equipmentId = route.params.equipmentId;
     const gymId = route.params.gymId;
-    fetchGym().then(equipment => equipmentRef.value = equipment);
+    fetchEquipment().then(equipment => equipmentRef.value = equipment);
 
-    function fetchGym(): Promise<EquipmentResponse> {
+    function fetchEquipment(): Promise<DetailEquipment> {
       return fetch(`http://localhost:8000/api/gym/${gymId}/equipment/${equipmentId}`)
-        .then(res => res.json() as Promise<EquipmentResponse>);
+        .then(res => res.json() as Promise<DetailEquipment>);
     }
-    // getEquipment(equipmentName).then(equipment => equipmentRef.value = equipment);
-    const router = useRouter();
 
-    // async function getEquipment(name: string): Promise<EquipmentResponse> {
-    // 	return {
-    // 		imgPath: "https://www.bestusedgymequipment.com/wp-content/uploads/2018/04/olympic-flat-bench-300x300.jpg",
-    // 		name: "",
-    // 		firstAdded: new Date(),
-    // 		reports: 10,
-    // 		confirmed: new Date()
-    // 	};
-    // }
+    const router = useRouter();
 
     const fields = computed((): Field[] => {
       const equipment = equipmentRef.value;
-      
+
       if (!equipment) {
         return [];
       }
 
+			const firstAdded = equipment.reports[0]?.createdAt || '-';
+
       return [{
         label: 'First added',
-        value: equipment
+        value: firstAdded
       }, {
         label: 'Reports',
-        value: equipment.reports
-      }, {
-        label: 'Confirmed',
-        value: equipment.confirmed
+        value: equipment.reports.length.toString()
       }];
     });
 
