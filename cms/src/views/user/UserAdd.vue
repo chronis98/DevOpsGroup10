@@ -32,7 +32,7 @@
 
 <script lang="ts">
 import {defineComponent, ref} from "vue";
-import {useRoute, useRouter} from "vue-router";
+import {useRouter} from "vue-router";
 
 type User = {
   username: string,

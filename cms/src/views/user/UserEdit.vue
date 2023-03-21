@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, watch} from "vue";
+import {defineComponent, ref} from "vue";
 import type {User} from "@/entities/User";
 import {useRoute, useRouter} from "vue-router";
 
