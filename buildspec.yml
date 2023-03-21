@@ -1,0 +1,12 @@
+install:
+  runtime-versions:
+    docker: 18
+pre-build:
+  commands:
+    echo "pre-build"
+build:
+  commands:
+   echo "build"
+post-build:
+  commands:
+    echo "post-build"
