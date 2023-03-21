@@ -6,8 +6,9 @@
             "cpu": 0,
             "portMappings": [
                 {
+                    "name": "api-8000-tcp",
                     "containerPort": 8000,
-                    "hostPort": 0,
+                    "hostPort": 8000,
                     "protocol": "tcp"
                 }
             ],
@@ -15,7 +16,16 @@
             "environment": [],
             "environmentFiles": [],
             "mountPoints": [],
-            "volumesFrom": []
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/ecs-deploy-gymcheck-operations",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
         },
         {
             "name": "frontend",
@@ -23,16 +33,26 @@
             "cpu": 0,
             "portMappings": [
                 {
-                    "containerPort": 80,
-                    "hostPort": 0,
-                    "protocol": "tcp"
+                    "name": "frontend-81-tcp",
+                    "containerPort": 81,
+                    "hostPort": 81,
+                    "protocol": "tcp",
                 }
             ],
             "essential": true,
             "environment": [],
             "environmentFiles": [],
             "mountPoints": [],
-            "volumesFrom": []
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/ecs-deploy-gymcheck-operations",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
         },
         {
             "name": "cms",
@@ -40,25 +60,61 @@
             "cpu": 0,
             "portMappings": [
                 {
-                    "containerPort": 80,
-                    "hostPort": 0,
-                    "protocol": "tcp"
+                    "name": "cms-83-tcp",
+                    "containerPort": 83,
+                    "hostPort": 83,
+                    "protocol": "tcp",
                 }
             ],
             "essential": true,
             "environment": [],
             "environmentFiles": [],
             "mountPoints": [],
-            "volumesFrom": []
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/ecs-deploy-gymcheck-operations",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
         }
     ],
-    "family": "gymcheck-ecs-containers",
+    "family": "ecs-deploy-gymcheck-operations",
     "executionRoleArn": "arn:aws:iam::528775740130:role/ecsTaskExecutionRole",
-    "networkMode": "bridge",
+    "networkMode": "awsvpc",
+    "revision": 3,
     "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+            "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+        }
+    ],
     "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
     "requiresCompatibilities": [
-        "EC2"
+        "FARGATE"
     ],
     "cpu": "1024",
     "memory": "3072",

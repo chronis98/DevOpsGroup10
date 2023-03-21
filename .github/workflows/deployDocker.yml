@@ -6,8 +6,6 @@ env:
   MYSQL_PASSWORD: ${{ secrets.AWS_RDS_PASSWORD }}
   MYSQL_HOST: ${{ secrets.AWS_RDS_HOST }}
   MYSQL_DATABASE: ${{ secrets.AWS_RDS_DBNAME }}
-  ECS_SERVICE: gymcheck-ecs-containers-deploy-final
-  ECS_CLUSTER: gymcheck
 
 on:
   push:
@@ -44,14 +42,14 @@ jobs:
           for service in $(docker-compose config --services); do
             echo "Building and pushing $service..."
             docker-compose build $service
-            docker tag $service $ECR_REGISTRY/$ECR_REPOSITORY/$service:$IMAGE_TAG
-            docker image push $ECR_REGISTRY/$ECR_REPOSITORY/$service:$IMAGE_TAG
+            # docker tag $service $ECR_REGISTRY/$ECR_REPOSITORY/$service:$IMAGE_TAG
+            # docker image push $ECR_REGISTRY/$ECR_REPOSITORY/$service:$IMAGE_TAG
           done
 
       - name: Deploy to Amazon ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1.4.10
         with:
           task-definition: ./task-definition-ecs.json
-          service: ${{ env.ECS_SERVICE }}
-          cluster: ${{ env.ECS_CLUSTER }}
+          service: gymcheck-deploy-service-operations
+          cluster: gymcheck-operations
           wait-for-service-stability: true
