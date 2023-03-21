@@ -2,10 +2,10 @@
 name: Deploy docker containers to ECS
 
 env:
-  MYSQL_USER=${{ secrets.AWS_RDS_USERNAME }}
-  MYSQL_PASSWORD=${{ secrets.AWS_RDS_PASSWORD }}
-  MYSQL_HOST=${{ secrets.AWS_RDS_HOST }}
-  MYSQL_DATABASE=${{ secrets.AWS_RDS_DBNAME }}
+  MYSQL_USER: ${{ secrets.AWS_RDS_USERNAME }}
+  MYSQL_PASSWORD: ${{ secrets.AWS_RDS_PASSWORD }}
+  MYSQL_HOST: ${{ secrets.AWS_RDS_HOST }}
+  MYSQL_DATABASE: ${{ secrets.AWS_RDS_DBNAME }}
 
 on:
   push:
