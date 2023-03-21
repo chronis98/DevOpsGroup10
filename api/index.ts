@@ -49,6 +49,44 @@ AppDataSource.initialize()
         res.json(result);
       });
 
+      app.get('/api/gym/:id', async (req: Request<{id: string}>, res: Response) => {
+        const gymId = parseInt(req.params.id);
+        const gym = await AppDataSource.manager.findOneBy(Gym, {id: gymId});
+        
+        if (!gym) {
+          return res.status(404).json({
+            message: `No gym found with id ${gymId}`
+          });
+        }
+
+        const equipments = await AppDataSource.manager
+          .createQueryBuilder(Equipment, 'equipment')
+          .innerJoin(Report, 'report', 'report.equipmentId = equipment.id')
+          .innerJoin(Gym, 'gym', 'gym.id = report.gymId')
+          .where('gym.id = :gymId', {gymId})
+          .getMany();
+
+        const gymPresentables = gyms.map(async gym => ({
+          id: gym.id,
+          name: gym.name,
+          imagePath: gym.imagePath,
+          address: await gym.address
+        }));
+        const result = await Promise.all(gymPresentables);
+        res.json({
+          id: gym.id,
+          name: gym.name,
+          imagePath: gym.imagePath,
+          equipments: equipments.map(equipment => ({
+            id: equipment.id,
+            name: equipment.name,
+            imagePath: equipment.imagePath,
+            status: equipment
+          }))
+        });
+      });
+      
+
       app.get('/api/gym/:gymId/equipment/:equipmentId', async (req: Request<Record<'gymId' | 'equipmentId', string>>, res: Response) => {
         const equipmentPromise = Equipment.findOne({
           relations: {
