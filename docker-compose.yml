@@ -2,7 +2,7 @@ version: '3'
 
 services:
   frontend:
-    image: devopsgroup10projectdev/frontend
+    image: aws/frontend
     build:
       context: .
       dockerfile: frontend/Dockerfile
@@ -13,7 +13,7 @@ services:
       - gymcheck
 
   api:
-    image: devopsgroup10projectdev/api
+    image: aws/api
     build:
       context: .
       dockerfile: api/Dockerfile
@@ -31,7 +31,7 @@ services:
     
 
   cms:
-    image: devopsgroup10projectdev/cms
+    image: aws/cms
     build:
       context: .
       dockerfile: cms/Dockerfile
