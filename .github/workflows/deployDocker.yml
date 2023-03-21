@@ -1,0 +1,21 @@
+---
+name: Deploy docker containers to ECS
+
+on:
+  push:
+    branches:
+      - docker
+  pull_request:
+    branches:
+      - docker
+
+jobs:
+  zip-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+
+
+
