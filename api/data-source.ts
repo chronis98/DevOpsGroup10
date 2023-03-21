@@ -22,4 +22,5 @@ export const AppDataSource = new DataSource({
     entities: [User, UserOwner, Equipment, Address, EquipmentCategory, Gym, GymOwnership, Report, ReportVerification],
     migrations: [],
     subscribers: [],
+    legacySpatialSupport: false
 })
