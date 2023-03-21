@@ -1,12 +1,26 @@
-install:
-  runtime-versions:
-    docker: 18
-pre-build:
-  commands:
-    echo "pre-build"
-build:
-  commands:
-   echo "build"
-post-build:
-  commands:
-    echo "post-build"
+ version: 0.1
+ phases:
+  install:
+    runtime-versions:
+      docker: 18
+  pre-build:
+    commands:
+      - echo Logging in to Amazon ECR... 
+      - aws --version 
+      - REPOSITORY_URI=528775740130.dkr.ecr.us-east-1.amazonaws.com/devopsgroup10projectdev
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7) 
+      - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}') 
+  build:
+    commands:
+    - echo "building images"
+    - docker build -t frontend:latest ./frontend
+    - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG 
+    - docker build -t api:latest ./api
+    - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+    - docker build -t cms:latest ./cms
+    - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+
+  post-build``:
+    commands:
+     - docker push $REPOSITORY_URI:latest
+     - docker push $REPOSITORY_URI:$IMAGE_TAG  
