@@ -29,27 +29,27 @@ const router = createRouter({
       redirect: {name: RouteName.GYM_OVERVIEW}
     },
     {
-      path: '/gym/:gymName',
+      path: '/gym/:gymId',
       name: RouteName.GYM_DETAILS,
       component: GymDetails,
     },
     {
-      path: '/gym/:gymName/equipment/:equipmentName',
+      path: '/gym/:gymId/equipment/:equipmentId',
       name: RouteName.EQUIPMENT_DETAILS,
       component: EquipmentDetail,
     },
     {
-      path: '/gym/:gymName/equipment/add',
+      path: '/gym/:gymId/equipment/add',
       name: RouteName.EQUIPMENT_ADD,
       component: EquipmentAdd,
     },
     {
-      path: '/gym/:gymName/equipment/:equipmentName/reports',
+      path: '/gym/:gymId/equipment/:equipmentId/reports',
       name: RouteName.REPORTS,
       component: Reports,
     },
     {
-      path: '/gym/:gymName/equipment/:equipmentName/reports/add',
+      path: '/gym/:gymId/equipment/:equipmentId/reports/add',
       name: RouteName.REPORTS_ADD,
       component: ReportsAdd,
     }

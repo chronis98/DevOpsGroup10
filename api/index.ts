@@ -138,6 +138,58 @@ AppDataSource.initialize()
         res.status(204).json();
       });
 
+      app.get('/api/gym/:id', async (req: Request<{ id: string }>, res: Response) => {
+        const gymId = parseInt(req.params.id);
+        const gym = await AppDataSource.manager.findOneBy(Gym, {id: gymId});
+
+        if (!gym) {
+          return res.status(404).json({
+            message: `No gym found with id ${gymId}`
+          });
+        }
+
+        const equipments = await AppDataSource.manager
+            .createQueryBuilder(Equipment, 'equipment')
+            .addSelect('COUNT(report.id)', 'reportsCount')
+            .addSelect('FIRST_VALUE(report.status) OVER (ORDER BY report.createdAt)', 'mostRecentReportStatus')
+            .innerJoin(Report, 'report', 'report.equipmentId = equipment.id')
+            .innerJoin(Gym, 'gym', 'gym.id = report.gymId')
+            .where('gym.id = :gymId', {gymId})
+            .groupBy('equipment.id')
+            .orderBy('report.createdAt', 'DESC')
+            .getRawMany<{
+              equipment_id: number,
+              equipment_categoryId: number,
+              equipment_name: string,
+              equipment_description: string,
+              equipment_imagePath: string,
+              reportsCount: `${number}`,
+              mostRecentReportStatus: null | 0 | 1
+            }>();
+
+        res.json({
+          id: gym.id,
+          name: gym.name,
+          imagePath: gym.imagePath,
+          equipments: equipments.map(({
+                                        equipment_id,
+                                        equipment_categoryId,
+                                        equipment_name,
+                                        equipment_description,
+                                        equipment_imagePath,
+                                        reportsCount,
+                                        mostRecentReportStatus
+                                      }) => ({
+            id: equipment_id,
+            name: equipment_name,
+            description: equipment_description,
+            imagePath: equipment_imagePath,
+            reportsCount: parseInt(reportsCount),
+            status: mostRecentReportStatus
+          }))
+        });
+      });
+
       app.get('/api/gym/:gymId/equipment/:equipmentId', async (req: Request<Record<'gymId' | 'equipmentId', string>>, res: Response) => {
         const equipmentPromise = Equipment.findOne({
           relations: {

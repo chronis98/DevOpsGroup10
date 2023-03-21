@@ -9,7 +9,7 @@ import UserOwner from "./models/UserOwner";
 import ReportVerification from "./models/ReportVerification";
 import Gym from "./models/Gym";
 import GymOwnership from "./models/GymOwnership";
-
+console.log(process.env);
 export const AppDataSource = new DataSource({
     type: "mysql",
     host: process.env.MYSQL_HOST,
