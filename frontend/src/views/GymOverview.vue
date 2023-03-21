@@ -1,12 +1,16 @@
 <template>
   <div class="title">Gym Overview</div>
   <br><br>
-  <div v-for="l in locations">
-    <Card
-      source="https://img.freepik.com/premium-vector/barbell-dumbbell-gym-icon-logo-template-gym-badge-fitness-logo-design_757387-345.jpg?w=2000"
-      name='' :date="l.date" v-on:click.native="handleClick(l.name)">
-      <div class="gym_title"> {{ l.name }} </div>
-    </Card>
+  <div class="container">
+    <div v-for="l in locations">
+      <Card @click="handleClick(l.name)">
+        <div>
+          <img
+            src="https://img.freepik.com/premium-vector/barbell-dumbbell-gym-icon-logo-template-gym-badge-fitness-logo-design_757387-345.jpg?w=2000" />
+        </div>
+        <div class="gym_title"> {{ l.name }} </div>
+      </Card>
+    </div>
   </div>
 </template>
 
@@ -115,7 +119,7 @@ export default defineComponent({
 
     const router = useRouter();
     function handleClick(name: string): void {
-      router.push({ name: RouteName.GYM_DETAILS, params: { name } });
+      router.push({ name: RouteName.GYM_DETAILS, params: { gymName: name } });
     }
 
     return {
@@ -132,7 +136,7 @@ export default defineComponent({
   font-style: 'large';
   font-size: 36.56px;
   color: #FDFDFD;
-  margin: 5px;
+  padding: 10px;
 }
 
 img {
@@ -145,4 +149,17 @@ img {
 .gym_title {
   margin: auto;
 
-}</style>
+}
+
+.container {
+  background-color: var(--vt-c-grey-soft);
+  padding: 10px;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: inherit;
+  justify-content: flex-start;
+  gap: 10px;
+  height: 100%;
+}
+</style>
