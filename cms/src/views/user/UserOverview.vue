@@ -71,7 +71,7 @@ export default defineComponent({
     }));
 
     async function getUsers(): Promise<User[]> {
-      return fetch(`http://localhost:8000/api/user`)
+      return fetch(`${window.location.origin}:8000/api/user`)
           .then(res => res.json() as Promise<User[]>);
     }
 
@@ -89,7 +89,7 @@ export default defineComponent({
     }
 
     async function closeModalAndDelete() {
-      await fetch(`http://localhost:8000/api/user/${selectedUser.value!.id}`, {
+      await fetch(`${window.location.origin}:8000/api/user/${selectedUser.value!.id}`, {
         method: 'DELETE'
       }).then(res => res.json() as Promise<User>);
       showModal.value = false;

@@ -46,7 +46,7 @@
 					.then(equipment => equipmentRef.value = equipment);
 
 			function fetchEquipment(): Promise<DetailEquipment> {
-				return fetch(`http://localhost:8000/api/gym/${gymId}/equipment/${equipmentId}`)
+				return fetch(`${window.location.origin}:8000/api/gym/${gymId}/equipment/${equipmentId}`)
 						.then(res => res.json() as Promise<DetailEquipment>);
 			}
 
@@ -62,7 +62,7 @@
 			}
 
 			function submitReport(): void {
-				fetch(`http://localhost:8000/api/gym/${gymId}/equipment/${equipmentId}`, {
+				fetch(`${window.location.origin}:8000/api/gym/${gymId}/equipment/${equipmentId}`, {
 					method: 'POST',
 					body: JSON.stringify({
 						status: getStatusForPOST(statusRef.value),
