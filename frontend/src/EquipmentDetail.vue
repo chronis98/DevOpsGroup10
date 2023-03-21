@@ -46,7 +46,7 @@
 			Reports
 		},
 		setup() {
-			const equipmentRef = ref<DetailEquipment | null>(null);
+			const equipmentRef = ref<DetailEquipment>(null as unknown as DetailEquipment);
 			const route = useRoute();
 			const equipmentId = route.params.equipmentId;
 			const gymId = route.params.gymId;
