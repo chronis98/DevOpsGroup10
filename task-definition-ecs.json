@@ -51,14 +51,14 @@
     ],
     "family": "gymcheck-ecs-containers",
     "executionRoleArn": "arn:aws:iam::528775740130:role/ecsTaskExecutionRole",
-    "networkMode": "bridge",
+    "networkMode": "awsvpc",
     "volumes": [],
     "placementConstraints": [],
     "requiresCompatibilities": [
         "EC2",
         "FARGATE"
     ],
-    "cpu": "2048",
+    "cpu": "1024",
     "memory": "3072",
     "runtimePlatform": {
         "cpuArchitecture": "X86_64",
