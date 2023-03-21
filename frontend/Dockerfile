@@ -1,4 +1,4 @@
-#install npm 
+#install npm
 FROM node:19.7.0-alpine AS node-builder
 
 WORKDIR /frontend
@@ -8,6 +8,8 @@ COPY frontend/package*.json ./
 RUN npm install
 
 COPY frontend/. .
+
+RUN cat .env
 
 RUN npm run build
 

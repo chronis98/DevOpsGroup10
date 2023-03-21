@@ -69,13 +69,13 @@ export default defineComponent({
     }
 
     async function fetchUser(id: number): Promise<User> {
-      return fetch(`${process.env.API_HOST}/api/user/${id}`)
+      return fetch(`http://localhost:8000/api/user/${id}`)
           .then(res => res.json() as Promise<User>);
     }
 
     async function saveUser(): Promise<User> {
       const {username, email} = formUserRef.value;
-      return fetch(`${process.env.API_HOST}/api/user/${route.params.id}`, {
+      return fetch(`http://localhost:8000/api/user/${route.params.id}`, {
         method: 'PUT',
         body: JSON.stringify({
           username,

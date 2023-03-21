@@ -8,7 +8,6 @@ import EquipmentDetail from "@/EquipmentDetail.vue";
 
 <template>
   <Header/>
-  <AddEquipment/>
   <RouterView />
 </template>
 
