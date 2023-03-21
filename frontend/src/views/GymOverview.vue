@@ -20,7 +20,7 @@ import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
 import { RouteName } from "@/router";
 import type Address from "@/models/Address";
-import type Gym from "@/models/Gym";
+import type OverviewGym from "@/models/Gym";
 import HelloWorld from '../components/HelloWorld.vue'
 import Card from '../views/Card.vue';
 
@@ -42,13 +42,13 @@ export default defineComponent({
     .catch(error => {
       console.error(error);
     });
-    const gymsRef = ref<Gym[]>([]);
+    const gymsRef = ref<OverviewGym[]>([]);
     const router = useRouter();
     fetchGyms().then(gyms => gymsRef.value = gyms);
 
-    function fetchGyms(): Promise<Gym[]> {
+    function fetchGyms(): Promise<OverviewGym[]> {
       return fetch('http://localhost:8000/api/gym')
-        .then(res => res.json() as Promise<Gym[]>);
+        .then(res => res.json() as Promise<OverviewGym[]>);
     }
 
     function handleClick(gymId: number): void {
