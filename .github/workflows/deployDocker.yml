@@ -42,8 +42,8 @@ jobs:
           for service in $(docker-compose config --services); do
             echo "Building and pushing $service..."
             docker-compose build $service
-            docker tag $service:latest 528775740130.dkr.ecr.us-east-1.amazonaws.com/$REPOSITORY_NAME:$service-latest
-            docker push 528775740130.dkr.ecr.us-east-1.amazonaws.com/$REPOSITORY_NAME:$service-latest
+            docker tag $service:latest 528775740130.dkr.ecr.us-east-1.amazonaws.com/$REPOSITORY_NAME:latest
+            docker push 528775740130.dkr.ecr.us-east-1.amazonaws.com/$REPOSITORY_NAME:latest
           done
       
 
