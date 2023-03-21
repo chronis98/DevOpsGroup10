@@ -34,113 +34,29 @@
 
 <script lang="ts">
 
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import router, { RouteName } from "@/router";
+import Equipment from '@/models/EquipmentV2';
+import Gym from '@/models/Gym';
 import Card from '../views/Card.vue';
-
-export type Location = {
-  name: string;
-  equipment: string[];
-  date: string;
-  numberOfPeople: number;
-  complete: boolean;
-};
 
 export default defineComponent({
   components: { Card },
   name: "GymDetails",
   setup() {
     const route = useRoute();
-    const locations: Location[] = [
-      {
-        name: "Basic-Fit Amsterdam", equipment: [
-          "Power rack",
-          "Chest fly machine",
-          "Bench Press",
-          "Incline bench press",
-          "Decline bench press",
-          "Adjustable bench",
-          "Olympic Weight Bench"
-        ], date: "11/02/2022", numberOfPeople: 4, complete: true
-      },
-      {
-        name: "Basic-Fit Amsterdam West", equipment: [
-          "Power rack",
-          "Chest fly machine",
-          "Bench Press",
-          "Incline bench press",
-          "Decline bench press",
-          "Adjustable bench",
-          "Olympic Weight Bench",
-          "Tricep Extension Machine",
-          "Shoulder Press Machine",
-          "Front Pull Down Machine"
-        ], date: "12/01/2022", numberOfPeople: 2, complete: true
-      },
-      {
-        name: "Basic-Fit Leiden", equipment: [
-          "Power rack",
-          "Chest fly machine",
-          "Bench Press"
-        ], date: "04/06/2021", numberOfPeople: 6, complete: true
-      },
-      {
-        name: "Power-Fit Diemen", equipment: [
-          "Power rack",
-          "Chest fly machine",
-          "Bench Press",
-          "Incline bench press",
-          "Decline bench press",
-          "Adjustable bench",
-          "Olympic Weight Bench",
-          "Tricep Extension Machine",
-          "Shoulder Press Machine",
-          "Front Pull Down Machine"
-        ], date: "08/10/2021", numberOfPeople: 10, complete: true
-      },
-      {
-        name: "Get-Fit Hilversum", equipment: [
-          "Power rack",
-          "Chest fly machine",
-          "Bench Press",
-          "Incline bench press",
-          "Decline bench press",
-          "Adjustable bench",
-          "Olympic Weight Bench",
-          "Tricep Extension Machine",
-          "Shoulder Press Machine",
-          "Front Pull Down Machine"
-        ], date: "12/12/2022", numberOfPeople: 14, complete: true
-      },
-      {
-        name: "Get-Fit Utrecht", equipment: [
-          "Power rack",
-          "Chest fly machine",
-          "Bench Press",
-          "Incline bench press",
-          "Decline bench press",
-          "Adjustable bench",
-          "Olympic Weight Bench",
-          "Tricep Extension Machine",
-          "Shoulder Press Machine",
-          "Front Pull Down Machine"
-        ], date: "10/02/2023", numberOfPeople: 12, complete: false
-      },
-      {
-        name: "Get-Fit Den Haag", equipment: [
-          "Power rack",
-          "Chest fly machine",
-          "Bench Press",
-          "Incline bench press"
-        ], date: "04/02/2020", numberOfPeople: 2, complete: true
-      }
-    ];
-
-    const gymName = route.params.gymName as string;
-    const gym = locations.find(location => location.name === gymName);
-
-    if (!gym) {
+    const equipmentRef = ref<Gym[]>([]);
+    const router = useRouter();
+    const gymId = route.params.gymId ;
+    fetchGyms().then(equipment=> equipmentRef.value.equipments= equipment);
+    
+    function fetchGyms(): Promise<Gym[]> {
+      return fetch('http://localhost:8000/api/gym/${gymId}/')
+        .then(res => res.json() as Promise<Gym[]>);
+    }
+    console.log(equipmentRef.value);
+    if (!gymId) {
       const router = useRouter();
       router.push({ name: RouteName.GYM_OVERVIEW });
     }
@@ -148,16 +64,15 @@ export default defineComponent({
     const card = document.getElementById("test");
     console.log(card);
     function addEquipment(name: string): void {
-      router.push({ name: RouteName.EQUIPMENT_ADD, params: { gymName: gymName } });
+      router.push({ name: RouteName.EQUIPMENT_ADD, params: { gymId } });
     };
     function viewDetails(name: string): void {
-      router.push({ name: RouteName.EQUIPMENT_DETAILS, params: { gymName: gymName, equipmentName: name } });
+      router.push({ name: RouteName.EQUIPMENT_DETAILS, params: { gymId, equipmentId: name } });
     };
 
     return {
-      gymName,
-      locations,
-      gymEquipment: gym!.equipment,
+      gymId,
+      equipment: equipmentRef,
       addEquipment,
       viewDetails,
       Card
