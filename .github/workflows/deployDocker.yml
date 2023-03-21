@@ -41,9 +41,9 @@ jobs:
         run: |
           for service in $(docker-compose config --services); do
             echo "Building and pushing $service..."
-            # docker-compose build $service
-            # docker tag $service $ECR_REGISTRY/$ECR_REPOSITORY/$service:$IMAGE_TAG
-            # docker image push $ECR_REGISTRY/$ECR_REPOSITORY/$service:$IMAGE_TAG
+            #docker-compose build $service
+            #docker tag $service $ECR_REGISTRY/$ECR_REPOSITORY/$service:$IMAGE_TAG
+            #docker image push $ECR_REGISTRY/$ECR_REPOSITORY/$service:$IMAGE_TAG
           done
 
       - name: Deploy to Amazon ECS
@@ -53,3 +53,6 @@ jobs:
           service: gymcheck-deploy-service-operations
           cluster: gymcheck-operations
           wait-for-service-stability: true
+          run: |
+            echo "Deploying to Amazon ECS..."
+
