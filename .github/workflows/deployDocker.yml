@@ -33,7 +33,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build, tag, and push image to Amazon ECR
+      - name: Build, tag, and push image to Amazon ECR 
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: gymcheck
@@ -46,7 +46,16 @@ jobs:
             docker image push $ECR_REGISTRY/$ECR_REPOSITORY/$service:$IMAGE_TAG
           done
           docker images
-      
+          docker context create ecs myecscontext
+
+      - name: Deploy to Amazon ECS
+        run : |
+         docker context create ecs myecscontext
+         docker context use myecscontext
+         docker context ls
+         docker compose up -d
+
+
 
 
 
