@@ -42,8 +42,8 @@ jobs:
           for service in $(docker-compose config --services); do
             echo "Building and pushing $service..."
             docker-compose build $service
-            docker tag $service $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-            docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+            docker tag $service $ECR_REGISTRY/$ECR_REPOSITORY/$service:$IMAGE_TAG
+            docker push $ECR_REGISTRY/$ECR_REPOSITORY/$service:$IMAGE_TAG
           done
           docker images
       
