@@ -13,7 +13,7 @@
         Edit
       </button>
 
-      <button class="button button-danger" :disabled="!selectedUser">
+      <button class="button button-danger" :disabled="!selectedUser" @click="showModal = true">
         <font-awesome-icon icon="fa-solid fa-trash"/>
         Delete
       </button>
@@ -29,7 +29,7 @@
         @cell-clicked="onCellClicked">
     </AgGridVue>
 
-    <router-view></router-view>
+    <DeleteModal v-show="showModal" @close-modal="showModal = false"/>
   </div>
 </template>
 
@@ -41,10 +41,12 @@ import "ag-grid-community/styles//ag-theme-alpine.css";
 import type {CellClickedEvent, ColDef} from "ag-grid-community";
 import type {User} from "@/entities/User";
 import {useRouter} from "vue-router";
+import DeleteModal from "@/components/modals/DeleteModal.vue";
 
 export default defineComponent({
   name: "UserOverview",
   components: {
+    DeleteModal,
     AgGridVue
   },
   setup() {
@@ -52,6 +54,7 @@ export default defineComponent({
     const usersRef = ref<User[]>([]);
     const rowIsSelected = ref<boolean>(false);
     const selectedUser = ref<User | null>(null);
+    const showModal = ref<boolean>(false);
 
     const columnDefs: ColDef[] = [
       {headerName: "Id", field: "id"},
@@ -89,6 +92,7 @@ export default defineComponent({
       selectedUser,
       columnDefs,
       rowIsSelected,
+      showModal,
       onCellClicked,
       routeToUserEdit,
       routeToUserAdd
