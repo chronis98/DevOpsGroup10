@@ -4,7 +4,7 @@
 <!--  </div>-->
 </template>
 
-<script>
+<script lang="ts">
 import UserOverview from "@/views/user/UserOverview.vue";
 import UserEdit from "@/views/user/UserEdit.vue";
 
