@@ -43,7 +43,7 @@ jobs:
             echo "Building and pushing $service..."
             docker-compose build $service
             docker tag $service $ECR_REGISTRY/$ECR_REPOSITORY/$service:$IMAGE_TAG
-            docker push $ECR_REGISTRY/$ECR_REPOSITORY/$service:$IMAGE_TAG
+            docker image push $ECR_REGISTRY/$ECR_REPOSITORY/$service:$IMAGE_TAG
           done
           docker images
       
