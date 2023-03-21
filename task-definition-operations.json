@@ -12,8 +12,28 @@
                 }
             ],
             "essential": true,
-            "environment": [],
-            "environmentFiles": [],
+            "environment": [
+                {
+                    "name": "API_NAME",
+                    "value": 8000
+                },
+                {
+                    "name": "MYSQL_HOST",
+                    "value": "gymcheck-rds-db.c326kshsg1xs.eu-west-2.rds.amazonaws.com"
+                },
+                {
+                    "name": "MYSQL_USER",
+                    "value": "admin"
+                },
+                {
+                    "name": "MYSQL_PASSWORD",
+                    "value": "password1"
+                },
+                {
+                    "name": "MYSQL_DATABASE",
+                    "value": "gymcheck"
+                }
+            ],
             "mountPoints": [],
             "volumesFrom": [],
             "logConfiguration": {
@@ -39,7 +59,6 @@
             ],
             "essential": true,
             "environment": [],
-            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
             "logConfiguration": {
@@ -65,7 +84,6 @@
             ],
             "essential": true,
             "environment": [],
-            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
             "logConfiguration": {
@@ -83,7 +101,37 @@
     "executionRoleArn": "arn:aws:iam::528775740130:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
     "volumes": [],
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+            "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+        }
+    ],
     "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
     "requiresCompatibilities": [
         "FARGATE"
     ],
