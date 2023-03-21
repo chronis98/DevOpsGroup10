@@ -6,6 +6,8 @@ env:
   MYSQL_PASSWORD: ${{ secrets.AWS_RDS_PASSWORD }}
   MYSQL_HOST: ${{ secrets.AWS_RDS_HOST }}
   MYSQL_DATABASE: ${{ secrets.AWS_RDS_DBNAME }}
+  ECS_SERVICE: gymcheck-ecs-containers-deploy
+  ECS_CLUSTER: gymcheck
 
 on:
   push:
@@ -45,17 +47,10 @@ jobs:
             docker tag $service $ECR_REGISTRY/$ECR_REPOSITORY/$service:$IMAGE_TAG
             docker image push $ECR_REGISTRY/$ECR_REPOSITORY/$service:$IMAGE_TAG
           done
-          docker images
-          docker context create ecs myecscontext
 
       - name: Deploy to Amazon ECS
-        run : |
-         docker context create ecs myecscontext
-         docker context use myecscontext
-         docker context ls
-         docker compose up -d
-
-
-
-
-
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1.4.10
+        with:
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
