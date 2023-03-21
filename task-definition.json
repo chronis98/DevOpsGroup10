@@ -1,5 +1,4 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-east-1:528775740130:task-definition/gymcheck-ecs-containers:1",
     "containerDefinitions": [
         {
             "name": "api",
@@ -7,11 +6,9 @@
             "cpu": 0,
             "portMappings": [
                 {
-                    "name": "api-8000-tcp",
                     "containerPort": 8000,
                     "hostPort": 0,
-                    "protocol": "tcp",
-                    "appProtocol": "http"
+                    "protocol": "tcp"
                 }
             ],
             "essential": true,
@@ -26,11 +23,9 @@
             "cpu": 0,
             "portMappings": [
                 {
-                    "name": "frontend-80-tcp",
                     "containerPort": 80,
                     "hostPort": 0,
-                    "protocol": "tcp",
-                    "appProtocol": "http"
+                    "protocol": "tcp"
                 }
             ],
             "essential": true,
@@ -45,11 +40,9 @@
             "cpu": 0,
             "portMappings": [
                 {
-                    "name": "cms-80-tcp",
                     "containerPort": 80,
                     "hostPort": 0,
-                    "protocol": "tcp",
-                    "appProtocol": "http"
+                    "protocol": "tcp"
                 }
             ],
             "essential": true,
@@ -62,13 +55,8 @@
     "family": "gymcheck-ecs-containers",
     "executionRoleArn": "arn:aws:iam::528775740130:role/ecsTaskExecutionRole",
     "networkMode": "bridge",
-    "revision": 1,
     "volumes": [],
-    "status": "ACTIVE",
     "placementConstraints": [],
-    "compatibilities": [
-        "EC2"
-    ],
     "requiresCompatibilities": [
         "EC2"
     ],
@@ -78,7 +66,5 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2023-03-21T13:16:59.621Z",
-    "registeredBy": "arn:aws:iam::528775740130:root",
     "tags": []
 }
