@@ -2,6 +2,7 @@ version: '3'
 
 services:
   frontend:
+    image: devopsgroup10projectdev/frontend
     build:
       context: .
       dockerfile: frontend/Dockerfile
@@ -12,23 +13,25 @@ services:
       - gymcheck
 
   api:
+    image: devopsgroup10projectdev/api
     build:
       context: .
       dockerfile: api/Dockerfile
     ports:
       - 82:8000
     restart: unless-stopped
-    depends_on:
-      - mariadb
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_HOST=${MYSQL_HOST}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - PORT=${API_PORT}
     networks:
       - gymcheck
+    
 
   cms:
+    image: devopsgroup10projectdev/cms
     build:
       context: .
       dockerfile: cms/Dockerfile
