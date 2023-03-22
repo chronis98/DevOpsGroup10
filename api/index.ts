@@ -280,7 +280,9 @@ AppDataSource.initialize()
         const report = AppDataSource.manager.create(Report, {
           gymId: parseInt(req.params.gymId),
           equipmentId: parseInt(req.params.equipmentId),
-          userId: (await AppDataSource.manager.findOneOrFail(User, {})).id,
+          userId: (await AppDataSource.manager.findOneOrFail(User, {where: {
+            id:1
+          }})).id,
           status: req.body.status,
           comment: req.body.comment
         }).save();
