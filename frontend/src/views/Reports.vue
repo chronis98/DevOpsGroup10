@@ -1,14 +1,14 @@
 <template>
   <div class="title">Reports</div>
-  <div class="container">
+  <div class="container" v-if="equipmentReports">
     <div class="flex-topwards">
-      <img class="image" :src="equipmentImage" :alt="equipmentName">
-      <div class="details_title">{{ equipmentName }}</div>
+      <img class="image" :src="equipmentReports.imagePath" :alt="equipmentReports.name">
+      <div class="details_title">{{ equipmentReports.name }}</div>
     </div>
     <div class="card_container">
-      <div v-for="report in  reports">
+      <div v-for="report in equipmentReports.reports">
         <Card>
-          <div class="gym_title">{{ report }}</div>
+          <div class="gym_title">{{ report.comment }}</div>
         </Card>
       </div>
     </div>
@@ -16,24 +16,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import router, { RouteName } from "@/router";
-import Card from '@/views/Card.vue';
+	import {defineComponent, ref} from "vue";
+	import {useRoute} from "vue-router";
+	import Card from '@/views/Card.vue';
+	import type EquipmentReports from "@/models/EquipmentReports";
+
+	function fetchEquipmentReports(gymId: number, equipmentId: number): Promise<EquipmentReports> {
+	return fetch(`${window.location.origin}:8000/api/gym/${gymId}/equipment/${equipmentId}/reports`)
+			.then(res => res.json() as Promise<EquipmentReports>);
+}
 
 export default defineComponent({
   name: "Reports",
   components: { Card },
   setup() {
-    const route = useRoute();
-    const reports = ["test", "awful", "should be careful with that ding ding", "asdad", "asdads", "more", "more", "more"];
-    const equipmentName = route.params.equipmentName as string;
-    const equipmentImage = "https://www.bestusedgymequipment.com/wp-content/uploads/2018/04/olympic-flat-bench-300x300.jpg";
-    console.log(reports);
+		const route = useRoute();
+		const equipmentReportsRef = ref(null as unknown as EquipmentReports);
+	  const gymId = parseInt(route.params.gymId as string);
+	  const equipmentId = parseInt(route.params.equipmentId as string);
+		fetchEquipmentReports(gymId, equipmentId)
+				.then(equipmentReports => equipmentReportsRef.value = equipmentReports);
+
     return {
-      reports,
-      equipmentName,
-      equipmentImage
+      equipmentReports: equipmentReportsRef
     }
   }
 });
