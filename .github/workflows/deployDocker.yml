@@ -46,6 +46,15 @@ jobs:
             docker image push $ECR_REGISTRY/$ECR_REPOSITORY/$service:$IMAGE_TAG
           done
 
+      - name : Testing
+        run: |
+          echo "Testing frontend..."
+          echo "Testing backend..."
+
+      - name: Deploying to Amazon ECS
+        run: |
+          echo "Deploying to Amazon ECS..."
+
       - name: Deploy to Amazon ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1.4.10
         with:
@@ -53,8 +62,6 @@ jobs:
           service: gymcheck-deploy-service-operations
           cluster: gymcheck-operations
           wait-for-service-stability: true
-          run: |
-            echo "Deploying to Amazon ECS..."
 
       - name: Get deployment IP
         run: |
