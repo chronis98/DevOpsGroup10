@@ -1,6 +1,6 @@
 <template>
   <div class="title">Reports</div>
-  <div class="container">
+  <div class="container" v-if="equipmentReports">
     <div class="flex-topwards">
       <img class="image" :src="equipmentReports.imagePath" :alt="equipmentReports.name">
       <div class="details_title">{{ equipmentReports.name }}</div>
