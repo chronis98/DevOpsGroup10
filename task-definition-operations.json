@@ -1,4 +1,10 @@
 {
+    "secrets":[
+        {
+            "name": "DATABASE_PASSWORD",
+            "valueFrom": "arn:aws:secretsmanager:us-east-1:528775740130:secret:password"
+        }
+    ],
     "containerDefinitions": [
         {
             "name": "api",
@@ -27,7 +33,7 @@
                 },
                 {
                     "name": "MYSQL_PASSWORD",
-                    "value": "password1"
+                    "value": "$DATABASE_PASSWORD"
                 },
                 {
                     "name": "MYSQL_DATABASE",
