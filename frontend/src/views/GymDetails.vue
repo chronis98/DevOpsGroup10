@@ -51,7 +51,7 @@
 			fetchGym().then(gym => gymRef.value = gym);
 
 			function fetchGym(): Promise<DetailGym> {
-				return fetch(`${window.location.origin}:8000/api/gym/${gymId}`)
+				return fetch(`${window.location.origin.substring(0, window.location.origin.lastIndexOf(":"))}:8000/api/gym/${gymId}`)
 						.then(res => res.json() as Promise<DetailGym>);
 			}
 

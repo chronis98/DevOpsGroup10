@@ -277,15 +277,28 @@ AppDataSource.initialize()
       });
 
       app.post('/api/gym/:gymId/equipment/:equipmentId', async (req: Request<Record<'gymId' | 'equipmentId', string>, Object, {status: true|false|null, comment: string}>, res: Response) => {
-        const report = AppDataSource.manager.create(Report, {
+        const report = await AppDataSource.manager.create(Report, {
           gymId: parseInt(req.params.gymId),
           equipmentId: parseInt(req.params.equipmentId),
-          userId: (await AppDataSource.manager.findOneOrFail(User, {})).id,
+          userId: (await AppDataSource.manager.findOneOrFail(User, {
+            where: {
+              id: 1
+            }
+          })).id,
           status: req.body.status,
-          comment: req.body.comment
+          comment: req.body.comment,
+          createdAt: new Date()
         }).save();
 
-        res.status(204).send();
+        res.status(201).json({
+          id: report.id,
+          gymId: report.gymId,
+          equipmentId: report.equipmentId,
+          userId: report.userId,
+          status: report.status,
+          comment: report.comment,
+          createdAt: report.createdAt
+        }).send()
       });
 
       app.listen(port, () => {

@@ -69,13 +69,13 @@ export default defineComponent({
     }
 
     async function fetchUser(id: number): Promise<User> {
-      return fetch(`${window.location.origin}:8000/api/user/${id}`)
+      return fetch(`${window.location.origin.substring(0, window.location.origin.lastIndexOf(":"))}:8000/api/user/${id}`)
           .then(res => res.json() as Promise<User>);
     }
 
     async function saveUser(): Promise<User> {
       const {username, email} = formUserRef.value;
-      return fetch(`${window.location.origin}:8000/api/user/${route.params.id}`, {
+      return fetch(`${window.location.origin.substring(0, window.location.origin.lastIndexOf(":"))}:8000/api/user/${route.params.id}`, {
         method: 'PUT',
         body: JSON.stringify({
           username,
