@@ -15,6 +15,7 @@ RUN npm run build
 FROM nginx:1.23.3-alpine
 
 COPY --from=node-builder /cms/dist /usr/share/nginx/html
+
 COPY cms/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 81
