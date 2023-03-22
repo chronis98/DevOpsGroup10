@@ -22,7 +22,7 @@
 	import type EquipmentReports from "@/models/EquipmentReports";
 
 	function fetchEquipmentReports(gymId: number, equipmentId: number): Promise<EquipmentReports> {
-	return fetch(`${window.location.origin.substring(0, window.location.origin.lastIndexOf(":"))}:8000/api/gym/${gymId}/equipment/${equipmentId}/reports`)
+	return fetch(`${window.location.origin}:8000/api/gym/${gymId}/equipment/${equipmentId}/reports`)
 			.then(res => res.json() as Promise<EquipmentReports>);
 }
 

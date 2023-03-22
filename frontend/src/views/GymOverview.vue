@@ -39,7 +39,7 @@ export default defineComponent({
 		console.log(import.meta.env);
 
     function fetchGyms(): Promise<OverviewGym[]> {
-      return fetch(`${window.location.origin.substring(0, window.location.origin.lastIndexOf(":"))}:8000/api/gym`)
+      return fetch(`${window.location.origin}:8000/api/gym`)
         .then(res => res.json() as Promise<OverviewGym[]>);
     }
 
