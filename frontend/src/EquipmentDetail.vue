@@ -32,7 +32,7 @@
 	import {RouteName} from "@/router";
 	import Card from '@/views/Card.vue';
 	import Reports from '@/views/Reports.vue';
-	import type DetailEquipment from "./models/EquipmentResponse";
+	import type DetailEquipment from "./models/DetailEquipment";
 
 	type Field = {
 		label: string;
@@ -53,7 +53,7 @@
 			fetchEquipment().then(equipment => equipmentRef.value = equipment);
 
 			function fetchEquipment(): Promise<DetailEquipment> {
-				return fetch(`${process.env.API_HOST}/api/gym/${gymId}/equipment/${equipmentId}`)
+				return fetch(`${window.location.origin}:8000/api/gym/${gymId}/equipment/${equipmentId}`)
 						.then(res => res.json() as Promise<DetailEquipment>);
 			}
 

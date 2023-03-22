@@ -1,4 +1,4 @@
-#install npm 
+#install npm
 FROM node:19.7.0-alpine AS node-builder
 
 WORKDIR /frontend

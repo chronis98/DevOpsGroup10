@@ -1,7 +1,7 @@
 import type Category from '@/models/Category';
 import type Report from '@/models/Reports';
 
-type EquipmentResponse = {
+type DetailEquipment = {
   "id": number,
   "name": string,
   "description": string,
@@ -10,4 +10,4 @@ type EquipmentResponse = {
   "reports": Report[]
 }
 
-export default EquipmentResponse;
+export default DetailEquipment;

@@ -57,7 +57,7 @@ export default defineComponent({
 
     function saveUser(): Promise<User> {
       const {username, email, password} = userRef.value;
-      return fetch(`${process.env.API_HOST}/api/user`, {
+      return fetch(`${window.location.origin}:8000/api/user`, {
         method: 'POST',
         body: JSON.stringify({
           username,
