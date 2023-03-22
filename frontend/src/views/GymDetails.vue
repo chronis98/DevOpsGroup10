@@ -28,8 +28,6 @@
 		</div>
 
 	</div>
-	<div @click="addEquipment()" class="plus radious">
-	</div>
 </template>
 
 <script lang="ts">
