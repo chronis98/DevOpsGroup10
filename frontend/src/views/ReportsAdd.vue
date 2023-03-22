@@ -1,18 +1,18 @@
 <template>
 	<div class="title">Add report</div>
-	<div class="container">
+	<div class="container" v-if="equipment">
 		<div class="flex-topwards">
-			<img class="image" :src="equipment.imagePath" :alt="equipment.name">
+			<img class="image" :src="equipment.imagePath">
 			{{ equipment.name }}
 		</div>
 
-		<div class="details">Select status: {{ status }}</div>
+		<div class="details">Select status:</div>
 		<select v-model="status" class="select">
 			<option selected value="null">None</option>
 			<option value="0">Working</option>
 			<option value="1">Defect</option>
 		</select>
-		<div class="details">Add comment: {{ status }}</div>
+		<div class="details">Add comment</div>
 		<input class='input' v-model="comment" placeholder="Place your comment here!"/>
 		<div>
 			<button class="button" @click="submitReport">Submit report</button>
@@ -22,9 +22,10 @@
 
 <script lang="ts">
 	import {defineComponent, ref} from "vue";
-	import {useRoute} from "vue-router";
+	import {useRoute, useRouter} from "vue-router";
 	import Card from '@/views/Card.vue';
 	import type DetailEquipment from "@/models/DetailEquipment";
+	import {RouteName} from "@/router";
 
 
 	type StatusForForm = "0" | "1" | "null";
@@ -34,6 +35,7 @@
 		name: "AddReport",
 		components: {Card},
 		setup() {
+			const router = useRouter();
 			const route = useRoute();
 			const gymId = parseInt(route.params.gymId as string);
 			const equipmentId = parseInt(route.params.equipmentId as string);
@@ -61,8 +63,8 @@
 				}
 			}
 
-			function submitReport(): void {
-				fetch(`${window.location.origin.substring(0, window.location.origin.lastIndexOf(":"))}:8000/api/gym/${gymId}/equipment/${equipmentId}`, {
+			async function submitReport(): Promise<void> {
+				await fetch(`${window.location.origin.substring(0, window.location.origin.lastIndexOf(":"))}:8000/api/gym/${gymId}/equipment/${equipmentId}`, {
 					method: 'POST',
 					body: JSON.stringify({
 						status: getStatusForPOST(statusRef.value),
@@ -71,7 +73,8 @@
 					headers: {
 						'Content-Type': 'application/json'
 					}
-				})
+				});
+				await router.push({name: RouteName.EQUIPMENT_DETAILS, params: {gymId, equipmentId}});
 			}
 
 			return {

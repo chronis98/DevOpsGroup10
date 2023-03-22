@@ -212,6 +212,9 @@ AppDataSource.initialize()
             equipmentId: parseInt(req.params.equipmentId),
             gymId: parseInt(req.params.gymId)
           },
+          order: {
+            createdAt: "DESC"
+          },
           take: 5
         });
 
@@ -275,6 +278,95 @@ AppDataSource.initialize()
           }))
         })
       });
+
+      app.get('/api/gym/:gymId/equipment/:equipmentId/reports', async (req: Request<Record<'gymId' | 'equipmentId', string>>, res: Response) => {
+        const equipmentPromise = Equipment.findOne({
+          relations: {
+            category: true
+          },
+          where: {
+            id: 1
+          }
+        });
+
+        const reportsPromise = Report.find({
+          join: {
+            alias: 'report',
+            leftJoinAndSelect: {
+              user: 'report.user',
+              verifications: 'report.verifications'
+            }
+          },
+          where: {
+            equipmentId: parseInt(req.params.equipmentId),
+            gymId: parseInt(req.params.gymId)
+          },
+          order: {
+            createdAt: "DESC"
+          }
+        });
+
+        const [equipment, reports, equipmentCategory] = await Promise.all([
+          equipmentPromise,
+          reportsPromise.then(reports => {
+            const entitiesPromises = reports.map(async report => ({
+              report,
+              user: await report.user,
+              // Promise<ReportVerification[]> -> Promise<{verification: ReportVerification, userOwner: {userOwner: UserOwner, user: User}}[]>
+              verifications: await report.verifications.then(verifications => {
+                const entitiesPromises = verifications.map(async verification => ({
+                  verification,
+                  userOwner: await verification.verifiedByUserOwner.then(async userOwner => ({
+                    userOwner,
+                    user: await userOwner.user
+                  }))
+                }));
+
+                return Promise.all(entitiesPromises);
+              })
+            }));
+
+            return Promise.all(entitiesPromises);
+          }),
+          equipmentPromise.then(e => e.category)
+        ]);
+
+        res.json({
+          id: equipment.id,
+          name: equipment.name,
+          description: equipment.description,
+          imagePath: equipment.imagePath,
+          category: {
+            id: equipmentCategory.id,
+            name: equipmentCategory.name
+          },
+          reports: reports.map(({report, user, verifications}) => ({
+            id: report.id,
+            createdAt: report.createdAt,
+            status: report.status,
+            comment: report.comment,
+            user: {
+              id: user.id,
+              username: user.username,
+              email: user.email,
+              createdAt: user.createdAt
+            },
+            verifications: verifications.map(({verification, userOwner: {user, userOwner}}) => ({
+              id: verification.id,
+              createdAt: verification.createdAt,
+              comment: verification.comment,
+              verifiedByUserOwner: {
+                id: userOwner.id,
+                userId: user.id,
+                username: user.username,
+                email: user.email,
+                createdAt: user.createdAt
+              }
+            }))
+          }))
+        })
+      });
+
 
       app.post('/api/gym/:gymId/equipment/:equipmentId', async (req: Request<Record<'gymId' | 'equipmentId', string>, Object, {status: true|false|null, comment: string}>, res: Response) => {
         const report = await AppDataSource.manager.create(Report, {
