@@ -6,7 +6,7 @@
             "secrets":[
                 {
                     "name": "DATABASE_PASSWORD",
-                    "valueFrom": "arn:aws:secretsmanager:us-east-1:528775740130:secret:db-details-DAf6yD::password"
+                    "valueFrom": "arn:aws:secretsmanager:us-east-1:528775740130:secret:db-details-DAf6yD:password::"
                 }
             ],
             "cpu": 0,
