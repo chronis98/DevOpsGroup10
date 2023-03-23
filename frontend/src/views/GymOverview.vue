@@ -23,6 +23,9 @@ import type Address from "@/models/Address";
 import type OverviewGym from "@/models/Gym";
 import HelloWorld from '../components/HelloWorld.vue'
 import Card from '../views/Card.vue';
+import {container} from "tsyringe";
+import DiToken from "@/di/DiToken";
+import {HttpMethod} from "@/utils/HttpMethod";
 
 export default defineComponent({
   components: {
@@ -36,11 +39,11 @@ export default defineComponent({
     const router = useRouter();
     fetchGyms().then(gyms => gymsRef.value = gyms);
 
-		console.log(import.meta.env);
-
     function fetchGyms(): Promise<OverviewGym[]> {
-      return fetch(`${window.location.origin}:8000/api/gym`)
-        .then(res => res.json() as Promise<OverviewGym[]>);
+			const httpClient = container.resolve(DiToken.HttpClient);
+			return httpClient.send(`${window.location.origin}:8000/api/gym`, HttpMethod.GET) as Promise<OverviewGym[]>;
+      /*return fetch(`${window.location.origin}:8000/api/gym`)
+        .then(res => res.json() as Promise<OverviewGym[]>);*/
     }
 
     function handleClick(gymId: number): void {
