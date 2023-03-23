@@ -1,16 +1,16 @@
-type address = {
+type Address = {
 "id": number,
 "number": number,
 "addition": null|string,
 "street": string,
 "city": string,
 "postcode": string,
-"coords": coords
+"coords": Coords
 }
 
-type coords = {
-  "lat":4.956683,
-  "long":52.35577
+type Coords = {
+  "lat": number,
+  "long": number
 }
 
-export default address;
+export default Address;

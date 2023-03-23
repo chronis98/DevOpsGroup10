@@ -9,6 +9,8 @@
       "@/*": ["./src/*"]
     },
     "strictNullChecks": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   }
 }
