@@ -61,4 +61,10 @@ jobs:
           task-definition: ./task-definition-operations.json
           service: gymcheck-deploy-service-operations
           cluster: gymcheck-operations 
+          wait-for-service-stability: true
+
+      - name: Get deployment IP
+        run: |
+          output=$(aws ec2 describe-network-interfaces --query 'NetworkInterfaces[*].Association.PublicIp')
+          echo "Website available at: $output" 
 
