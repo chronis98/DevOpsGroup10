@@ -33,7 +33,7 @@
                 },
                 {
                     "name": "MYSQL_PASSWORD",
-                    "value": "password1"
+                    "value": "${DATABASE_PASSWORD}"
                 },
                 {
                     "name": "MYSQL_DATABASE",
