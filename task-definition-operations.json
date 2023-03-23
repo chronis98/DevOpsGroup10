@@ -3,12 +3,6 @@
         {
             "name": "api",
             "image": "528775740130.dkr.ecr.us-east-1.amazonaws.com/gymcheck/api:latest",
-            "secrets":[
-                {
-                    "name": "DATABASE_PASSWORD",
-                    "valueFrom": "arn:aws:secretsmanager:us-east-1:528775740130:secret:db-details-DAf6yD:password::"
-                }
-            ],
             "cpu": 0,
             "portMappings": [
                 {
@@ -33,7 +27,7 @@
                 },
                 {
                     "name": "MYSQL_PASSWORD",
-                    "value": "${DATABASE_PASSWORD}"
+                    "value": "password1"
                 },
                 {
                     "name": "MYSQL_DATABASE",
