@@ -68,5 +68,5 @@ jobs:
       - name: Get deployment IP
         run: |
           output=$(aws ec2 describe-network-interfaces --query 'NetworkInterfaces[*].Association.PublicIp')
-          echo "Website available at: $output" 
+          echo "Website available at: $output"  
 
