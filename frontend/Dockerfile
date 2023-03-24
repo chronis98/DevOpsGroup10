@@ -18,7 +18,7 @@ COPY --from=node-builder /frontend/dist /usr/share/nginx/html
 
 COPY frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY frontend/loaderio-b3fe77e500b87148d2b5d4665ff9cdbe.txt /usr/share/nginx/html/loaderio-b3fe77e500b87148d2b5d4665ff9cdbe.txt
+COPY frontend/loaderio-b20a5d5dd704d5516eaf1d5e385c862b.txt /usr/share/nginx/html/loaderio-b20a5d5dd704d5516eaf1d5e385c862b.txt
 
 EXPOSE 80
 
