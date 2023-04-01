@@ -1,21 +1,70 @@
 ---
 name: Deploy docker containers to ECS
 
+env:
+  MYSQL_USER: ${{ secrets.AWS_RDS_USERNAME }}
+  MYSQL_PASSWORD: ${{ secrets.AWS_RDS_PASSWORD }}
+  MYSQL_HOST: ${{ secrets.AWS_RDS_HOST }}
+  MYSQL_DATABASE: ${{ secrets.AWS_RDS_DBNAME }}
+
 on:
   push:
     branches:
-      - docker
+      - operations
   pull_request:
     branches:
-      - docker
+      - operations
 
 jobs:
-  zip-and-push:
+  deploy-docker-containers-to-ECS:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR 
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: gymcheck
+          IMAGE_TAG: latest
+        run: |
+          for service in $(docker-compose config --services); do
+            echo "Building and pushing $service..."
+            docker-compose build $service
+            docker tag $service $ECR_REGISTRY/$ECR_REPOSITORY/$service:$IMAGE_TAG
+            docker image push $ECR_REGISTRY/$ECR_REPOSITORY/$service:$IMAGE_TAG
+          done
+
+      - name : Testing
+        run: |
+          echo "Testing frontend..."
+          echo "Testing backend..."
+
+      - name: Deploying to Amazon ECS
+        run: |
+          echo "Deploying to Amazon ECS..."
+
+      - name: Deploy to Amazon ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1.4.10
+        with:
+          task-definition: ./task-definition-operations.json
+          service: gymcheck-deploy-service-operations
+          cluster: gymcheck-operations 
+          wait-for-service-stability: true
+
+      - name: Get deployment IP
+        run: |
+          output=$(aws ec2 describe-network-interfaces --query 'NetworkInterfaces[*].Association.PublicIp')
+          echo "Website available at: $output" 
 

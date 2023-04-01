@@ -1,5 +1,4 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-east-1:528775740130:task-definition/ecs-deploy-gymcheck-development:1",
     "containerDefinitions": [
         {
             "name": "gymcheck-dev",
@@ -31,9 +30,7 @@
     "family": "ecs-deploy-gymcheck-development",
     "executionRoleArn": "arn:aws:iam::528775740130:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 1,
     "volumes": [],
-    "status": "ACTIVE",
     "requiresAttributes": [
         {
             "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
@@ -65,12 +62,7 @@
         "EC2",
         "FARGATE"
     ],
-    "requiresCompatibilities": [
-        "FARGATE"
-    ],
     "cpu": "1024",
     "memory": "3072",
-    "registeredAt": "2023-03-16T09:48:54.502Z",
-    "registeredBy": "arn:aws:iam::528775740130:root",
     "tags": []
 }

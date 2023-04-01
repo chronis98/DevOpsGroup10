@@ -1,116 +1,196 @@
 <template>
-  <div class="center">
-    <div class="container" v-if="equipment">
-      <img class="image" :src="equipment.imgPath" :alt="equipment.name">
-
-      <div class="details-container">
-        <label>Name: </label> <span>{{ equipment.name }}</span>
-        <label>First Added: </label> <span>{{ equipment.firstAdded.toLocaleString() }}</span>
-        <label>Reports: </label> <span>{{ equipment.reports }}</span>
-        <label>Confirmed: </label> <span>{{ equipment.confirmed.toLocaleString() }}</span>
-      </div>
-
-      <div class="buttons-container">
-        <button class="button" type="button">Stars</button>
-        <button class="button button-primary" type="button">Add Report</button>
-      </div>
-    </div>
-  </div>
+	<div class="title" v-if="equipment">{{ equipment.name }}</div>
+	<div class="center">
+		<div class="container" v-if="equipment">
+			<div class="flex-topwards">
+				<img class="image" :src="equipment.imagePath" :alt="equipment.name">
+				<div class="details-container">
+					<template v-for="field in fields">
+						<label>{{ field.label }}: </label> <span>{{ field.value }}</span>
+					</template>
+				</div>
+			</div>
+			<div class="card-container">
+				<div v-for="report in equipment.reports">
+					<Card @click="navigateToReportsOverview">
+						<div class="gym_title">{{ report.comment }}</div>
+					</Card>
+				</div>
+			</div>
+			<div class="flex-bottomwards">
+				<div class="buttons-container">
+					<button class="button" type="button" @click="navigateToReportsAdd()">Add Report</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from "vue";
+	import {computed, defineComponent, ref} from "vue";
+	import {useRoute, useRouter} from "vue-router";
+	import {RouteName} from "@/router";
+	import Card from '@/views/Card.vue';
+	import Reports from '@/views/Reports.vue';
+	import type DetailEquipment from "./models/DetailEquipment";
 
-type Equipment = {
-  imgPath: string
-  name: string,
-  firstAdded: Date,
-  reports: number,
-  confirmed: Date
-};
+	type Field = {
+		label: string;
+		value: string;
+	}
 
-export default defineComponent({
-  name: "EquipmentDetail",
-  props: {
-    id: {
-      type: Number,
-      required: true
-    }
-  },
-  setup(props) {
-    const equipmentRef = ref<Equipment | null>(null);
-    getEquipment(props.id).then(equipment => equipmentRef.value = equipment);
+	export default defineComponent({
+		name: "EquipmentDetail",
+		components: {
+			Card,
+			Reports
+		},
+		setup() {
+			const equipmentRef = ref<DetailEquipment>(null as unknown as DetailEquipment);
+			const route = useRoute();
+			const equipmentId = route.params.equipmentId;
+			const gymId = route.params.gymId;
+			fetchEquipment().then(equipment => equipmentRef.value = equipment);
 
-    async function getEquipment(id: Number = 0): Promise<Equipment> {
-      return {
-        imgPath: "https://www.bestusedgymequipment.com/wp-content/uploads/2018/04/olympic-flat-bench-300x300.jpg",
-        name: "Bench Press",
-        firstAdded: new Date(),
-        reports: 10,
-        confirmed: new Date()
-      };
-    }
+			function fetchEquipment(): Promise<DetailEquipment> {
+				return fetch(`${window.location.origin}:8000/api/gym/${gymId}/equipment/${equipmentId}`)
+						.then(res => res.json() as Promise<DetailEquipment>);
+			}
 
-    return {
-      equipment: equipmentRef
-    }
-  }
-});
+			const router = useRouter();
+
+			const fields = computed((): Field[] => {
+				const equipment = equipmentRef.value;
+
+				if (!equipment) {
+					return [];
+				}
+
+				const firstAdded = equipment.reports[0]?.createdAt || '-';
+				const reports = equipment.reports;
+				const name = equipment.name;
+				return [{
+					label: 'First added',
+					value: firstAdded
+				}, {
+					label: 'Reports',
+					value: equipment.reports.length.toString()
+				}];
+			});
+
+			function navigateToReportsOverview(): void {
+				router.push({name: RouteName.REPORTS, params: {gymId, equipmentId}});
+			}
+
+			function navigateToReportsAdd(): void {
+				router.push({name: RouteName.REPORTS_ADD, params: {gymId, equipmentId}});
+			}
+
+			return {
+				equipment: equipmentRef,
+				equipmentId,
+				navigateToReportsOverview,
+				navigateToReportsAdd,
+				fields
+			}
+		}
+	});
 </script>
 
 <style scoped lang="scss">
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+	.center {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
+	}
 
-.container {
-  background-color: var(--vt-c-grey-soft);
-  box-shadow: 4px 11px 15px 3px rgba(0, 0, 0, 0.25);
-  padding: 20px 30px;
-  margin: 15px;
-  border-radius: 3px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-}
+	.title {
+		font-size: 36px;
+		color: #FDFDFD;
+		padding: 10px;
+	}
 
-.details-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
+	.container {
+		background-color: var(--vt-c-grey-soft);
+		padding: 20px 10px 0;
+		border-radius: 3px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
+		gap: 20px;
+		height: 100%;
+		width: 100%;
+	}
 
-.buttons-container {
-  align-self: end;
-  display: flex;
-  gap: 10px;
-}
+	.card-container {
+		background-color: var(--vt-c-grey-soft);
+		border-radius: 3px;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		gap: 10px;
+		width: 100%;
+	}
 
-.image {
-  max-height: 20vh;
-  margin: 0 0 20px 0;
-  border-radius: 8px;
-}
+	.flex-topwards {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
 
-.button {
-  border: none;
-  border-radius: 4px;
-  padding: 8px 16px;
-  font-size: 14px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-}
+	.flex-bottomwards {
+		display: flex;
+		justify-content: flex-end;
+		width: 100%;
+	}
 
-.button-primary {
-  background-color: black;
-  color: white;
-}
+	.details-container {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
 
-.button-primary:hover {
-  background-color: var(--color-background);
-  color: white;
-}
+	.details {
+		font-size: 18.56px;
+		color: #FDFDFD;
+		margin: 10px 10px 10px 5px;
+	}
 
+	.buttons-container {
+		align-self: flex-end;
+		display: flex;
+		gap: 10px;
+	}
+
+	.button {
+		display: block;
+		float: right;
+		background-color: #0375F7;
+		border: none;
+		color: white;
+		padding: 15px 15px 15px 15px;
+		text-align: center;
+		text-decoration: none;
+		font-size: 16px;
+		margin: 35px 0px 10px 10px;
+		border-radius: 10px;
+	}
+
+	.button:hover {
+		color: rgb(0, 0, 0);
+		cursor: pointer;
+	}
+
+	.image {
+		max-height: 20vh;
+		margin: 0 0 20px 0;
+		border-radius: 8px;
+		width: 150px;
+	}
+
+	.gym_title {
+		margin: auto;
+
+	}
 </style>

@@ -1,0 +1,115 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "api",
+            "image": "528775740130.dkr.ecr.us-east-1.amazonaws.com/gymcheck/api:latest",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "containerPort": 8000,
+                    "hostPort": 8000,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "API_PORT",
+                    "value": "8000"
+                },
+                {
+                    "name": "MYSQL_HOST",
+                    "value": "gymcheck-rds-db.c326kshsg1xs.eu-west-2.rds.amazonaws.com"
+                },
+                {
+                    "name": "MYSQL_USER",
+                    "value": "admin"
+                },
+                {
+                    "name": "MYSQL_PASSWORD",
+                    "value": "password1"
+                },
+                {
+                    "name": "MYSQL_DATABASE",
+                    "value": "gymcheck"
+                }
+            ],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/ecs-deploy-gymcheck-operations",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
+        },
+        {
+            "name": "frontend",
+            "image": "528775740130.dkr.ecr.us-east-1.amazonaws.com/gymcheck/frontend:latest",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/ecs-deploy-gymcheck-operations",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
+        },
+        {
+            "name": "cms",
+            "image": "528775740130.dkr.ecr.us-east-1.amazonaws.com/gymcheck/cms:latest",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "containerPort": 81,
+                    "hostPort": 81,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/ecs-deploy-gymcheck-operations",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
+        }
+    ],
+    "family": "ecs-deploy-gymcheck-operations",
+    "executionRoleArn": "arn:aws:iam::528775740130:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "volumes": [],
+    "placementConstraints": [],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "3072",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "tags": []
+}

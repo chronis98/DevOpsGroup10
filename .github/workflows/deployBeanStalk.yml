@@ -3,10 +3,10 @@ name: Deploy to BeanStalk
 on:
   push:
     branches:
-      - operations
+      - development
   pull_request:
     branches:
-      - operations
+      - development
 jobs:
   zip-and-push:
     runs-on: ubuntu-latest
